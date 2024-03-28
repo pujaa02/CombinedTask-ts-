@@ -1225,7 +1225,7 @@
           });
           var result2 = await response.json();
           console.log(result2);
-          window.location.href = `http://localhost:9025/update`;
+          window.location.href = `http://localhost:5058/update`;
         } else if (window.location.href.substring(22).startsWith("update")) {
           response = await fetch(`/update/${id}`, {
             method: "POST",
@@ -1235,7 +1235,7 @@
           });
           var result2 = await response.json();
           console.log(result2);
-          window.location.href = `http://localhost:9025/showupdate`;
+          window.location.href = `http://localhost:5058/showupdate`;
         }
       }
 
@@ -1786,42 +1786,42 @@
     <script>
       let link = window.location.href;
       console.log("link", link);
-      // http://localhost:9025/update/16
+      // http://localhost:5058/update/16
       let id = link.substring(29);
 
       console.log("id", id);
       async function fetchid() {
-        const emp = await fetch("http://localhost:9025/emp");
+        const emp = await fetch("http://localhost:5058/emp");
         const emp_result = await emp.json();
         let res1 = emp_result[id - 1];
         console.log(emp_result[id - 1]);
 
-        const edu = await fetch("http://localhost:9025/edu");
+        const edu = await fetch("http://localhost:5058/edu");
         const edu_result = await edu.json();
         let res2 = edu_result;
         console.log(res2);
 
-        const work = await fetch("http://localhost:9025/work");
+        const work = await fetch("http://localhost:5058/work");
         const work_result = await work.json();
         let res3 = work_result;
         console.log(res3);
 
-        const lan = await fetch("http://localhost:9025/lan");
+        const lan = await fetch("http://localhost:5058/lan");
         const lan_result = await lan.json();
         let res4 = lan_result;
         console.log(res4);
 
-        const techno = await fetch("http://localhost:9025/tech");
+        const techno = await fetch("http://localhost:5058/tech");
         const techno_result = await techno.json();
         let res5 = techno_result;
         console.log(res5);
 
-        const ref = await fetch("http://localhost:9025/ref");
+        const ref = await fetch("http://localhost:5058/ref");
         const ref_result = await ref.json();
         let res6 = ref_result;
         console.log(res6);
 
-        const pre = await fetch("http://localhost:9025/pre");
+        const pre = await fetch("http://localhost:5058/pre");
         const pre_result = await pre.json();
         let res7 = pre_result[id - 1];
         console.log(res7);
