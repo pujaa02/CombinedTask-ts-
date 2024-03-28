@@ -15,7 +15,7 @@ con.connect((err) => {
 function checkmail(req, res) {
   console.log(req.query.email);
   con.query(
-    `select * from save_data where email='${req.query.email}'`,
+    `select * from login where email='${req.query.email}'`,
     function (err, result) {
       if (err) throw err;
       data = result;

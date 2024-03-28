@@ -199,7 +199,7 @@ route.post("/loginpage", async (req, res) => {
         token = jwt.sign(
           { email: result[0].email },
           process.env.JWT_SECRET_KEY,
-          { expiresIn: "2s" }
+          { expiresIn: "5m" }
         );
       } else {
         console.log("password is wrong");
@@ -237,30 +237,30 @@ route.get("/redirect/:mail", async (req, res) => {
 // route.get("/home", (req, res) => {
 //   res.render("Home");
 // });
-route.get("/dynamic_table", (req, res) => {
+route.get("/dynamic_table", checkAuth, (req, res) => {
   res.render("singleTask/dynamic_table");
 });
 
-route.get("/kukucube", (req, res) => {
+route.get("/kukucube", checkAuth, (req, res) => {
   res.render("singleTask/kukucube");
 });
 
-route.get("/tic-tac-toe", (req, res) => {
+route.get("/tic-tac-toe", checkAuth, (req, res) => {
   res.render("singleTask/tic-tac-toe");
 });
 
-route.get("/sorting", (req, res) => {
+route.get("/sorting", checkAuth, (req, res) => {
   res.render("singleTask/sorting");
 });
-route.get("/events", (req, res) => {
+route.get("/events", checkAuth, (req, res) => {
   res.render("singleTask/events");
 });
-route.get("/job_app", (req, res) => {
+route.get("/job_app", checkAuth, (req, res) => {
   res.render("singleTask/job_application");
 });
 // ================ order by =====================
 var name;
-route.get("/data", (req, res) => {
+route.get("/data", checkAuth, (req, res) => {
   if (req.query.field) {
     name = req.query.field;
   } else {
@@ -294,7 +294,7 @@ route.get("/data", (req, res) => {
   );
 });
 //==================attendeanch27==================
-route.get("/att", (req, res) => {
+route.get("/att", checkAuth, (req, res) => {
   let m, y;
   if ((req.query.months, req.query.year)) {
     m = req.query.months;
@@ -318,7 +318,7 @@ route.get("/att", (req, res) => {
   });
 });
 
-route.get("/att/:fd", (req, res) => {
+route.get("/att/:fd", checkAuth, (req, res) => {
   let field = req.params.fd;
   let m, y;
   if ((req.query.months, req.query.year)) {
@@ -344,7 +344,7 @@ route.get("/att/:fd", (req, res) => {
   });
 });
 
-route.get("/data/:fd", (req, res) => {
+route.get("/data/:fd", checkAuth, (req, res) => {
   let field = req.params.fd;
   let m, y;
   if ((req.query.months, req.query.year)) {
@@ -371,7 +371,7 @@ route.get("/data/:fd", (req, res) => {
 });
 
 // =========================result=======================
-route.get("/result", (req, res) => {
+route.get("/result", checkAuth, (req, res) => {
   let q1 = `select student_master26.id, student_master26.firstname,sum(exam_result.theory_obtain_mark) as Theory,sum(exam_result.prac_total_mark) as Practical from student_master26 join exam_result
   on student_master26.id=exam_result.stu_id where exam_result.exam_id=1 group by student_master26.id;`;
   let q2 = `select sum(exam_result.theory_obtain_mark) as Th2,sum(exam_result.prac_total_mark) as Prac2 from student_master26 join exam_result
@@ -414,7 +414,7 @@ route.get("/result", (req, res) => {
   });
 });
 
-route.get("/datares/:id", (req, res) => {
+route.get("/datares/:id", checkAuth, (req, res) => {
   let id = req.params.id;
   let q1 = `select student_master26.id, student_master26.firstname,count( IF( att_master26.attendance = 'present' , att_master26.date, NULL)) as TOTAL_PRESENT,
   round((count( IF( att_master26.attendance = 'present' , att_master26.date, NULL)) * 100/90),2 )as Percentage from student_master26
@@ -469,7 +469,7 @@ route.get("/datares/:id", (req, res) => {
 
 // ====================fetch data using query=============
 
-route.get("/fetch", (req, res) => {
+route.get("/fetch", checkAuth, (req, res) => {
   res.render("taskzero/home");
 });
 route.post("/fetch", async function (req, res) {
@@ -517,7 +517,7 @@ route.post("/fetch", async function (req, res) {
     });
   }
 });
-route.get("/fetchdata/:page/:query", async function (req, res) {
+route.get("/fetchdata/:page/:query", checkAuth, async function (req, res) {
   let search = req.params.query;
   // console.log(sql);
   let page = req.params.page;
@@ -548,7 +548,7 @@ route.get("/fetchdata/:page/:query", async function (req, res) {
 
 // ====================fetch data using query//22////=============
 
-route.get("/fetch2", (req, res) => {
+route.get("/fetch2", checkAuth, (req, res) => {
   res.render("taskone/home");
 });
 
@@ -571,7 +571,7 @@ route.post("/fetch2", (req, res) => {
   });
 });
 
-route.get("/fetch2/:page/:search", (req, res) => {
+route.get("/fetch2/:page/:search", checkAuth, (req, res) => {
   let search = req.params.search;
   let perPage = 5;
   let page = parseInt(req.params.page) || 1;
@@ -587,7 +587,7 @@ route.get("/fetch2/:page/:search", (req, res) => {
   });
 });
 
-route.get("/view", (req, res) => {
+route.get("/view", checkAuth, (req, res) => {
   res.render("taskone/form2");
 });
 
@@ -628,7 +628,7 @@ route.post("/view", (req, res) => {
   });
 });
 
-route.get("/view/:page/:jsonData", (req, res) => {
+route.get("/view/:page/:jsonData", checkAuth, (req, res) => {
   console.log(`we are at pagination`);
   let jsonData = req.params.jsonData;
   let data = JSON.parse(jsonData);
@@ -664,7 +664,7 @@ route.get("/view/:page/:jsonData", (req, res) => {
 });
 
 //===========fetching by special character==============
-route.get("/sch", (req, res) => {
+route.get("/sch", checkAuth, (req, res) => {
   res.render("specialchar/home");
 });
 
@@ -765,7 +765,7 @@ route.post("/sch", (req, res) => {
 });
 
 // =====================generate form========
-route.get("/geneform", (req, res) => {
+route.get("/geneform", checkAuth, (req, res) => {
   res.render("generateform/home");
 });
 
@@ -789,7 +789,7 @@ route.post("/geneform", (req, res) => {
 
 // ===================form insert & update ===========
 
-route.get("/inu", (req, res) => {
+route.get("/inu", checkAuth, (req, res) => {
   res.render("forminu/home");
 });
 
@@ -1048,10 +1048,10 @@ route.post(
     });
   }
 );
-route.get("/alluser", (req, res) => {
+route.get("/alluser", checkAuth, (req, res) => {
   res.render("forminu/fetchuser");
 });
-route.get("/normalupdate/:id", async (req, res) => {
+route.get("/normalupdate/:id", checkAuth, async (req, res) => {
   let id = req.params.id;
   console.log(id);
 
@@ -1350,28 +1350,28 @@ route.post(
 
 // ====================ajax city & country===================
 
-route.get("/state", get_data);
-route.get("/cities", get_city);
+route.get("/state", checkAuth, get_data);
+route.get("/cities", checkAuth, get_city);
 
-route.get("/fetchcity", (req, res) => {
+route.get("/fetchcity", checkAuth, (req, res) => {
   res.render("fetchcity/home");
 });
 
 // ====================inu using ajax===================
 
-route.get("/users", get_user);
-route.get("/emp", get_emp);
-route.get("/edu", edu_det);
-route.get("/work", work_exp);
-route.get("/lan", lan);
-route.get("/tech", techno);
-route.get("/ref", ref);
-route.get("/pre", pre);
+route.get("/users", checkAuth, get_user);
+route.get("/emp", checkAuth, get_emp);
+route.get("/edu", checkAuth, edu_det);
+route.get("/work", checkAuth, work_exp);
+route.get("/lan", checkAuth, lan);
+route.get("/tech", checkAuth, techno);
+route.get("/ref", checkAuth, ref);
+route.get("/pre", checkAuth, pre);
 
-route.get("/inuajax", (req, res) => {
+route.get("/inuajax", checkAuth, (req, res) => {
   res.render("ajaxinup/home");
 });
-route.get("/update", (req, res) => {
+route.get("/update", checkAuth, (req, res) => {
   res.render("ajaxinup/fetchuser");
 });
 
@@ -1600,7 +1600,7 @@ route.post(
     });
   }
 );
-route.get("/update/:id", (req, res) => {
+route.get("/update/:id", checkAuth, (req, res) => {
   let id = req.params.id;
   res.render("ajaxinup/home", { id });
 });
@@ -1818,24 +1818,24 @@ route.post(
     res.json("data updated");
   }
 );
-route.get("/showupdate", (req, res) => {
+route.get("/showupdate", checkAuth, (req, res) => {
   res.send("Data is Succesfully Updated!!");
 });
 
 // ===========timestamp=================
 
-route.get("/timestamp", (req, res) => {
+route.get("/timestamp", checkAuth, (req, res) => {
   res.render("timestamp/home");
 });
 
 // ==========================================frames===============================
-route.get("/frame1", (req, res) => {
+route.get("/frame1", checkAuth, (req, res) => {
   res.render("frame1/f1");
 });
-route.get("/frame2", (req, res) => {
+route.get("/frame2", checkAuth, (req, res) => {
   res.render("frame2/f2");
 });
-route.get("/frame3", (req, res) => {
+route.get("/frame3", checkAuth, (req, res) => {
   res.render("frame3/f3");
 });
 module.exports = route;
