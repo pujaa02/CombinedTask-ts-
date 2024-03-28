@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ADD DELETE operation</title>
+    <style>
+      body {
+        background-color: bisque;
+      }
+      h3 {
+        text-align: center;
+        color: brown;
+        font-size: 25px;
+      }
+      table,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        margin: 5px 5px;
+      }
+
+      button {
+        margin: 5px 3px;
+        border-radius: 4px;
+        background-color: rgb(216, 60, 60);
+        padding: 5px 5px;
+        font-size: 25px;
+      }
+      tr:nth-child(even) > td:nth-child(odd) {
+        background-color: rgb(160, 157, 157);
+      }
+      tr:nth-child(odd) > td:nth-child(even) {
+        background-color: rgb(160, 157, 157);
+      }
+      tr:nth-child(odd) > td:nth-child(odd) {
+        background-color: lightgray;
+      }
+      tr:nth-child(even) > td:nth-child(even) {
+        background-color: lightgray;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h3>Puja Moravadiya</h3>
+    <h3>01 / 02 / 2024</h3>
+    <h3>24DEV046</h3>
+    <table id="tab" cellpadding="25">
+      <tr class="colad">
+        <td></td>
+        <td></td>
+      </tr>
+      <tr class="colad">
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+    <button onclick="addrow()">AddRow</button>
+    <button onclick="delrow()">DelRow</button>
+    <button onclick="addcol()">AddCol</button>
+    <button onclick="delcol()">DelCol</button>
+
+    <script type="text/Javascript">
+      function addrow(){
+          var table = document.getElementById("tab");
+          var colcount = table.rows[0].cells.length;
+          var rowcount = table.rows.length;
+
+          var row = table.insertRow(rowcount);
+          for(let i = 0; i < colcount;i++) {
+              let cell = row.insertCell(i);
+          }
+      }
+
+      function delrow() {
+          var table = document.getElementById("tab");
+          var colcount = table.rows[0].cells.length;
+          var rowcount = table.rows.length;
+          if(rowcount>2){
+            var row=table.deleteRow(rowcount-1);
+          for(var i=0; i<colcount; i++){
+              var cell = row.deleteCell(i);
+          }
+          }
+
+      }
+      function addcol(){
+          var rowcount= document.getElementById("tab").rows.length;
+          var colcount= document.getElementById("tab").rows[0].cells.length;
+          var table = document.getElementById("tab");
+
+          // console.log(rowcount);
+          // console.log(colcount);
+
+          for(var i=0; i<rowcount; i++){
+              var cell =table.rows[i].insertCell(colcount-1);
+          }
+      }
+      function delcol(){
+          var rowcount= document.getElementById("tab").rows.length;
+          var colcount= document.getElementById("tab").rows[0].cells.length;
+          var table = document.getElementById("tab");
+
+          if(colcount>2){
+          for(var i=0; i<rowcount; i++){
+              var cell=table.rows[i].deleteCell(colcount-1);
+          }
+          }
+      }
+    </script>
+  </body>
+</html>

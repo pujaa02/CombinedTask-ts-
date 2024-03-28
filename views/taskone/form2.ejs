@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      tr:hover {
+        background-color: #ddd;
+      }
+      th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: rgb(49, 126, 49);
+      }
+      .btns {
+        margin: 15px auto;
+      }
+      #form {
+        margin: 10px 10px;
+      }
+      #txtar {
+        padding: 10px;
+        width: 1000px;
+        height: 50px;
+        font-weight: bold;
+        font-size: 20px;
+      }
+      #div {
+        margin: 15px 20rem;
+      }
+      #gobtn {
+        margin: 10px 55rem;
+        padding: 10px 20px;
+        width: 85px;
+        border-radius: 10px;
+        border: none;
+        background-color: green;
+        font-weight: bold;
+        font-size: 25px;
+      }
+      #anchor {
+        text-decoration: none;
+        margin: 0 85rem;
+        color: white;
+        padding: 10px 20px;
+        width: 85px;
+        border-radius: 10px;
+        border: none;
+        background-color: green;
+        font-weight: bold;
+        font-size: 20px;
+      }
+      .txt {
+        margin: 5px 5px;
+        padding: 10px;
+        /* width: 1000px; */
+        height: 50px;
+        font-weight: bold;
+        font-size: 20px;
+      }
+      .sel {
+        margin: 10px 34rem;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: none;
+        background-color: bisque;
+        font-weight: bold;
+        font-size: 25px;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/view" method="post">
+      <div id="div">
+        <input name="fname" type="text" class="txt" placeholder="firstname" />
+        <input name="lname" type="text" class="txt" placeholder="lastname" />
+        <input name="email" type="text" class="txt" placeholder="Email" />
+        <input name="city" type="text" class="txt" placeholder="city" />
+        <input name="bg" type="text" class="txt" placeholder="Blood_Group" />
+        <select class="sel" name="opa">
+          <option value="and">AND</option>
+          <option value="or">OR</option>
+        </select>
+      </div>
+      <input id="gobtn" type="submit" value="Go" />
+    </form>
+  </body>
+</html>

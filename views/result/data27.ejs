@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rendring Mysql data</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+       
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      tr:hover {
+        background-color: #ddd;
+      }
+      th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+
+        background-color: rgb(49, 126, 49);
+      }
+      .td{
+        font-weight: bold;
+        background-color:  rgb(96, 167, 96);
+        border: none;
+      }
+      #back{
+        margin:2px 55rem;
+        text-decoration: none;
+        border:none;
+        padding: 2px 7px;
+        border-radius: 4px;
+        background-color:  rgb(49, 126, 49);
+        color: #000000;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Puja Moravadiya</h1>
+    
+    <table>
+        <tr>
+            <td class="td" colspan="8">Student_ID : <%=key1[0].id%></td>
+        </tr>
+        <tr>
+            <td class="td" colspan="8">First Name : <%=key1[0].firstname%></td>
+        </tr>
+        <tr>
+            <td class="td" colspan="8">Attendance(Out Of 90 Days) : <%=key1[0].TOTAL_PRESENT%></td>
+        </tr>
+        <tr>
+            <td class="td" colspan="8">Attendance Ratio : <%=key1[0].Percentage%>%</td>
+        </tr>
+      <tr>
+        <th rowspan="2">Subject Name</th>
+        <th colspan="2">Terminal</th>
+        <th colspan="2">Prelim</th>
+        <th colspan="2">Final</th>
+        <th rowspan="2">Total Mark</th>
+      </tr>
+      <tr>
+        <th>Theory(out of 50)</th>
+        <th>Practical(out of 20)</th>
+        <th>Theory(out of 50)</th>
+        <th>Practical(out of 20)</th>
+        <th>Theory(out of 70)</th>
+        <th>Practical(out of 30)</th>
+      </tr>
+      <% for(let i=0; i<key2.length; i++){%>
+      <tr>
+        <td><%=key7[i].sub_name%></td>
+        <td><%=key2[i].theory_obtain_mark%></td>
+        <td><%=key2[i].prac_total_mark%></td>
+        <td><%=key3[i].theory_obtain_mark%></td>
+        <td><%=key3[i].prac_total_mark%></td>
+        <td><%=key4[i].theory_obtain_mark%></td>
+        <td><%=key4[i].prac_total_mark%></td>
+        <td><%=key5[i].Alltotal%></td>
+      </tr>
+      <%} %>
+     
+     <tr>
+        <td class="td" colspan="8">Total Marks : 
+            <%=key6[0].Alltotal%></td>
+     </tr>
+    </table>
+
+    <a id="back" href="/result">Back</a>
+  </body>
+</html>

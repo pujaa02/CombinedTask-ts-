@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rendring Mysql data</title>
+    <style>
+        *{
+    box-sizing: border-box;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  tr:hover {
+    background-color: #ddd;
+  }
+  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(49, 126, 49);
+  }
+  .btns{
+    margin: 15px auto;
+  }
+#form{
+  margin: 10px 10px;
+}
+#txtar{
+  padding: 10px;
+  width: 1000px;
+  height: 50px;
+  font-weight: bold;
+  font-size: 20px;
+}
+#div{
+  margin: 15px 20rem;
+}
+#gobtn{
+  margin: 10px 55rem;
+  padding: 10px 20px;
+  width: 85px;
+  border-radius: 10px;
+  border: none;
+  background-color: red;
+  font-weight: bold;
+  font-size: 25px;
+}
+    </style>
+   
+  </head>
+  <body>
+    <%- include("form")%>
+    <table>
+      <tr>
+      <%for(let i=0; i<field.length; i++){%>
+      <th><%=field[i]["name"]%></th>
+      <%}%>
+    </tr>
+    <%users.forEach((user)=>{%>
+      <tr>
+           <%Object.keys(user).forEach(key=>{%>
+                <td><%= user[key]%></td>
+           <%})%>
+      </tr>
+    <%})%>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .div {
+        margin: 20px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="/" method="post">
+      <div class="div" id="one">
+        <input
+          type="datetime-local"
+          name="input"
+          id="input"
+          onkeydown="myFunction()"
+        />
+      </div>
+      <div id="two" class="div">
+        <label for="select">select time zone </label>
+        <select onChange="selectedtime()" id="select"></select>
+        <p id="demo"></p>
+      </div>
+    </form>
+  </body>
+  <script>
+    let curtime = document.getElementById("input").value;
+    let s1 = new Date(curtime).toLocaleDateString();
+    let s2 = new Date(curtime).toLocaleTimeString();
+
+    function myFunction() {
+      console.log("calling");
+      console.log(curtime);
+      document.getElementById("demo").innerHTML = s1 + " " + s2;
+    }
+    var aryIanaTimeZones = Intl.supportedValuesOf("timeZone");
+    // console.log(aryIanaTimeZones);
+    let select = document.getElementById("select");
+    let str = "";
+    aryIanaTimeZones.forEach((item) => {
+      str += `<option value="${item}">${item}</option>`;
+    });
+    select.innerHTML = str;
+
+    function selectedtime() {
+      var value = document.getElementById("select").value;
+      fetchtime(value);
+    }
+    function fetchtime(value) {
+      console.log(value);
+      let date = new Date(curtime);
+      console.log(date.toLocaleDateString());
+      console.log(date.toLocaleTimeString());
+      let strTime = date.toLocaleString("en-US", { timeZone: `${value}` });
+      console.log(value, strTime);
+      document.getElementById("demo").innerHTML = strTime;
+    }
+  </script>
+</html>

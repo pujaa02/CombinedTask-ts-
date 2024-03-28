@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <h1>hello</h1> -->
+    <select name="state" id="state" onchange="changecity()">
+      <option value="select state">select state</option>
+    </select>
+    <select name="city" id="city">
+      <option value="" style="visibility: none">select city</option>
+    </select>
+  </body>
+  <script>
+    //==============state==============
+    async function fetchingstate() {
+      const response = await fetch("http://localhost:9025/state");
+      const result = await response.json();
+      getstate(result);
+    }
+    function getstate(result) {
+      let str = "";
+      result.forEach((element) => {
+        str += `<option value="${element.id}" >${element.name} </option>`;
+      });
+      document.getElementById("state").innerHTML = str;
+    }
+    fetchingstate();
+    //=================city=============
+    async function fetchingcity(x) {
+      const response = await fetch("http://localhost:9025/cities");
+      const result = await response.json();
+      console.log(result);
+      getcity(result, x);
+    }
+    function getcity(result, x) {
+      console.log("value of x");
+      console.log(x);
+      let str = "";
+      result.forEach((element) => {
+        if (element.state_id == x) {
+          str += `<option value="${element.city}">${element.city}</option>`;
+        }
+      });
+      document.getElementById("city").innerHTML = str;
+    }
+    function changecity() {
+      var x = document.getElementById("state").value;
+      fetchingcity(x);
+      console.log(x);
+    }
+  </script>
+</html>

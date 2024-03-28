@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+    <style>
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        .col {
+            background-color: rgb(160, 157, 157);
+        }
+
+        .col2 {
+            background-color: lightgray;
+        }
+
+        td {
+            width: 280px;
+            height: 250px;
+        }
+
+        .inputs {
+            margin: 20px 20px 20px 20px;
+            font-size: 20px;
+
+        }
+
+        div {
+            width: 200px;
+            height: 100px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body onresize="resizing()">
+
+    <form action="">
+        <table border="1" class="center">
+            <tr>
+                <td class="col">
+                    <p class="inputs">click event</p>
+                    <input class="inputs" type="button" onclick="clickevent()" value="click me" />
+                </td>
+                <td class="col2">
+                    <p class="inputs">MouseOver event</p>
+                    <input class="inputs" id="MouseOver event" type="button" onmouseover="mouseoverevent()"
+                        value="MouseOver" />
+                </td>
+                <td class="col">
+                    <p class="inputs">Focus event</p>
+                    <input class="inputs" id="focus" type="text" onfocus="my_focus(this)"
+                        placeholder="focus this area" />
+                </td>
+                <td class="col2">
+                    <p class="inputs">On Change Event</p>
+                    <p class="inputs">Select Your Favourite Color :</p>
+                    <select class="inputs" id="change" onchange="changes()">
+                        <option value="pink">pink</option>
+                        <option value="Red">Red</option>
+                        <option value="Blue">Blue</option>
+                        <option value="Yellow">Yellow</option>
+                    </select>
+                    <p id="demo"></p>
+                </td>
+                <td class="col">
+                    <p class="inputs">On load Event</p>
+                    <!-- <img class="inputs" onload="alert('Image completely loaded')" alt="Logo" src="/img_videos/earth.jpg"
+                        style="height: 100px; width: 100px;"> -->
+                </td>
+
+            </tr>
+            <tr>
+                <td class="col2">
+                    <p class="inputs">on play event</p>
+                    <video class="inputs" controls onplay="alert('onplay event is Triggered..')" width="200"
+                        height="150">
+                        <source src="tom_and_jerry.mp4" type="video/mp4" alt="video">
+                        <!-- <source src="/media/movie.ogg" type="video/ogg"> -->
+                    </video>
+                    <p class="inputs" id="demo1"></p>
+                </td>
+                <td class="col">
+                    <p class="inputs"> Enter your name: </p>
+                    <input class="inputs" type="text" id="fname" onblur="alert('Focus lost')">
+                    <p class="inputs">When you leave the input field, a Alert function is triggered..</p>
+                </td>
+                <td class="col2">
+                    <p class="inputs">on can play event</p>
+                    <!-- <video class="inputs" controls oncanplay="alert('oncanplay event is Triggered..')" width="200"
+                        height="150"> -->
+                    <source src="tom_and_jerry.mp4" type="video/mp4" alt="video">
+                    <!-- <source src="/media/movie.ogg" type="video/ogg"> -->
+                    </video>
+                </td>
+                <td class="col">
+                    <p class="inputs">on copy event</p>
+                    <input class="inputs" type="text" oncopy="trytocopy()" value="copy me">
+                    <p id="cop" class="inputs"></p>
+                </td>
+                <td class="col2">
+                    <p class="inputs">on double click event</p>
+                    <p class="inputs" ondblclick="myFun()">Double-click on this.</p>
+
+                    <p class="inputs" id="show"></p>
+                </td>
+            </tr>
+            <tr>
+                <td class="col">
+                    <p class="inputs">on error event</p>
+                    <!-- <img class="inputs" src="img.gif" onerror="alert('The image could not be loaded.')"> -->
+                </td>
+                <td class="col2">
+                    <p class="inputs">on input event</p>
+                    <input class="inputs" type="text" id="txt" oninput="input_type()">
+                    <p id="demo3"></p>
+                </td>
+                <td class="col">
+                    <p class="inputs">on invalid event</p>
+                    <form action="" method="get">
+                        Name: <input type="text" oninvalid="alert('Please fill the form first!');" name="fname"
+                            required>
+                        <input type="submit" value="Submit">
+                    </form>
+                </td>
+                <td class="col2">
+                    <p class="inputs">on key Down event</p>
+                    <input class="inputs" type="text" onkeydown="downthekey()">
+                    <p id="demo4"></p>
+                </td>
+                <td class="col">
+                    <p class="inputs">on key press event</p>
+                    <input type="text" class="inputs" onkeypress="pressthekey()">
+                </td>
+            </tr>
+            <tr>
+                <td class="col2">
+                    <p class="inputs">on key up event</p>
+                    <p class="inputs">The function transforms the input field to upper case:</p>
+                    <input type="text" id="name" class="inputs" onkeyup="key_up()">
+                </td>
+                <td class="col">
+                    <p class="inputs">on mouse up and down event</p>
+                    <p id="pm1" onmousedown="mouseDown()" onmouseup="mouseUp()">
+                        The mouseDown() function change the text to upppercase.
+                        The mouseUp() function change the text to lowercase.
+                    </p>
+                </td>
+                <td class="col2">
+                    <p class="inputs">on mouse enter event</p>
+                    <img class="inputs" src="earth.jpg" onmouseenter="big(this)" onmouseleave="small(this)"
+                        width="32" height="32" alt="image name">
+
+                </td>
+                <td class="col">
+                    <p class="inputs">on mouse move event</p>
+                    <div class="inputs" onmousemove="movethemouse(event)" onmouseout="clr()"></div>
+                    <p id="p5"></p>
+                </td>
+                <td class="col2">
+                    <p class="inputs">on resize event</p>
+                    <p>Try to resize the browser window to display the windows height and width.</p>
+                    <p id="demo6"></p>
+                </td>
+            </tr>
+
+
+        </table>
+    </form>
+
+
+
+    <script type="text/Javascript">
+    function clickevent(){
+    alert("Click Event Triggered...");
+}
+function mouseoverevent(){
+    alert("Mouse Over event triggered...");
+}
+function my_focus(x){
+    // alert("focus event Triggered...");
+    x.style.background = "yellow";
+}
+function changes() {
+  var x = document.getElementById("change").value;
+  document.getElementById("demo").innerHTML = "Your Favourite Color is: " + x;
+}
+function play(){
+    console.log("play is triggered");
+        document.getElementById("demo1").innerHTML = "The video has started to play";
+    }
+    //  function blur() {
+    //     let x = document.getElementById("fname");
+    //     x.value = x.value.toUpperCase();
+    // }
+    function trytocopy(){
+        document.getElementById("cop").innerHTML = "You copied text!"
+    }
+    function myFun(){
+        document.getElementById("show").innerHTML += "You Click Two times!! ";
+}
+function input_type(){
+    let text = document.getElementById("txt").value;
+  document.getElementById("demo3").innerHTML = "You wrote: " + text;
+}
+function downthekey() {
+  document.getElementById("demo4").innerHTML = "You pressed a key inside the input field";
+}
+function pressthekey() {
+  alert("You pressed a key inside the input field");
+}
+function key_up() {
+  let x = document.getElementById("name");
+  x.value = x.value.toUpperCase();
+}
+function mouseDown() {
+    document.getElementById("pm1").style.color = "red";
+
+//   x.value = x.value.toUpperCase();
+}
+
+function mouseUp() {
+    document.getElementById("pm1").style.color = "blue";
+
+}
+function big(x) {
+    x.style.height = "64px";
+  x.style.width = "64px";
+ 
+}
+
+function small(x) {
+    x.style.height = "32px";
+  x.style.width = "32px";
+ 
+}
+function movethemouse(e) {
+  let x = e.clientX;
+  let y = e.clientY;
+  let coor = "Coordinates: (" + x + "," + y + ")";
+  document.getElementById("p5").innerHTML = coor;
+}
+
+function clr() {
+  document.getElementById("p5").innerHTML = "";
+}
+function resizing() {
+  let w = window.outerWidth;
+  let h = window.outerHeight;
+  let txt = "Window size: width=" + w + ", height=" + h;
+  document.getElementById("demo6").innerHTML = txt;
+}
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rendring Mysql data</title>
+    <link rel="stylesheet" href="css/style27.css" />
+  </head>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tr:hover {
+      background-color: #ddd;
+    }
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: rgb(49, 126, 49);
+    }
+    form {
+      margin: 15px 15px;
+    }
+    .clkbtn {
+      margin-left: 15px;
+      padding: 2px 10px;
+      background-color: red;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    .clkbtn:hover {
+      background-color: rgb(221, 77, 77);
+    }
+    .uprbtn {
+      padding: 2px 10px;
+      background-color: chocolate;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    .subbtn {
+      padding: 3px 10px;
+      background-color: rgb(16, 146, 16);
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .subbtn:hover {
+      background-color: dodgerblue;
+    }
+    .sel {
+      background-color: antiquewhite;
+      padding: 7px 10px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      /* font-size: 18px; */
+    }
+  </style>
+  <body>
+    <h1>Puja Moravadiya</h1>
+    <%- include('form27'); %>
+    <table>
+      <tr>
+        <th>
+          Student_ID
+          <button class="clkbtn" onclick="window.location.href='/data/id'">
+            &#8593;
+          </button>
+          <button class="clkbtn" onclick="window.location.href='/att/id'">
+            &#8595;
+          </button>
+        </th>
+        <th>
+          First Name
+          <button
+            class="clkbtn"
+            onclick="window.location.href='/data/firstname'"
+          >
+            &#8593;
+          </button>
+          <button
+            class="clkbtn"
+            onclick="window.location.href='/att/firstname'"
+          >
+            &#8595;
+          </button>
+        </th>
+        <th>
+          Year
+          <button class="clkbtn" onclick="window.location.href='/data/year'">
+            &#8593;
+          </button>
+          <button class="clkbtn" onclick="window.location.href='/att/year'">
+            &#8595;
+          </button>
+        </th>
+        <th>
+          Month
+          <button class="clkbtn" onclick="window.location.href='/data/month'">
+            &#8593;
+          </button>
+          <button class="clkbtn" onclick="window.location.href='/att/month'">
+            &#8595;
+          </button>
+        </th>
+        <th>
+          TOTAL_PRESENT
+          <button
+            class="clkbtn"
+            onclick="window.location.href='/data/TOTAL_PRESENT'"
+          >
+            &#8593;
+          </button>
+          <button
+            class="clkbtn"
+            onclick="window.location.href='/att/TOTAL_PRESENT'"
+          >
+            &#8595;
+          </button>
+        </th>
+        <th>
+          Percentage
+          <button
+            class="clkbtn"
+            onclick="window.location.href='/data/Percentage'"
+          >
+            &#8593;
+          </button>
+          <button
+            class="clkbtn"
+            onclick="window.location.href='/att/Percentage'"
+          >
+            &#8595;
+          </button>
+        </th>
+      </tr>
+      <% users.forEach((user)=>{%>
+      <tr>
+        <td><%=user.id%></td>
+        <td><%=user.firstname%></td>
+        <td><%=user.year%></td>
+        <td><%=user.month%></td>
+        <td><%=user.TOTAL_PRESENT%></td>
+        <td><%=user.Percentage%>%</td>
+      </tr>
+      <%}) %>
+    </table>
+  </body>
+</html>

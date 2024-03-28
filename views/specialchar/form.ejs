@@ -1,0 +1,42 @@
+<table align="center" style="width: 30%">
+    <tr>
+      <th>FirstName</th>
+      <th>LastName</th>
+      <th>Email</th>
+      <th>Number</th>
+      <th>City</th>
+      <th>Blood_Group</th>
+    </tr>
+    <tr>
+      <td>_</td>
+      <td>^</td>
+      <td>$</td>
+      <td>!</td>
+      <td>{</td>
+      <td>:</td>
+    </tr>
+  </table>
+  <form action="/sch" method="post" id="form">
+    <div id="div">
+      <label for="txtar">Enter Your String : </label>
+      <input name="query" type="text" id="txtar" required autofocus /> <br />
+    </div>
+    <input id="gobtn" type="submit" value="Go" />
+  </form>
+  
+  
+  <script>
+    document.getElementById("form").addEventListener("submit", function (event) {
+      var inputValue = document.getElementById("txtar").value;
+      localStorage.setItem("savedInput", inputValue);
+    });
+  
+    // Retrieve input value from localStorage on page load
+    window.addEventListener("load", function () {
+      var savedInput = localStorage.getItem("savedInput");
+      if (savedInput) {
+        document.getElementById("txtar").value = savedInput;
+      }
+    });
+  </script>
+  

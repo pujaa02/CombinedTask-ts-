@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% let total_record=200;
+ let pagesize=20;
+ let last=total_record/pagesize;
+ %>
+
+    <div class="btns">
+      <button class="uprbtn" name="first" onclick="window.location.href='/att/?page=<%=1%>'"<%= page==1 ? 'disabled':''%> >
+        <<
+      </button>
+      <button class="uprbtn"
+        name="pre"
+        onclick="window.location.href='/att/?page=<%=Number(page)-1%>'"<%= page==1 ? 'disabled':'' %>>
+        <
+      </button>
+      <span class="uprbtn" id="span"><%=page%></span>
+      <button class="uprbtn"
+        name="next"
+        onclick="window.location.href='/att/?page=<%=Number(page)+1%>'"<%= page==10 ? 'disabled':''%>
+      >
+        >
+      </button>
+      <button class="uprbtn" name="last" onclick="window.location.href='/att/?page=<%=last%>'" <%= page==10 ? 'disabled':'' %>
+        >>>
+      </button>
+      
+    </div>
+    <form action="/att" id="form">
+      <select class="sel" name="months" id="months">
+        <option value="12" >December</option>
+        <option value="1">January</option>
+        <option value="2">February</option>
+      </select>
+      <select class="sel" name="year" id="year">
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+      </select>
+      <input class="subbtn" type="submit" value="Submit" />
+    </form>
+  </body>
+</html>

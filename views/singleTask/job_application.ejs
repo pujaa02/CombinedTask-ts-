@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job_Application_4</title>
+    <style>
+      .container {
+        /* min-height: 100vh; */
+        display: block;
+        align-items: center;
+      }
+
+      form {
+        width: 50%;
+        margin: 0 auto;
+      }
+      p {
+        color: red;
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <form
+      name="myForm"
+      action="/"
+      method="post"
+      onsubmit="return validateForm()"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h1>Job Application</h1>
+          </div>
+        </div>
+      </div>
+      <fieldset class="form-control" style="width: 650px">
+        <legend><b>Basic Details</b></legend>
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <label for="fname">First name:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="fname"
+                name="fname"
+                placeholder="Enter your first Name...."
+                tabindex="1"
+                autofocus
+              />
+              <p id="p1" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="lname">Last name:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="lname"
+                name="lname"
+                placeholder="Enter your Last Name...."
+                tabindex="2"
+              />
+              <p id="p2" class="error"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="designation">Designation:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="designation"
+                name="designation"
+                tabindex="3"
+              />
+              <p id="p3" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="dob" class="form-label">Date of Birth :</label>
+              <input
+                type="text"
+                class="form-control"
+                id="dob"
+                name="dob"
+                rows="1"
+                tabindex="4"
+              />
+              <p id="p4" class="error"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="exampleFormControlInput1" class="form-label"
+                >Email address</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="name@abc.com"
+                autocomplete="email"
+                tabindex="5"
+              />
+              <p id="p5" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="phone_no">Phone Number:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="number"
+                name="number"
+                tabindex="6"
+              />
+              <p id="p6" class="error"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="city" class="form-label">City :</label>
+              <input
+                class="form-control"
+                id="city"
+                name="city"
+                list="cities"
+                rows="1"
+                placeholder="Enter city Here"
+                class="col-sm-6 custom-select custom-select-sm"
+                tabindex="7"
+              />
+              <p id="p7" class="error"></p>
+              <datalist id="cities">
+                <option value="surat">surat</option>
+                <option value="ahmedabad">ahmedabad</option>
+                <option value="vadodara">vadodara</option>
+                <option value="mehasana">mehasana</option>
+                <option value="rajkot">rajkot</option>
+                <option value="junagadh">junagadh</option>
+                <option value="somnath">somnath</option>
+              </datalist>
+            </div>
+            <div class="col">
+              <label for="zip_code" class="form-label">Zip code :</label>
+              <input
+                type="text"
+                class="form-control"
+                id="zipcode"
+                name="zipcode"
+                rows="1"
+                tabindex="8"
+              />
+              <p id="p8" class="error"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Address 1 :</label
+              >
+              <textarea
+                class="form-control"
+                id="add1"
+                name="add1"
+                rows="1"
+                tabindex="9"
+              ></textarea>
+              <p id="p9" class="error"></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Address 2 :</label
+              >
+              <textarea
+                class="form-control"
+                id="add2"
+                name="add2"
+                rows="1"
+                tabindex="10"
+              ></textarea>
+              <p id="p10" class="error"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="state" class="form-label">State :</label>
+              <select class="custom-select" id="state" name="state">
+                <option value="1">Gujarat</option>
+                <option value="2">Gua</option>
+                <option value="3">Haryana</option>
+                <option value="3">Bihar</option>
+              </select>
+            </div>
+            <div class="col">
+              <label for="rel_status" class="form-label"
+                >Relationship Status :</label
+              >
+              <select class="custom-select" id="relstatus" name="relstatus">
+                <option value="1" name="relstatus">Married</option>
+                <option value="2" name="relstatus">Unmarried</option>
+                <option value="3" name="relstatus">Divorced</option>
+                <option value="3" name="relstatus">Widow</option>
+              </select>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col">
+              <label for="Gender" class="form-label" id="gender" name="gender"
+                >Gender :</label
+              >
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="inlineRadio1"
+                  value="option1"
+                />
+                <label class="form-check-label" for="inlineRadio1">Male</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="inlineRadio2"
+                  value="option2"
+                />
+                <label class="form-check-label" for="inlineRadio2"
+                  >Female</label
+                >
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="inlineRadio3"
+                  value="option3"
+                />
+                <label class="form-check-label" for="inlineRadio3">Other</label>
+              </div>
+              <p id="p13"></p>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <br /><br />
+
+      <!-- ========fieldset 2============ -->
+      <fieldset class="form-control" style="width: 850px">
+        <legend><b>Education_details</b></legend>
+        <div class="container">
+          <h5>SSC result</h5>
+          <div class="row">
+            <div class="col">
+              <label for="board_name">Name of Board</label>
+              <input
+                type="text"
+                class="form-control"
+                id="board1"
+                value="gseb"
+                name="board1"
+              />
+              <p id="p14" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="passing_year">Passing year</label>
+              <input type="text" class="form-control" id="py1" name="py1" />
+              <p id="p15" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="pecentage">Percentage</label>
+              <input
+                type="text"
+                class="form-control"
+                id="pecentage1"
+                name="pecentage1"
+              />
+              <p id="p16" class="error"></p>
+            </div>
+          </div>
+          <hr />
+
+          <h5>HSC result</h5>
+          <div class="row">
+            <div class="col">
+              <label for="board_name">Name of Board</label>
+              <input
+                type="text"
+                class="form-control"
+                id="board2"
+                value="gseb"
+                name="board2"
+              />
+              <p id="p17" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="passing_year">Passing year</label>
+              <input type="text" class="form-control" id="py2" name="py2" />
+              <p id="p18" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="pecentage">Percentage</label>
+              <input
+                type="text"
+                class="form-control"
+                id="pecentage2"
+                name="pecentage2"
+              />
+              <p id="p19" class="error"></p>
+            </div>
+          </div>
+          <hr />
+
+          <h5>Bachelor degree</h5>
+          <div class="row">
+            <div class="col">
+              <label for="course_name">Cource Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="course1"
+                name="course1"
+                name="course_name"
+              />
+              <p id="p20" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="University">University</label>
+              <input
+                type="text"
+                class="form-control"
+                id="university1"
+                name="university1"
+              />
+              <p id="p21" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="passing_year">Passing year</label>
+              <input type="text" class="form-control" name="py11" id="py11" />
+              <p id="p22" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="pecentage">Percentage</label>
+              <input
+                type="text"
+                class="form-control"
+                id="pecentage11"
+                name="pecentage11"
+              />
+              <p id="p23" class="error"></p>
+            </div>
+          </div>
+          <hr />
+
+          <h5>Master degree</h5>
+          <div class="row">
+            <div class="col">
+              <label for="course_name">Cource Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="course2"
+                name="course2"
+              />
+              <p id="p24" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="University">University</label>
+              <input
+                type="text"
+                class="form-control"
+                id="university2"
+                name="university2"
+              />
+              <p id="p25" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="passing_year">Passing year</label>
+              <input type="text" class="form-control" id="py22" name="py22" />
+              <p id="p26" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="pecentage">Percentage</label>
+              <input
+                type="text"
+                class="form-control"
+                id="pecentage22"
+                name="pecentage22"
+              />
+              <p id="p27" class="error"></p>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <br />
+      <br />
+
+      <!-- section 3 -->
+
+      <fieldset class="form-control" style="width: 900px">
+        <legend><b>Work Experience</b></legend>
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <label for="company_name">Company name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="companyname1"
+                name="companyname1"
+              />
+              <p id="p28" class="workerr1"></p>
+            </div>
+            <div class="col">
+              <label for="designation">Designation</label>
+              <input
+                type="text"
+                class="form-control"
+                id="designation1"
+                name="designation1"
+              />
+              <p id="p29" class="workerr1"></p>
+            </div>
+            <div class="col">
+              <label for="date">From</label>
+              <input
+                type="date"
+                class="form-control"
+                id="date11"
+                name="date11"
+              />
+              <p id="p30" class="workerr1"></p>
+            </div>
+            <div class="col">
+              <label for="date">To</label>
+              <input
+                type="date"
+                class="form-control"
+                id="date12"
+                name="date12"
+              />
+              <p id="p31" class="workerr1"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="company_name">Company name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="companyname2"
+                name="companyname2"
+              />
+              <p id="p32" class="workerr2"></p>
+            </div>
+            <div class="col">
+              <label for="designation">Designation</label>
+              <input
+                type="text"
+                class="form-control"
+                id="designation2"
+                name="designation2"
+              />
+              <p id="p33" class="workerr2"></p>
+            </div>
+            <div class="col">
+              <label for="date">From</label>
+              <input
+                type="date"
+                class="form-control"
+                id="date21"
+                name="date21"
+              />
+              <p id="p34" class="workerr2"></p>
+            </div>
+            <div class="col">
+              <label for="date">To</label>
+              <input
+                type="date"
+                class="form-control"
+                id="date22"
+                name="date22"
+              />
+              <p id="p35" class="workerr2"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="company_name">Company name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="companyname3"
+                name="companyname3"
+              />
+              <p id="p36" class="workerr3"></p>
+            </div>
+            <div class="col">
+              <label for="designation">Designation</label>
+              <input
+                type="text"
+                class="form-control"
+                id="designation3"
+                name="designation3"
+              />
+              <p id="p37" class="workerr3"></p>
+            </div>
+            <div class="col">
+              <label for="date">From</label>
+              <input
+                type="date"
+                class="form-control"
+                id="date31"
+                name="date31"
+              />
+              <p id="p38" class="workerr3"></p>
+            </div>
+            <div class="col">
+              <label for="date">To</label>
+              <input
+                type="date"
+                class="form-control"
+                id="date32"
+                name="date32"
+              />
+              <p id="p39" class="workerr3"></p>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <br />
+      <br />
+      <table>
+        <tr>
+          <td>
+            <fieldset class="form-control" style="width: 500px">
+              <legend><b>Language Known</b></legend>
+
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Hindi
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        read
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        write
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Speak
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        English
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        read
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        write
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Speak
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Gujarati
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        read
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        write
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Speak
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </td>
+          <td>
+            <fieldset class="form-control" style="width: 500px">
+              <legend><b>Technologies you know</b></legend>
+
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Php
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Beginner
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Mideator
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Expert
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Mysql
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Beginner
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Mideator
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Expert
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        laravel
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Beginner
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Mideator
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Expert
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Oracle
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Beginner
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Mideator
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Expert
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </td>
+        </tr>
+      </table>
+
+      <br />
+      <br />
+
+      <fieldset class="form-control" style="width: 900px">
+        <legend><b>Reference Contact</b></legend>
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <label for="name"> Name</label>
+              <input type="text" class="form-control" id="name" name="name" />
+            </div>
+            <div class="col">
+              <label for="mobile_no">Contact Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="mobile_no"
+                name="mobile_no"
+              />
+            </div>
+            <div class="col">
+              <label for="rel">Relation</label>
+              <input type="text" class="form-control" id="rel" name="rel" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="name"> Name</label>
+              <input type="text" class="form-control" id="name" name="name" />
+            </div>
+            <div class="col">
+              <label for="mobile_no">Contact Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="mobile_no"
+                name="mobile_no"
+              />
+            </div>
+            <div class="col">
+              <label for="rel">Relation</label>
+              <input type="text" class="form-control" id="rel" name="rel" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="name"> Name</label>
+              <input type="text" class="form-control" id="name" name="name" />
+            </div>
+            <div class="col">
+              <label for="mobile_no">Contact Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="mobile_no"
+                name="mobile_no"
+              />
+            </div>
+            <div class="col">
+              <label for="rel">Relation</label>
+              <input type="text" class="form-control" id="rel" name="rel" />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-control" style="width: 850px">
+        <legend><b>Preferences</b></legend>
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <label for="location" class="form-label"
+                >Preferred Location :</label
+              >
+              <select class="custom-select" id="location">
+                <option selected>Choose...</option>
+                <option value="1">Mumbai</option>
+                <option value="2">Ahmedabad</option>
+                <option value="3">Surat</option>
+                <option value="3">Rajkot</option>
+              </select>
+            </div>
+
+            <div class="col">
+              <label for="Notice period">Notice period</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Notice period"
+                name="Notice period"
+              />
+
+              <label for="Expected CTC">Expected CTC</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Expected CTC"
+                name="Expected CTC"
+              />
+
+              <label for="Current CTC">Current CTC</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Current CTC"
+                name="Current CTC"
+              />
+            </div>
+
+            <div class="col">
+              <label for="department" class="form-label">Department</label>
+              <select class="custom-select" id="department">
+                <option selected>Choose...</option>
+                <option value="1">Development</option>
+                <option value="2">Design</option>
+                <option value="3">Marketing</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <br />
+      <br />
+      <input
+        type="submit"
+        class="btn btn-danger"
+        name="submit"
+        id="submit"
+        value="Submit"
+      />
+      <input type="reset" class="btn btn-danger" value="Reset" />
+      <br />
+      <br />
+    </form>
+
+    <script type="text/javascript">
+      $(document).on("keypress", "input,select", function (e) {
+        if (e.which == 13) {
+          e.preventDefault();
+          var $next = $("[tabIndex=" + (+this.tabIndex + 1) + "]");
+          console.log($next.length);
+          if (!$next.length) {
+            $next = $("[tabIndex=1]");
+          }
+          $next.focus().click();
+        }
+      });
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>

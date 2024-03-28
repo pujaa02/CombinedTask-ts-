@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bubble_sort</title>
+  </head>
+  <body>
+    <h1>Sorting</h1>
+    <p>Before Sorting------</p>
+    <p id="name"></p>
+    <p>After Sorting-------</p>
+    <p id="name2"></p>
+
+    <script type="text/javascript">
+      // var arr = [5, 4, 9, 8];
+      var arr = ["puja", "maya", "khushi", "aayushi"];
+
+      //before swapped
+
+      for (var x = 0; x < arr.length; x++) {
+        console.log(arr[x]);
+        document.getElementById("name").innerHTML += arr[x] + " ";
+      }
+
+      for (var i = 0; i < arr.length; i++) {
+        //  let x=arr[i];
+        for (var j = i + 1; j < arr.length; j++) {
+          if (arr[i] > arr[j]) {
+            var temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+          }
+        }
+      }
+
+      // after swapped
+      console.log("Swapping......");
+      for (var x = 0; x < arr.length; x++) {
+        console.log(arr[x]);
+        document.getElementById("name2").innerHTML += arr[x] + " ";
+      }
+    </script>
+  </body>
+</html>

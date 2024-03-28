@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rendring Mysql data</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      tr:hover {
+        background-color: #ddd;
+      }
+      th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+
+        background-color: rgb(49, 126, 49);
+      }
+      #anch{
+        text-decoration: none;
+        border:none;
+        padding: 2px 7px;
+        border-radius: 4px;
+        background-color:  rgb(49, 126, 49);
+        color: #000000;
+        font-weight: bold;
+      }
+      #anch:hover{
+        background-color: rgb(243, 52, 52);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Puja Moravadiya</h1>
+    <table>
+      <tr>
+        <th rowspan="3">Student_ID</th>
+        <th rowspan="3">First Name</th>
+        <th rowspan="3">Attendance(Out Of 90 Days)</th>
+        <th rowspan="3">Attendance Ratio</th>
+        <th colspan="6">Exam</th>
+        <th rowspan="3">Total Marks</th>
+        <th rowspan="3">More Detailed</th>
+      </tr>
+      <tr>
+        <th colspan="2">Terminal</th>
+        <th colspan="2">Prelim</th>
+        <th colspan="2">Final</th>
+      </tr>
+      <tr>
+        <th>Theory(out of 300)</th>
+        <th>Practical(out of 120)</th>
+        <th>Theory(out of 300)</th>
+        <th>Practical(out of 120)</th>
+        <th>Theory(out of 420)</th>
+        <th>Practical(out of 180)</th>
+      </tr>
+      <% for(let i=0; i<users.length; i++){%>
+      <tr>
+        <td><%=users[i].id%></td>
+        <td><%=users[i].firstname%></td>
+        <td><%=user5[i].TOTAL_PRESENT%></td>
+        <td><%=user5[i].Percentage%>%</td>
+        <td><%=users[i].Theory%></td>
+        <td><%=users[i].Practical%></td>
+        <td><%=user2[i].Th2%></td>
+        <td><%=user2[i].Prac2%></td>
+        <td><%=user3[i].Th3%></td>
+        <td><%=user3[i].Prac3%></td>
+        <td><%=user4[i].Alltotal%></td>
+        <td><a id="anch" href="/datares/<%=users[i].id%>">View</a></td>
+      </tr>
+      <%} %>
+    </table>
+  </body>
+</html>

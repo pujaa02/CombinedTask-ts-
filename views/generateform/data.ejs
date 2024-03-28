@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/stylegenerate.css" />
+  </head>
+  <body>
+    <%- include("form") %>
+    <form id="form">
+
+        <% if(type=="text") {%>
+        <label for=""><%=search%> : </label>
+        <input type="<%=type%>" name="<%=search%>"/>
+        <% }%>
+
+
+      <% if(type=="radio" ||
+      type=="checkbox") {%>
+
+        <label for=""><%=search%> : </label>
+         
+       <% for(let i=0; i<users.length; i++){ %>
+               <input type="<%=type%>" name="<%=search%>"/><%=users[i].op_name%>
+       <% }%>
+     <%}%> 
+      
+     <% if(type=="select" ) {%>
+        <label for=""><%=search%> : </label>
+        <select name="<%=search%>" id="">
+        <% for(let i=0; i<users.length; i++){ %>
+                <option value="<%=users[i].op_name%>"><%=users[i].op_name%></option>
+                <% }%>
+                </select>
+      <%}%>
+
+    </form>
+  </body>
+</html>

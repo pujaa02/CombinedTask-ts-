@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <h1>Welcome to Update Password Page</h1>
+    <p id="err"></p>
+    <a id="activate" style="display: none"></a>
+    <p id="timer"></p>
+  </body>
+  <script>
+    let activate = document.getElementById("activate");
+    function timer() {
+      var sec = 10;
+      var timer = setInterval(function () {
+        document.getElementById("timer").innerHTML = "00:" + sec;
+        sec--;
+        if (sec < 0) {
+          clearInterval(timer);
+          activate.style.display = "none";
+        }
+      }, 1000);
+    }
+    timer();
+    document.getElementById("err").innerHTML =
+      "to update your password copy the url and go to this url : ";
+    activate.style.display = "block";
+    var response;
+    response = fetch(`/redirect/:mail`);
+    var result2 = response.json();
+    console.log(result2);
+  </script>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rendring Mysql data</title>
+    <link rel="stylesheet" href="css/style26.css" />
+  </head>
+  <body>
+    <%- include('form26'); %>
+    <table>
+      <tr>
+        <th><a href="/data?field=id">Student_ID</a></th>
+        <th><a href="/data?field=firstname">First Name</a></th>
+        <th><a href="/data?field=middlename">Middle Name</a></th>
+        <th><a href="/data?field=lastname">Last Name</a></th>
+        <th><a href="/data?field=date_of_birth">Date_of_Birth</a></th>
+        <th><a href="/data?field=mobile_number">Mobile Number</a></th>
+        <th><a href="/data?field=email">Email</a></th>
+        <th><a href="/data?field=address">Address</a></th>
+        <th><a href="/data?field=city">City</a></th>
+        <th><a href="/data?field=state">State</a></th>
+        <th><a href="/data?field=country">Country</a></th>
+        <th><a href="/data?field=zipcode">ZipCode</a></th>
+        <th><a href="/data?field=blood_group">Blood_Group</a></th>
+      </tr>
+      <%users.forEach((user)=>{%>
+      <tr>
+        <td><%= user.id%></td>
+        <td><%= user.firstname%></td>
+        <td><%= user.middlename%></td>
+        <td><%= user.lastname%></td>
+        <td><%= user.date_of_birth%></td>
+        <td><%= user.mobile_number%></td>
+        <td><%= user.email%></td>
+        <td><%= user.address%></td>
+        <td><%= user.city%></td>
+        <td><%= user.state%></td>
+        <td><%= user.country%></td>
+        <td><%= user.zipcode%></td>
+        <td><%= user.blood_group%></td>
+      </tr>
+      <%})%>
+    </table>
+  </body>
+</html>

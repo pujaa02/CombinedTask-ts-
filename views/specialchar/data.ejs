@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/stylechar.css" />
+    <title>data</title>
+  </head>
+  <body>
+    <%- include("form") %>
+    <table>
+      <tr>
+        <th>Student_ID</th>
+        <th>First Name</th>
+        <th>Middle Name</th>
+        <th>Last Name</th>
+        <th>Date_of_Birth</th>
+        <th>Mobile Number</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+        <th>ZipCode</th>
+        <th>Blood_Group</th>
+      </tr>
+
+      <%users.forEach((user)=>{%>
+      <tr>
+        <%Object.keys(user).forEach(key=>{%>
+        <td><%=user[key]%></td>
+        <%})%>
+      </tr>
+      <%})%>
+    </table>
+  </body>
+</html>

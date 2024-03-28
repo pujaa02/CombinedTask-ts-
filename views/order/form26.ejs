@@ -1,0 +1,28 @@
+<% let total_record=100000;
+ let pagesize=200;
+ let last=total_record/pagesize;
+ %>
+
+    <div class="btns">
+      <button name="first" onclick="window.location.href='/data?page=<%=1%>'"<%= page==1 ? 'disabled':''%> >
+        <<
+      </button>
+      <button
+        name="pre"
+        onclick="window.location.href='/data?page=<%=Number(page)-1%>'"<%= page==1 ? 'disabled':'' %>>
+        <
+      </button>
+      <span id="span"><%=page%></span>
+      <button
+        name="next"
+        onclick="window.location.href='/data?page=<%=Number(page)+1%>'"<%= page==500 ? 'disabled':''%>
+      >
+        >
+      </button>
+      <button name="last" onclick="window.location.href='/data?page=<%=last%>'" <%= page==500 ? 'disabled':'' %>
+        >>>
+      </button>
+    </div>
+
+   
+ 

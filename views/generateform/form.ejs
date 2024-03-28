@@ -1,0 +1,30 @@
+<form action="/geneform" method="post" id="form">
+    <div id="div">
+      <label for="txtar">Enter Name : </label>
+      <input name="query" type="text" id="txtar" required autofocus /> <br />
+      <br />
+      <label for="txtar">Enter Type : </label>
+      <input name="type" type="text" id="txtar2" required autofocus /> <br />
+    </div>
+    <input id="gobtn" type="submit" value="Go" />
+  </form>
+  
+  <script>
+    document.getElementById("form").addEventListener("submit", function (event) {
+      var inputValue = document.getElementById("txtar").value;
+      localStorage.setItem("savedInput", inputValue);
+      var inputValue2 = document.getElementById("txtar2").value;
+      localStorage.setItem("savedInput2", inputValue2);
+    });
+  
+    // Retrieve input value from localStorage on page load
+    window.addEventListener("load", function () {
+      var savedInput = localStorage.getItem("savedInput");
+      var savedInput2 = localStorage.getItem("savedInput2");
+      if (savedInput) {
+        document.getElementById("txtar").value = savedInput;
+        document.getElementById("txtar2").value = savedInput2;
+      }
+    });
+  </script>
+  
