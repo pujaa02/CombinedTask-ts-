@@ -8,7 +8,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/img_videos"));
 
-let port = process.env.PORT || 5059;
+let port = process.env.PORT || 5058;
 
 app.listen(port, (err) => {
   if (err) {
