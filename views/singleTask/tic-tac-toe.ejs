@@ -4,67 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TIc-Tac-Toe</title>
-    <!-- <link rel="stylesheet" href="../public/css/tic-tac-toe.css" /> -->
+    <link rel="stylesheet" href="/css/tic-tac-toe.css" />
   </head>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      margin: 5px;
-      background-color: #deb887;
-      text-align: center;
-    }
-    .hide {
-      display: none;
-    }
-    #head {
-      color: #b109a8ee;
-      text-align: center;
-      margin-top: 30px;
-    }
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 60vh;
-    }
-    .boxes {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      width: 400px;
-      height: 350px;
-      gap: 0.5vmin;
-    }
-    .box {
-      width: 120px;
-      height: 130px;
-      border: none;
-      border-radius: 0.5rem;
-      background-color: azure;
-      color: #a52a2a;
-      font-size: 40px;
-      /* gap: 0.5rem; */
-    }
-    .button {
-      font-size: 20px;
-      width: 150px;
-      padding: 10px;
-      background-color: #a52a2a;
-    }
 
-    .msg-container {
-      margin: 10px;
-    }
-    .msg {
-      margin-bottom: 20px;
-      font-size: 35px;
-      color: crimson;
-    }
-  </style>
   <body>
     <h3 class="h3">Emp_Name : Puja Moravadiya</h3>
     <h3 class="h3">Date: 01/02/2024</h3>
@@ -94,91 +36,6 @@
       <button class="button" id="reset-btn">Reset</button>
     </main>
 
-    <!-- <script src="../public/js/tictactoe.js"></script> -->
-    <script>
-      let boxes = document.querySelectorAll(".box");
-      let newbtn = document.querySelector("#new-btn");
-      let resetbtn = document.querySelector("#reset-btn");
-      let msgContainer = document.querySelector(".msg-container");
-      let msg = document.querySelector(".msg");
-
-      var player1 = true;
-      var count = 0;
-
-      var winPatterns = [
-        [0, 1, 2],
-        [0, 3, 6],
-        [0, 4, 8],
-        [1, 4, 7],
-        [2, 5, 8],
-        [2, 4, 6],
-        [3, 4, 5],
-        [6, 7, 8],
-      ];
-
-      boxes.forEach((box) => {
-        box.addEventListener("click", () => {
-          if (player1) {
-            box.innerHTML = "O";
-            player1 = false;
-          } else {
-            box.innerHTML = "X";
-            player1 = true;
-          }
-          box.disabled = true;
-          count++;
-          let iswin = checkwinner();
-          if (count == 9 && !iswin) {
-            gamedrawn();
-          }
-        });
-      });
-      const gamedrawn = () => {
-        msg.innerText = `Game Drawn`;
-        msgContainer.classList.remove("hide");
-        disabledbox();
-        // restart();
-      };
-      const checkwinner = () => {
-        for (pattern of winPatterns) {
-          // console.log(pattern);
-          var value1 = boxes[pattern[0]].innerText;
-          var value2 = boxes[pattern[1]].innerText;
-          var value3 = boxes[pattern[2]].innerText;
-
-          if (value1 != "" && value2 != "" && value3 != "") {
-            if (value1 === value2 && value2 === value3 && value3 === value1) {
-              showWinner(value1);
-            }
-          }
-        }
-      };
-      const disabledbox = () => {
-        for (let box of boxes) {
-          box.disabled = true;
-        }
-      };
-      const enabledbox = () => {
-        for (let box of boxes) {
-          box.disabled = false;
-          box.innerHTML = "";
-        }
-        msgContainer.classList.add("hide");
-      };
-      const showWinner = (winner) => {
-        console.log("winner");
-        msg.innerText = `Congratulation Winner is : ${winner}`;
-        msgContainer.classList.remove("hide");
-        disabledbox();
-      };
-
-      const restart = () => {
-        count = 0;
-        enabledbox();
-      };
-
-      newbtn.addEventListener("click", restart);
-      resetbtn.addEventListener("click", restart);
-    </script>
+    <script src="/js/tictactoe.js"></script>
   </body>
 </html>
