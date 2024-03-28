@@ -199,7 +199,7 @@ route.post("/loginpage", async (req, res) => {
         token = jwt.sign(
           { email: result[0].email },
           process.env.JWT_SECRET_KEY,
-          { expiresIn: "1h" }
+          { expiresIn: "2s" }
         );
       } else {
         console.log("password is wrong");
