@@ -489,8 +489,12 @@ route.post("/fetch", async function (req, res) {
     // console.log("else if");
     let q = `${search}`;
     con.query(q, [offset, perPage], (err, result, field) => {
-      if (err) throw err;
-      res.render("nolimit", { users: result, field: field });
+      if (err) {
+        res.render("taskzero/home2", { error: err });
+        // res.json(err);
+      } else {
+        res.render("taskzero/nolimit", { users: result, field: field });
+      }
     });
   } else {
     let str = search;
@@ -500,20 +504,25 @@ route.post("/fetch", async function (req, res) {
     // console.log("query", q);
     // console.log("str", str);
     con.query(q2, (err, ans) => {
-      if (err) throw err;
-      con.query(q, [offset, perPage], (err, result, field) => {
-        if (err) throw err;
-        // console.log(result.length);
-        // console.log(field.length);
-        // console.log(field[0]["name"]);
-        res.render("taskzero/data", {
-          users: result,
-          field: field,
-          page,
-          search,
-          len: ans,
+      if (err) {
+        res.render("taskzero/home2", { error: err });
+        // res.json(err);
+      } else {
+        con.query(q, [offset, perPage], (err, result, field) => {
+          if (err) {
+            res.render("home2", { error: err });
+            // res.json(err);
+          } else {
+            res.render("taskzero/data", {
+              users: result,
+              field: field,
+              page,
+              search,
+              len: ans,
+            });
+          }
         });
-      });
+      }
     });
   }
 });
