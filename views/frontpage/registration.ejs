@@ -189,7 +189,7 @@
       if (check) {
         console.log("checked");
         const checkdata = await fetch(
-          `http://localhost:5065/getData?email=${email.value}`
+          `/getData?email=${email.value}`
         );
         const result = await checkdata.json();
         console.log(result.length);

@@ -1791,7 +1791,7 @@
 
       console.log("id", id);
       async function fetchid() {
-        const emp = await fetch("http://localhost:5065/emp");
+        const emp = await fetch("/emp");
         const emp_result = await emp.json();
         console.log("emp", emp_result);
         let res1 = [];
@@ -1805,32 +1805,32 @@
         // console.log(emp_result[id - 1]);
         // console.log("res1", res1);
 
-        const edu = await fetch("http://localhost:5065/edu");
+        const edu = await fetch("/edu");
         const edu_result = await edu.json();
         let res2 = edu_result;
         console.log(res2);
 
-        const work = await fetch("http://localhost:5065/work");
+        const work = await fetch("/work");
         const work_result = await work.json();
         let res3 = work_result;
         console.log(res3);
 
-        const lan = await fetch("http://localhost:5065/lan");
+        const lan = await fetch("/lan");
         const lan_result = await lan.json();
         let res4 = lan_result;
         console.log(res4);
 
-        const techno = await fetch("http://localhost:5065/tech");
+        const techno = await fetch("/tech");
         const techno_result = await techno.json();
         let res5 = techno_result;
         console.log(res5);
 
-        const ref = await fetch("http://localhost:5065/ref");
+        const ref = await fetch("/ref");
         const ref_result = await ref.json();
         let res6 = ref_result;
         console.log(res6);
 
-        const pre = await fetch("http://localhost:5065/pre");
+        const pre = await fetch("/pre");
         const pre_result = await pre.json();
         let res7 = [];
         pre_result.forEach((el) => {
