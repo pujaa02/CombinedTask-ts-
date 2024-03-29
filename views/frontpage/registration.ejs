@@ -189,7 +189,7 @@
       if (check) {
         console.log("checked");
         const checkdata = await fetch(
-          `http://localhost:5058/getData?email=${email.value}`
+          `http://localhost:5065/getData?email=${email.value}`
         );
         const result = await checkdata.json();
         console.log(result.length);
@@ -211,7 +211,7 @@
           console.log(response);
           const result = await response.json();
           console.log(result);
-          window.location.href = `http://localhost:5058/afterregister/${str}`;
+          window.location.href = `http://localhost:5065/afterregister/${str}`;
         }
       }
     });

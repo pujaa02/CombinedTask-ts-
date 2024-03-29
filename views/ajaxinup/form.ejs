@@ -1225,7 +1225,7 @@
           });
           var result2 = await response.json();
           console.log(result2);
-          window.location.href = `http://localhost:5058/update`;
+          window.location.href = `http://localhost:5065/update`;
         } else if (window.location.href.substring(22).startsWith("update")) {
           response = await fetch(`/update/${id}`, {
             method: "POST",
@@ -1235,7 +1235,7 @@
           });
           var result2 = await response.json();
           console.log(result2);
-          window.location.href = `http://localhost:5058/showupdate`;
+          window.location.href = `http://localhost:5065/showupdate`;
         }
       }
 
@@ -1791,67 +1791,90 @@
 
       console.log("id", id);
       async function fetchid() {
-        const emp = await fetch("http://localhost:5058/emp");
+        const emp = await fetch("http://localhost:5065/emp");
         const emp_result = await emp.json();
-        let res1 = emp_result[id - 1];
-        console.log(emp_result[id - 1]);
+        console.log("emp", emp_result);
+        let res1 = [];
+        emp_result.forEach((el) => {
+          if (el.emp_id == id) {
+            res1.push(el);
+          }
+        });
+        console.log("res1", res1);
+        // let res1 = emp_result[id - 1];
+        // console.log(emp_result[id - 1]);
+        // console.log("res1", res1);
 
-        const edu = await fetch("http://localhost:5058/edu");
+        const edu = await fetch("http://localhost:5065/edu");
         const edu_result = await edu.json();
         let res2 = edu_result;
         console.log(res2);
 
-        const work = await fetch("http://localhost:5058/work");
+        const work = await fetch("http://localhost:5065/work");
         const work_result = await work.json();
         let res3 = work_result;
         console.log(res3);
 
-        const lan = await fetch("http://localhost:5058/lan");
+        const lan = await fetch("http://localhost:5065/lan");
         const lan_result = await lan.json();
         let res4 = lan_result;
         console.log(res4);
 
-        const techno = await fetch("http://localhost:5058/tech");
+        const techno = await fetch("http://localhost:5065/tech");
         const techno_result = await techno.json();
         let res5 = techno_result;
         console.log(res5);
 
-        const ref = await fetch("http://localhost:5058/ref");
+        const ref = await fetch("http://localhost:5065/ref");
         const ref_result = await ref.json();
         let res6 = ref_result;
         console.log(res6);
 
-        const pre = await fetch("http://localhost:5058/pre");
+        const pre = await fetch("http://localhost:5065/pre");
         const pre_result = await pre.json();
-        let res7 = pre_result[id - 1];
-        console.log(res7);
+        let res7 = [];
+        pre_result.forEach((el) => {
+          if (el.emp_id == id) {
+            res7.push(el);
+          }
+        });
+        // let res7 = pre_result[id - 1];
+        console.log("res7", res7);
 
-        document.getElementById("fname").setAttribute("value", `${res1.fname}`);
-        document.getElementById("lname").setAttribute("value", `${res1.lname}`);
+        document
+          .getElementById("fname")
+          .setAttribute("value", `${res1[0].fname}`);
+        document
+          .getElementById("lname")
+          .setAttribute("value", `${res1[0].lname}`);
         document
           .getElementById("designation")
-          .setAttribute("value", `${res1.designation}`);
-        document.getElementById("dob").setAttribute("value", `${res1.bd}`);
-        document.getElementById("email").setAttribute("value", `${res1.email}`);
+          .setAttribute("value", `${res1[0].designation}`);
+        document.getElementById("dob").setAttribute("value", `${res1[0].bd}`);
+        document
+          .getElementById("email")
+          .setAttribute("value", `${res1[0].email}`);
         document
           .getElementById("number")
-          .setAttribute("value", `${res1.phone}`);
-        document.getElementById("city").setAttribute("value", `${res1.city}`);
+          .setAttribute("value", `${res1[0].phone}`);
+        document
+          .getElementById("city")
+          .setAttribute("value", `${res1[0].city}`);
         document
           .getElementById("zipcode")
-          .setAttribute("value", `${res1.zipcode}`);
+          .setAttribute("value", `${res1[0].zipcode}`);
         document
           .getElementById("add1")
-          .setAttribute("value", `${res1.address1}`);
+          .setAttribute("value", `${res1[0].address1}`);
         document
           .getElementById("add2")
-          .setAttribute("value", `${res1.address2}`);
+          .setAttribute("value", `${res1[0].address2}`);
 
-        document.getElementById(`${res1.state}`).selected = "selected";
+        document.getElementById(`${res1[0].state}`).selected = "selected";
 
-        document.getElementById(`${res1.rel_status}`).selected = "selected";
+        document.getElementById(`${res1[0].rel_status}`).selected = "selected";
 
-        document.getElementById(`${res1.gender}`).checked = true;
+        document.getElementById(`${res1[0].gender}`).checked = true;
 
         // ============section 2==============
         res2.forEach((obj) => {
@@ -2164,18 +2187,18 @@
 
         // ============section 7==============
 
-        document.getElementById(`${res7.prefered_location}`).selected =
+        document.getElementById(`${res7[0].prefered_location}`).selected =
           "selected";
-        document.getElementById(`${res7.department}`).selected = "selected";
+        document.getElementById(`${res7[0].department}`).selected = "selected";
         document
           .getElementById("exctc")
-          .setAttribute("value", `${res7.expected_ctc}`);
+          .setAttribute("value", `${res7[0].expected_ctc}`);
         document
           .getElementById("curctc")
-          .setAttribute("value", `${res7.current_ctc}`);
+          .setAttribute("value", `${res7[0].current_ctc}`);
         document
           .getElementById("notice")
-          .setAttribute("value", `${res7.notice_period}`);
+          .setAttribute("value", `${res7[0].notice_period}`);
       }
       fetchid();
     </script>

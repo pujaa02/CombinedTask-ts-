@@ -137,7 +137,7 @@
 
         if (result2.flag == true) {
           document.cookie = `token=${result2.token}`;
-          window.location.href = `http://localhost:5058/completelogin`;
+          window.location.href = `http://localhost:5065/completelogin`;
         } else {
           document.getElementById("demo").innerHTML = `invalid Data!!`;
         }
@@ -160,7 +160,7 @@
             "demo"
           ).innerHTML = `Please Enter correct Email!!`;
         } else {
-          window.location.href = `http://localhost:5058/secondpage/${mail}`;
+          window.location.href = `http://localhost:5065/secondpage/${mail}`;
         }
       }
     });

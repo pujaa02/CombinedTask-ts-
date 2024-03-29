@@ -36,14 +36,14 @@
     <h3>To activate your account Go to this link</h3>
 
     <a id="activate" onclick="get()"
-      >http://localhost:5058/checktime/<%=actcode%></a
+      >http://localhost:5065/checktime/<%=actcode%></a
     >
     <p id="error"></p>
   </body>
   <script>
     async function get() {
       const checkdata = await fetch(
-        `http://localhost:5058/checktime/<%=actcode%>`
+        `http://localhost:5065/checktime/<%=actcode%>`
       );
       const result = await checkdata.json();
       // console.log(result.length);
@@ -53,7 +53,7 @@
           .getElementById("activate")
           .setAttribute(
             "href",
-            `http://localhost:5058/create_password/<%=actcode%>`
+            `http://localhost:5065/create_password/<%=actcode%>`
           );
       } else if (result == "1") {
         document.getElementById("error").innerHTML = "Link has been Expired!!";

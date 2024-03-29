@@ -1,22 +1,21 @@
 const route = require("express").Router();
 const { check, validationResult } = require("express-validator");
-var get_data = require("./ajaxcityfetch/get_data");
-var get_city = require("./ajaxcityfetch/get_cities");
-var get_user = require("./ajaxinsertupdate/get_user");
-var get_emp = require("./ajaxinsertupdate/get_emp_det");
-var edu_det = require("./ajaxinsertupdate/get_edu_det");
-var work_exp = require("./ajaxinsertupdate/work_exp");
-var lan = require("./ajaxinsertupdate/language");
-var techno = require("./ajaxinsertupdate/techno");
-var ref = require("./ajaxinsertupdate/ref");
-var pre = require("./ajaxinsertupdate/pre");
-var checkAuth = require("./checkauth");
+var get_data = require("../../public/js/ajaxcityfetch/get_data");
+var get_city = require("../../public/js/ajaxcityfetch/get_cities");
+var get_user = require("../../public/js/ajaxinsertupdate/get_user");
+var get_emp = require("../../public/js/ajaxinsertupdate/get_emp_det");
+var edu_det = require("../../public/js/ajaxinsertupdate/get_edu_det");
+var work_exp = require("../../public/js/ajaxinsertupdate/work_exp");
+var lan = require("../../public/js/ajaxinsertupdate/language");
+var techno = require("../../public/js/ajaxinsertupdate/techno");
+var ref = require("../../public/js/ajaxinsertupdate/ref");
+var pre = require("../../public/js/ajaxinsertupdate/pre");
+var checkAuth = require("../middlewares/checkauth");
 var md5 = require("md5");
-var mysql = require("mysql2");
+var con = require("../models/database");
 var parser = require("body-parser");
 const cookieParser = require("cookie-parser");
-let getdata = require("./checkdate");
-// const { response } = require("express");
+let getdata = require("../controller/checkdate");
 route.use(cookieParser());
 route.use(parser.json());
 route.use(parser.urlencoded({ extended: false }));
@@ -24,18 +23,6 @@ const urlencodedParser = parser.urlencoded({ extended: false });
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
-
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root@258",
-  database: "main",
-  dateStrings: "true",
-});
-con.connect((err) => {
-  if (err) throw err;
-  console.log("connected!!");
-});
 
 let lastid;
 route.get("/getData", getdata);
@@ -187,6 +174,7 @@ route.post("/loginpage", async (req, res) => {
   let q5 = `select email,password,salt from login where email='${user}'`;
   con.query(q5, (err, result) => {
     if (err) throw err;
+    console.log(result);
     if (result[0].email == user) {
       console.log(result[0]);
       console.log("match");
@@ -216,7 +204,7 @@ route.get("/completelogin", checkAuth, (req, res) => {
   // res.send("login successfully!!");
   res.render("Home");
 });
-route.get("/redirect/:mail", async (req, res) => {
+route.get("/redirect/:mail", checkAuth, async (req, res) => {
   console.log("redirect");
   let mail = req.params.mail;
   let q6 = `select * from login where email='${mail}' `;

@@ -48,7 +48,7 @@
   </body>
   <script>
     async function fetchingusers() {
-      const res = await fetch("http://localhost:5058/users");
+      const res = await fetch("http://localhost:5065/users");
       const result = await res.json();
       getuser(result);
     }
