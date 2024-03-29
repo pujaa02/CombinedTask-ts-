@@ -1847,4 +1847,15 @@ route.get("/frame2", checkAuth, (req, res) => {
 route.get("/frame3", checkAuth, (req, res) => {
   res.render("frame3/f3");
 });
+
+//====calculator ======
+route.get("/calculator", checkAuth, (req, res) => {
+  res.render("singleTask/calculator");
+});
+
+//====todo list ======
+route.get("/todolist", checkAuth, (req, res) => {
+  res.render("singleTask/todo");
+});
+
 module.exports = route;

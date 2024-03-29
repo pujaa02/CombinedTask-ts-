@@ -1,0 +1,82 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color:#f8f7f2;
+    text-align: center;
+}
+.main{
+    height: 80vh;
+}
+#msg{
+    margin-top: 15rem;
+    font-size: 35px;
+    color: #59412e;
+    font-weight: bold;
+    text-decoration:underline;
+}
+
+.input{
+    padding: 7px;
+    font-size: 20px;
+    /* color: white; */
+    color: red;
+    margin-top: 25px;
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background-color:#c3a27f;
+}
+#btn{
+    margin-top: 25px;
+    margin-left:30px;
+    padding: 12px;
+    border: none;
+    border-radius: 15px;
+    font-size: 25px;
+    font-weight: bold;
+    width: 50px;
+    background-color: maroon;
+    color: aliceblue;
+}
+#btn:hover{
+    background-color: green;
+}
+ul{
+    list-style-type: none;
+    margin-top: 50px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+li{
+      
+      background-color: rgb(245, 194, 117);
+      /* padding: 10px; */
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      color:rgb(202, 30, 44);
+      font-size: 22px;
+      font-weight:bolder;
+      /* border: 1px solid black; */
+      border-radius: 5px;
+      margin-bottom: 15px;
+      width: 300px;
+      height: 40px;
+}
+.delbtn{
+    float: right;
+    width: 50px;
+    padding: 8px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+}
+#delbtn:hover{
+    background-color: rgba(187, 46, 41, 0.884);
+}
