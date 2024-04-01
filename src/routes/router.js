@@ -29,7 +29,7 @@ route.get("/getData", getdata);
 route.get("/", (req, res) => {
   res.render("frontpage/home");
 });
-//==============insert reg data==========
+//==========================  insert reg data ========================
 route.post("/register/:str", async (req, res) => {
   console.log("this is register post");
   let formData = req.body;
@@ -359,6 +359,7 @@ route.get("/data/:fd", checkAuth, (req, res) => {
 });
 
 // =========================result=======================
+
 route.get("/result", checkAuth, (req, res) => {
   let q1 = `select student_master26.id, student_master26.firstname,sum(exam_result.theory_obtain_mark) as Theory,sum(exam_result.prac_total_mark) as Practical from student_master26 join exam_result
   on student_master26.id=exam_result.stu_id where exam_result.exam_id=1 group by student_master26.id;`;
@@ -466,13 +467,17 @@ route.post("/fetch", async function (req, res) {
   let jsonData = req.body;
   console.log(jsonData);
   let search = jsonData["query"];
-  console.log(search);
+  console.log("search", search);
   let perPage = 20;
   let page = parseInt(req.query.page) || 1;
   const offset = (page - 1) * perPage;
   console.log(search.search("limit"));
+  // console.log("check", search.startsWith("delete"));
   if (search === "") {
     res.send("Please Write Query First");
+  } else if (search.startsWith("delete") || search.startsWith("update")) {
+    // console.log("enter");
+    res.send("Please write only select query");
   } else if (search.search("limit") > 1) {
     // console.log("else if");
     let q = `${search}`;
@@ -661,6 +666,7 @@ route.get("/view/:page/:jsonData", checkAuth, (req, res) => {
 });
 
 //===========fetching by special character==============
+
 route.get("/sch", checkAuth, (req, res) => {
   res.render("specialchar/home");
 });
@@ -761,7 +767,8 @@ route.post("/sch", (req, res) => {
   });
 });
 
-// =====================generate form========
+// =====================generate form=====================
+
 route.get("/geneform", checkAuth, (req, res) => {
   res.render("generateform/home");
 });
@@ -1819,13 +1826,13 @@ route.get("/showupdate", checkAuth, (req, res) => {
   res.send("Data is Succesfully Updated!!");
 });
 
-// ===========timestamp=================
+// ================================timestamp========================================
 
 route.get("/timestamp", checkAuth, (req, res) => {
   res.render("timestamp/home");
 });
 
-// ==========================================frames===============================
+// ==========================================frames====================================================
 route.get("/frame1", checkAuth, (req, res) => {
   res.render("frame1/f1");
 });
@@ -1836,12 +1843,12 @@ route.get("/frame3", checkAuth, (req, res) => {
   res.render("frame3/f3");
 });
 
-//====calculator ======
+//========================== calculator ==================================
 route.get("/calculator", checkAuth, (req, res) => {
   res.render("singleTask/calculator");
 });
 
-//====todo list ======
+//========================= todo list ===================================
 route.get("/todolist", checkAuth, (req, res) => {
   res.render("singleTask/todo");
 });
