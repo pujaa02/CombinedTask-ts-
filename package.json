@@ -9,6 +9,7 @@
     "fastify-cookie": "^5.7.0",
     "jsonwebtoken": "^9.0.2",
     "md5": "^2.3.0",
-    "mysql2": "^3.9.2"
+    "mysql2": "^3.9.2",
+    "path": "^0.12.7"
   }
 }

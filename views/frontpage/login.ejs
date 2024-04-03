@@ -136,8 +136,9 @@
         console.log(result2.flag);
 
         if (result2.flag == true) {
+          console.log("true res2");
           document.cookie = `token=${result2.token}`;
-          window.location.href = `http://localhost:5065/completelogin`;
+          window.location.href = `/completelogin`;
         } else {
           document.getElementById("demo").innerHTML = `invalid Data!!`;
         }
@@ -152,7 +153,7 @@
         console.log("enter");
         document.getElementById("demo").innerHTML = `Please Enter Email!!`;
       } else {
-        let fetchdate = await fetch(`redirect/${mail}`);
+        let fetchdate = await fetch(`/redirect/${mail}`);
         const result = await fetchdate.json();
         console.log("result", result);
         if (result == "email not valid") {
@@ -160,7 +161,7 @@
             "demo"
           ).innerHTML = `Please Enter correct Email!!`;
         } else {
-          window.location.href = `http://localhost:5065/secondpage/${mail}`;
+          window.location.href = `/secondpage/${mail}`;
         }
       }
     });
