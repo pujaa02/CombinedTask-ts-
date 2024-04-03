@@ -1,4 +1,4 @@
-var con = require("../models/database");
+var con = require("../../models/database");
 
 function checkmail(req, res) {
   console.log(req.query.email);
