@@ -1,1317 +1,1750 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job_Application_4</title>
+    <style>
+      .container {
+        /* min-height: 100vh; */
+        display: block;
+        align-items: center;
+      }
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Job_Application_4</title>
-  <style>
-    .container {
-      /* min-height: 100vh; */
-      display: block;
-      align-items: center;
-    }
+      form {
+        width: 50%;
+        margin: 0 auto;
+      }
 
-    form {
-      width: 50%;
-      margin: 0 auto;
-    }
+      p {
+        color: red;
+        margin: 5px 0;
+      }
+    </style>
 
-    p {
-      color: red;
-      margin: 5px 0;
-    }
-  </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
-</head>
-
-<body>
-  <% if(typeof alert !='undefined' ) { %>
-    <% alert.forEach(function(error) { %>
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <%= error.msg %>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
+  <body>
+    <% if(typeof alert !='undefined' ) { %> <% alert.forEach(function(error) {
+    %>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <%= error.msg %>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <% }) %> <% } %>
+    <form
+      name="myForm"
+      action="/inu"
+      method="post"
+      onsubmit="return validateForm()"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h1>Job Application</h1>
+          </div>
+        </div>
       </div>
-      <% }) %>
-        <% } %>
-          <form name="myForm" action="/inu" method="post" onsubmit="return validateForm()">
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <h1>Job Application</h1>
-                </div>
-              </div>
+      <fieldset class="form-control" style="width: 650px">
+        <legend><b>Basic Details</b></legend>
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <label for="fname">First name:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="fname"
+                name="fname"
+                placeholder="Enter your first Name...."
+                tabindex="1"
+                autofocus
+              />
+              <p id="p1" class="error"></p>
             </div>
-            <fieldset class="form-control" style="width: 650px">
-              <legend><b>Basic Details</b></legend>
+            <div class="col">
+              <label for="lname">Last name:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="lname"
+                name="lname"
+                placeholder="Enter your Last Name...."
+                tabindex="2"
+              />
+              <p id="p2" class="error"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="designation">Designation:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="designation"
+                name="designa"
+                tabindex="3"
+              />
+              <p id="p3" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="dob" class="form-label">Date of Birth :</label>
+              <input
+                type="text"
+                class="form-control"
+                id="dob"
+                name="dob"
+                rows="1"
+                tabindex="4"
+              />
+              <p id="p4" class="error"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="exampleFormControlInput1" class="form-label"
+                >Email address</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="name@abc.com"
+                autocomplete="email"
+                tabindex="5"
+              />
+              <p id="p5" class="error"></p>
+            </div>
+            <div class="col">
+              <label for="phone_no">Phone Number:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="number"
+                name="number"
+                tabindex="6"
+              />
+              <p id="p6" class="error"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="city" class="form-label">City :</label>
+              <input
+                class="form-control"
+                id="city"
+                name="city"
+                list="cities"
+                rows="1"
+                placeholder="Enter city Here"
+                class="col-sm-6 custom-select custom-select-sm"
+                tabindex="7"
+              />
+              <p id="p7" class="error"></p>
+              <datalist id="cities">
+                <option value="surat">surat</option>
+                <option value="ahmedabad">ahmedabad</option>
+                <option value="vadodara">vadodara</option>
+                <option value="mehasana">mehasana</option>
+                <option value="rajkot">rajkot</option>
+                <option value="junagadh">junagadh</option>
+                <option value="somnath">somnath</option>
+              </datalist>
+            </div>
+            <div class="col">
+              <label for="zip_code" class="form-label">Zip code :</label>
+              <input
+                type="text"
+                class="form-control"
+                id="zipcode"
+                name="zipcode"
+                rows="1"
+                tabindex="8"
+              />
+              <p id="p8" class="error"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Address 1 :</label
+              >
+              <input
+                class="form-control"
+                id="add1"
+                name="add1"
+                rows="1"
+                tabindex="9"
+              />
+              <p id="p9" class="error"></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Address 2 :</label
+              >
+              <input
+                class="form-control"
+                id="add2"
+                name="add2"
+                rows="1"
+                tabindex="10"
+              />
+              <p id="p10" class="error"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="state" class="form-label">State :</label>
+              <select class="custom-select" id="state" name="state">
+                <option value="Gujarat">Gujarat</option>
+                <option value="Gua">Gua</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Bihar">Bihar</option>
+              </select>
+            </div>
+            <div class="col">
+              <label for="rel_status" class="form-label"
+                >Relationship Status :</label
+              >
+              <select class="custom-select" id="relstatus" name="relstatus">
+                <option value="married" name="relstatus">Married</option>
+                <option value="unmarried" name="relstatus">Unmarried</option>
+                <option value="divorced" name="relstatus">Divorced</option>
+                <option value="widow" name="relstatus">Widow</option>
+              </select>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col">
+              <label for="Gender" class="form-label" id="gender" name="gender"
+                >Gender :</label
+              >
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="inlineRadio1"
+                  value="male"
+                />
+                <label class="form-check-label" for="inlineRadio1">Male</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="inlineRadio2"
+                  value="female"
+                />
+                <label class="form-check-label" for="inlineRadio2"
+                  >Female</label
+                >
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="inlineRadio3"
+                  value="other"
+                />
+                <label class="form-check-label" for="inlineRadio3">Other</label>
+              </div>
+              <p id="p13"></p>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <br /><br />
+
+      <!-- ========fieldset 2============ -->
+      <fieldset class="form-control" style="width: 850px">
+        <legend><b>Education_details</b></legend>
+        <div class="container">
+          <h5>SSC result</h5>
+          <div class="row">
+            <div class="col">
+              <label for="board_name">Name of Board</label>
+              <input
+                type="text"
+                class="form-control"
+                id="board1"
+                name="board_name"
+              />
+              <p id="p14" class="ssc"></p>
+            </div>
+            <div class="col">
+              <label for="passing_year">Passing year</label>
+              <input
+                type="text"
+                class="form-control"
+                id="py1"
+                name="py"
+                maxlength="4"
+              />
+              <p id="p15" class="ssc"></p>
+            </div>
+            <div class="col">
+              <label for="pecentage">Percentage</label>
+              <input
+                type="text"
+                class="form-control"
+                id="pecentage1"
+                name="percentage"
+                maxlength="2"
+              />
+              <p id="p16" class="ssc"></p>
+            </div>
+          </div>
+          <hr />
+
+          <h5>HSC result</h5>
+          <div class="row">
+            <div class="col">
+              <label for="board_name">Name of Board</label>
+              <input
+                type="text"
+                class="form-control"
+                id="board2"
+                name="board_name"
+              />
+              <p id="p17" class="hsc"></p>
+            </div>
+            <div class="col">
+              <label for="passing_year">Passing year</label>
+              <input
+                type="text"
+                class="form-control"
+                id="py2"
+                name="py"
+                maxlength="4"
+              />
+              <p id="p18" class="hsc"></p>
+            </div>
+            <div class="col">
+              <label for="pecentage">Percentage</label>
+              <input
+                type="text"
+                class="form-control"
+                id="pecentage2"
+                name="percentage"
+                maxlength="2"
+              />
+              <p id="p19" class="hsc"></p>
+            </div>
+          </div>
+          <hr />
+
+          <h5>Bachelor degree</h5>
+          <div class="row">
+            <div class="col">
+              <label for="course_name">Cource Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="course1"
+                name="board_name"
+                name="course_name"
+              />
+              <p id="p20" class="bachelor"></p>
+            </div>
+
+            <div class="col">
+              <label for="passing_year">Passing year</label>
+              <input
+                type="text"
+                class="form-control"
+                name="py"
+                id="py11"
+                maxlength="4"
+              />
+              <p id="p22" class="bachelor"></p>
+            </div>
+            <div class="col">
+              <label for="pecentage">Percentage</label>
+              <input
+                type="text"
+                class="form-control"
+                id="pecentage11"
+                name="percentage"
+                maxlength="2"
+              />
+              <p id="p23" class="bachelor"></p>
+            </div>
+          </div>
+          <hr />
+
+          <h5>Master degree</h5>
+          <div class="row">
+            <div class="col">
+              <label for="course_name">Cource Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="course2"
+                name="board_name"
+              />
+              <p id="p24" class="master"></p>
+            </div>
+
+            <div class="col">
+              <label for="passing_year">Passing year</label>
+              <input
+                type="text"
+                class="form-control"
+                id="py22"
+                name="py"
+                maxlength="4"
+              />
+              <p id="p26" class="master"></p>
+            </div>
+            <div class="col">
+              <label for="pecentage">Percentage</label>
+              <input
+                type="text"
+                class="form-control"
+                id="pecentage22"
+                name="percentage"
+                maxlength="2"
+              />
+              <p id="p27" class="master"></p>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <br />
+      <br />
+
+      <!-- section 3 -->
+
+      <fieldset class="form-control" style="width: 900px">
+        <legend><b>Work Experience</b></legend>
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <label for="company_name">Company name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="companyname1"
+                name="companyname"
+              />
+              <p id="p28" class="workerr1"></p>
+            </div>
+            <div class="col">
+              <label for="designation">Designation</label>
+              <input
+                type="text"
+                class="form-control"
+                id="designation1"
+                name="designation"
+              />
+              <p id="p29" class="workerr1"></p>
+            </div>
+            <div class="col">
+              <label for="date">From</label>
+              <input
+                type="text"
+                class="duration form-control"
+                id="date11"
+                name="from"
+              />
+              <p id="p30" class="workerr1"></p>
+            </div>
+            <div class="col">
+              <label for="date">To</label>
+              <input
+                type="text"
+                id="date12"
+                name="to"
+                class="duration form-control"
+              />
+              <p id="p31" class="workerr1"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="company_name">Company name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="companyname2"
+                name="companyname"
+              />
+              <p id="p32" class="workerr2"></p>
+            </div>
+            <div class="col">
+              <label for="designation">Designation</label>
+              <input
+                type="text"
+                class="form-control"
+                id="designation2"
+                name="designation"
+              />
+              <p id="p33" class="workerr2"></p>
+            </div>
+            <div class="col">
+              <label for="date">From</label>
+              <input
+                type="text"
+                id="date21"
+                name="from"
+                class="duration form-control"
+              />
+              <p id="p34" class="workerr2"></p>
+            </div>
+            <div class="col">
+              <label for="date">To</label>
+              <input
+                type="text"
+                id="date22"
+                name="to"
+                class="duration form-control"
+              />
+              <p id="p35" class="workerr2"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="company_name">Company name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="companyname3"
+                name="companyname"
+              />
+              <p id="p36" class="workerr3"></p>
+            </div>
+            <div class="col">
+              <label for="designation">Designation</label>
+              <input
+                type="text"
+                class="form-control"
+                id="designation3"
+                name="designation"
+              />
+              <p id="p37" class="workerr3"></p>
+            </div>
+            <div class="col">
+              <label for="date">From</label>
+              <input
+                type="text"
+                id="date31"
+                name="from"
+                class="duration form-control"
+              />
+              <p id="p38" class="workerr3"></p>
+            </div>
+            <div class="col">
+              <label for="date">To</label>
+              <input
+                type="text"
+                id="date32"
+                name="to"
+                class="duration form-control"
+              />
+              <p id="p39" class="workerr3"></p>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <br />
+      <br />
+      <table>
+        <tr>
+          <td>
+            <!-- ======== section 4============= -->
+            <fieldset class="form-control" style="width: 500px">
+              <legend><b>Language Known</b></legend>
 
               <div class="container">
                 <div class="row">
                   <div class="col">
-                    <label for="fname">First name:</label>
-                    <input type="text" class="form-control" id="fname" name="fname"
-                      placeholder="Enter your first Name...." tabindex="1" autofocus />
-                    <p id="p1" class="error"></p>
-                  </div>
-                  <div class="col">
-                    <label for="lname">Last name:</label>
-                    <input type="text" class="form-control" id="lname" name="lname"
-                      placeholder="Enter your Last Name...." tabindex="2" />
-                    <p id="p2" class="error"></p>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col">
-                    <label for="designation">Designation:</label>
-                    <input type="text" class="form-control" id="designation" name="designa" tabindex="3" />
-                    <p id="p3" class="error"></p>
-                  </div>
-                  <div class="col">
-                    <label for="dob" class="form-label">Date of Birth :</label>
-                    <input type="text" class="form-control" id="dob" name="dob" rows="1" tabindex="4" />
-                    <p id="p4" class="error"></p>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col">
-                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                    <input type="text" class="form-control" id="email" name="email" placeholder="name@abc.com"
-                      autocomplete="email" tabindex="5" />
-                    <p id="p5" class="error"></p>
-                  </div>
-                  <div class="col">
-                    <label for="phone_no">Phone Number:</label>
-                    <input type="text" class="form-control" id="number" name="number" tabindex="6" />
-                    <p id="p6" class="error"></p>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col">
-                    <label for="city" class="form-label">City :</label>
-                    <input class="form-control" id="city" name="city" list="cities" rows="1"
-                      placeholder="Enter city Here" class="col-sm-6 custom-select custom-select-sm" tabindex="7" />
-                    <p id="p7" class="error"></p>
-                    <datalist id="cities">
-                      <option value="surat">surat</option>
-                      <option value="ahmedabad">ahmedabad</option>
-                      <option value="vadodara">vadodara</option>
-                      <option value="mehasana">mehasana</option>
-                      <option value="rajkot">rajkot</option>
-                      <option value="junagadh">junagadh</option>
-                      <option value="somnath">somnath</option>
-                    </datalist>
-                  </div>
-                  <div class="col">
-                    <label for="zip_code" class="form-label">Zip code :</label>
-                    <input type="text" class="form-control" id="zipcode" name="zipcode" rows="1" tabindex="8" />
-                    <p id="p8" class="error"></p>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col">
-                    <label for="exampleFormControlTextarea1" class="form-label">Address 1 :</label>
-                    <input class="form-control" id="add1" name="add1" rows="1" tabindex="9">
-                    <p id="p9" class="error"></p>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <label for="exampleFormControlTextarea1" class="form-label">Address 2 :</label>
-                    <input class="form-control" id="add2" name="add2" rows="1" tabindex="10">
-                    <p id="p10" class="error"></p>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col">
-                    <label for="state" class="form-label">State :</label>
-                    <select class="custom-select" id="state" name="state">
-                      <option value="Gujarat">Gujarat</option>
-                      <option value="Gua">Gua</option>
-                      <option value="Haryana">Haryana</option>
-                      <option value="Bihar">Bihar</option>
-                    </select>
-                  </div>
-                  <div class="col">
-                    <label for="rel_status" class="form-label">Relationship Status :</label>
-                    <select class="custom-select" id="relstatus" name="relstatus">
-                      <option value="married" name="relstatus">Married</option>
-                      <option value="unmarried" name="relstatus">Unmarried</option>
-                      <option value="divorced" name="relstatus">Divorced</option>
-                      <option value="widow" name="relstatus">Widow</option>
-                    </select>
-                  </div>
-                </div>
-                <br />
-                <div class="row">
-                  <div class="col">
-                    <label for="Gender" class="form-label" id="gender" name="gender">Gender :</label>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="male" />
-                      <label class="form-check-label" for="inlineRadio1">Male</label>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="hindi"
+                        id="hindi"
+                        name="lan1"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Hindi
+                      </label>
                     </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="female" />
-                      <label class="form-check-label" for="inlineRadio2">Female</label>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="read"
+                        id="read1"
+                        name="able1"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        read
+                      </label>
                     </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="gender" id="inlineRadio3" value="other" />
-                      <label class="form-check-label" for="inlineRadio3">Other</label>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="write"
+                        id="write1"
+                        name="able1"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        write
+                      </label>
                     </div>
-                    <p id="p13"></p>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="speak"
+                        id="speak1"
+                        name="able1"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Speak
+                      </label>
+                    </div>
                   </div>
                 </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="english"
+                        id="eng"
+                        name="lan2"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        English
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="read"
+                        id="read2"
+                        name="able2"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        read
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="write"
+                        id="write2"
+                        name="able2"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        write
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="speak"
+                        id="speak2"
+                        name="able2"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Speak
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="gujarati"
+                        id="guj"
+                        name="lan3"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Gujarati
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="read"
+                        id="read3"
+                        name="able3"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        read
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="write"
+                        id="write3"
+                        name="able3"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        write
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="speak"
+                        id="speak3"
+                        name="able3"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Speak
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <p id="print"></p>
               </div>
             </fieldset>
-            <br /><br />
-
-            <!-- ========fieldset 2============ -->
-            <fieldset class="form-control" style="width: 850px">
-              <legend><b>Education_details</b></legend>
-              <div class="container">
-                <h5>SSC result</h5>
-                <div class="row">
-                  <div class="col">
-                    <label for="board_name">Name of Board</label>
-                    <input type="text" class="form-control" id="board1" name="board_name" />
-                    <p id="p14" class="ssc"></p>
-                  </div>
-                  <div class="col">
-                    <label for="passing_year">Passing year</label>
-                    <input type="text" class="form-control" id="py1" name="py" maxlength="4" />
-                    <p id="p15" class="ssc"></p>
-                  </div>
-                  <div class="col">
-                    <label for="pecentage">Percentage</label>
-                    <input type="text" class="form-control" id="pecentage1" name="percentage" maxlength="2" />
-                    <p id="p16" class="ssc"></p>
-                  </div>
-                </div>
-                <hr />
-
-                <h5>HSC result</h5>
-                <div class="row">
-                  <div class="col">
-                    <label for="board_name">Name of Board</label>
-                    <input type="text" class="form-control" id="board2" name="board_name" />
-                    <p id="p17" class="hsc"></p>
-                  </div>
-                  <div class="col">
-                    <label for="passing_year">Passing year</label>
-                    <input type="text" class="form-control" id="py2" name="py" maxlength="4" />
-                    <p id="p18" class="hsc"></p>
-                  </div>
-                  <div class="col">
-                    <label for="pecentage">Percentage</label>
-                    <input type="text" class="form-control" id="pecentage2" name="percentage" maxlength="2" />
-                    <p id="p19" class="hsc"></p>
-                  </div>
-                </div>
-                <hr />
-
-                <h5>Bachelor degree</h5>
-                <div class="row">
-                  <div class="col">
-                    <label for="course_name">Cource Name</label>
-                    <input type="text" class="form-control" id="course1" name="board_name" name="course_name" />
-                    <p id="p20" class="bachelor"></p>
-                  </div>
-
-                  <div class="col">
-                    <label for="passing_year">Passing year</label>
-                    <input type="text" class="form-control" name="py" id="py11" maxlength="4" />
-                    <p id="p22" class="bachelor"></p>
-                  </div>
-                  <div class="col">
-                    <label for="pecentage">Percentage</label>
-                    <input type="text" class="form-control" id="pecentage11" name="percentage" maxlength="2" />
-                    <p id="p23" class="bachelor"></p>
-                  </div>
-                </div>
-                <hr />
-
-                <h5>Master degree</h5>
-                <div class="row">
-                  <div class="col">
-                    <label for="course_name">Cource Name</label>
-                    <input type="text" class="form-control" id="course2" name="board_name" />
-                    <p id="p24" class="master"></p>
-                  </div>
-
-                  <div class="col">
-                    <label for="passing_year">Passing year</label>
-                    <input type="text" class="form-control" id="py22" name="py" maxlength="4" />
-                    <p id="p26" class="master"></p>
-                  </div>
-                  <div class="col">
-                    <label for="pecentage">Percentage</label>
-                    <input type="text" class="form-control" id="pecentage22" name="percentage" maxlength="2" />
-                    <p id="p27" class="master"></p>
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-
-            <br />
-            <br />
-
-            <!-- section 3 -->
-
-            <fieldset class="form-control" style="width: 900px">
-              <legend><b>Work Experience</b></legend>
+          </td>
+          <td>
+            <!-- ========== section 5=============== -->
+            <fieldset class="form-control" style="width: 500px">
+              <legend><b>Technologies you know</b></legend>
 
               <div class="container">
                 <div class="row">
                   <div class="col">
-                    <label for="company_name">Company name</label>
-                    <input type="text" class="form-control" id="companyname1" name="companyname" />
-                    <p id="p28" class="workerr1"></p>
-                  </div>
-                  <div class="col">
-                    <label for="designation">Designation</label>
-                    <input type="text" class="form-control" id="designation1" name="designation" />
-                    <p id="p29" class="workerr1"></p>
-                  </div>
-                  <div class="col">
-                    <label for="date">From</label>
-                    <input type="text" class="duration form-control" id="date11" name="from" />
-                    <p id="p30" class="workerr1"></p>
-                  </div>
-                  <div class="col">
-                    <label for="date">To</label>
-                    <input type="text" id="date12" name="to" class="duration form-control" />
-                    <p id="p31" class="workerr1"></p>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col">
-                    <label for="company_name">Company name</label>
-                    <input type="text" class="form-control" id="companyname2" name="companyname" />
-                    <p id="p32" class="workerr2"></p>
-                  </div>
-                  <div class="col">
-                    <label for="designation">Designation</label>
-                    <input type="text" class="form-control" id="designation2" name="designation" />
-                    <p id="p33" class="workerr2"></p>
-                  </div>
-                  <div class="col">
-                    <label for="date">From</label>
-                    <input type="text" id="date21" name="from" class="duration form-control" />
-                    <p id="p34" class="workerr2"></p>
-                  </div>
-                  <div class="col">
-                    <label for="date">To</label>
-                    <input type="text" id="date22" name="to" class="duration form-control" />
-                    <p id="p35" class="workerr2"></p>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col">
-                    <label for="company_name">Company name</label>
-                    <input type="text" class="form-control" id="companyname3" name="companyname" />
-                    <p id="p36" class="workerr3"></p>
-                  </div>
-                  <div class="col">
-                    <label for="designation">Designation</label>
-                    <input type="text" class="form-control" id="designation3" name="designation" />
-                    <p id="p37" class="workerr3"></p>
-                  </div>
-                  <div class="col">
-                    <label for="date">From</label>
-                    <input type="text" id="date31" name="from" class="duration form-control" />
-                    <p id="p38" class="workerr3"></p>
-                  </div>
-                  <div class="col">
-                    <label for="date">To</label>
-                    <input type="text" id="date32" name="to" class="duration form-control" />
-                    <p id="p39" class="workerr3"></p>
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-
-            <br />
-            <br />
-            <table>
-              <tr>
-                <td>
-                  <!-- ======== section 4============= -->
-                  <fieldset class="form-control" style="width: 500px">
-                    <legend><b>Language Known</b></legend>
-
-                    <div class="container">
-                      <div class="row">
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="hindi" id="hindi" name="lan1" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Hindi
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="read" id="read1" name="able1" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              read
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="write" id="write1" name="able1" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              write
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="speak" id="speak1" name="able1" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Speak
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="english" id="eng" name="lan2" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              English
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="read" id="read2" name="able2" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              read
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="write" id="write2" name="able2" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              write
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="speak" id="speak2" name="able2" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Speak
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="gujarati" id="guj" name="lan3" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Gujarati
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="read" id="read3" name="able3" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              read
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="write" id="write3" name="able3" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              write
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="speak" id="speak3" name="able3" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Speak
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <p id="print"></p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="php"
+                        id="php"
+                        name="tech1"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Php
+                      </label>
                     </div>
-                  </fieldset>
-                </td>
-                <td>
-                  <!-- ========== section 5=============== -->
-                  <fieldset class="form-control" style="width: 500px">
-                    <legend><b>Technologies you know</b></legend>
+                  </div>
 
-                    <div class="container">
-                      <div class="row">
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="php" id="php" name="tech1" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Php
-                            </label>
-                          </div>
-                        </div>
-
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level1" id="beg1" value="beginner" />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                              Beginner
-                            </label>
-                          </div>
-                        </div>
-
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level1" id="mid1" value="mideator" />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                              Mideator
-                            </label>
-                          </div>
-                        </div>
-
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level1" id="ex1" value="expert" />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                              Expert
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="mysql" id="mysql" name="tech2" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Mysql
-                            </label>
-                          </div>
-                        </div>
-
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level2" id="beg2" value="beginner" />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                              Beginner
-                            </label>
-                          </div>
-                        </div>
-
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level2" id="mid2" value="mideator" />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                              Mideator
-                            </label>
-                          </div>
-                        </div>
-
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level2" id="ex2" value="expert" />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                              Expert
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="laravel" id="laravel" name="tech3" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              laravel
-                            </label>
-                          </div>
-                        </div>
-
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level3" id="beg3" value="beginner" />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                              Beginner
-                            </label>
-                          </div>
-                        </div>
-
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level3" id="mid3" value="mideator" />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                              Mideator
-                            </label>
-                          </div>
-                        </div>
-
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level3" id="ex3" value="expert" />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                              Expert
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="oracle" id="oracle" name="tech4" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Oracle
-                            </label>
-                          </div>
-                        </div>
-
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level4" id="beg4" value="beginner" />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                              Beginner
-                            </label>
-                          </div>
-                        </div>
-
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level4" id="mid4" value="mideator" />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                              Mideator
-                            </label>
-                          </div>
-                        </div>
-
-                        <div class="col">
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level4" id="ex4" value="expert" />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                              Expert
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <p id="showmsg"></p>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="level1"
+                        id="beg1"
+                        value="beginner"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Beginner
+                      </label>
                     </div>
-                  </fieldset>
-                </td>
-              </tr>
-            </table>
-
-            <br />
-            <br />
-
-            <!-- ============== section 6 ================= -->
-
-            <fieldset class="form-control" style="width: 900px">
-              <legend><b>Reference Contact</b></legend>
-
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <label for="name"> Name</label>
-                    <input type="text" class="form-control" id="name1" name="name" />
-                    <p class="ref1"></p>
                   </div>
+
                   <div class="col">
-                    <label for="mobile_no">Contact Number</label>
-                    <input type="text" class="form-control" id="mobileno1" name="mobileno" />
-                    <p class="ref1"></p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="level1"
+                        id="mid1"
+                        value="mideator"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Mideator
+                      </label>
+                    </div>
                   </div>
+
                   <div class="col">
-                    <label for="rel">Relation</label>
-                    <input type="text" class="form-control" id="rel1" name="rel" />
-                    <p class="ref1"></p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="level1"
+                        id="ex1"
+                        value="expert"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Expert
+                      </label>
+                    </div>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col">
-                    <label for="name"> Name</label>
-                    <input type="text" class="form-control" id="name2" name="name" />
-                    <p class="ref2"></p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="mysql"
+                        id="mysql"
+                        name="tech2"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Mysql
+                      </label>
+                    </div>
                   </div>
+
                   <div class="col">
-                    <label for="mobile_no">Contact Number</label>
-                    <input type="text" class="form-control" id="mobileno2" name="mobileno" />
-                    <p class="ref2"></p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="level2"
+                        id="beg2"
+                        value="beginner"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Beginner
+                      </label>
+                    </div>
                   </div>
+
                   <div class="col">
-                    <label for="rel">Relation</label>
-                    <input type="text" class="form-control" id="rel2" name="rel" />
-                    <p class="ref2"></p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="level2"
+                        id="mid2"
+                        value="mideator"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Mideator
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="level2"
+                        id="ex2"
+                        value="expert"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Expert
+                      </label>
+                    </div>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col">
-                    <label for="name"> Name</label>
-                    <input type="text" class="form-control" id="name3" name="name" />
-                    <p class="ref3"></p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="laravel"
+                        id="laravel"
+                        name="tech3"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        laravel
+                      </label>
+                    </div>
                   </div>
+
                   <div class="col">
-                    <label for="mobile_no">Contact Number</label>
-                    <input type="text" class="form-control" id="mobileno3" name="mobileno" />
-                    <p class="ref3"></p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="level3"
+                        id="beg3"
+                        value="beginner"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Beginner
+                      </label>
+                    </div>
                   </div>
+
                   <div class="col">
-                    <label for="rel">Relation</label>
-                    <input type="text" class="form-control" id="rel3" name="rel" />
-                    <p class="ref3"></p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="level3"
+                        id="mid3"
+                        value="mideator"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Mideator
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="level3"
+                        id="ex3"
+                        value="expert"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Expert
+                      </label>
+                    </div>
                   </div>
                 </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="oracle"
+                        id="oracle"
+                        name="tech4"
+                      />
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Oracle
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="level4"
+                        id="beg4"
+                        value="beginner"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Beginner
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="level4"
+                        id="mid4"
+                        value="mideator"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Mideator
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="level4"
+                        id="ex4"
+                        value="expert"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Expert
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <p id="showmsg"></p>
               </div>
             </fieldset>
+          </td>
+        </tr>
+      </table>
 
-            <!-- ===================== section 7 ==================== -->
+      <br />
+      <br />
 
-            <fieldset class="form-control" style="width: 850px">
-              <legend><b>Preferences</b></legend>
+      <!-- ============== section 6 ================= -->
 
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <label for="location" class="form-label">Preferred Location :</label>
-                    <select class="custom-select" id="location" name="preloc">
-                      <option value="Mumbai" name="preloc">Mumbai</option>
-                      <option value="Ahmedabad" name="preloc">Ahmedabad</option>
-                      <option value="Surat" name="preloc">Surat</option>
-                      <option value="Rajkot" name="preloc">Rajkot</option>
-                    </select>
-                  </div>
+      <fieldset class="form-control" style="width: 900px">
+        <legend><b>Reference Contact</b></legend>
 
-                  <div class="col">
-                    <label for="Notice period">Notice period</label>
-                    <input type="text" class="form-control" id="notice" name="notice" />
-                    <p class="msg"></p>
-                    <label for="Expected CTC">Expected CTC</label>
-                    <input type="text" class="form-control" id="exctc" name="exctc" />
-                    <p class="msg"></p>
-                    <label for="Current CTC">Current CTC</label>
-                    <input type="text" class="form-control" id="curctc" name="curctc" />
-                    <p class="msg"></p>
-                  </div>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <label for="name"> Name</label>
+              <input type="text" class="form-control" id="name1" name="name" />
+              <p class="ref1"></p>
+            </div>
+            <div class="col">
+              <label for="mobile_no">Contact Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="mobileno1"
+                name="mobileno"
+              />
+              <p class="ref1"></p>
+            </div>
+            <div class="col">
+              <label for="rel">Relation</label>
+              <input type="text" class="form-control" id="rel1" name="rel" />
+              <p class="ref1"></p>
+            </div>
+          </div>
 
-                  <div class="col">
-                    <label for="department" class="form-label">Department</label>
-                    <select class="custom-select" id="department" name="depa">
-                      <option value="Development" name="depa">Development</option>
-                      <option value="Design" name="depa">Design</option>
-                      <option value="Marketing" name="depa">Marketing</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-            <br />
-            <br />
-            <input type="submit" class="btn btn-danger" name="submit" id="submit" value="Submit" />
-             <!-- <input type="reset" class="btn btn-danger" value="Reset" /> -->
-            <br />
-            <br />
-          </form>
+          <div class="row">
+            <div class="col">
+              <label for="name"> Name</label>
+              <input type="text" class="form-control" id="name2" name="name" />
+              <p class="ref2"></p>
+            </div>
+            <div class="col">
+              <label for="mobile_no">Contact Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="mobileno2"
+                name="mobileno"
+              />
+              <p class="ref2"></p>
+            </div>
+            <div class="col">
+              <label for="rel">Relation</label>
+              <input type="text" class="form-control" id="rel2" name="rel" />
+              <p class="ref2"></p>
+            </div>
+          </div>
 
-          <script type="text/javascript">
-            $(document).on("keypress", "input,select", function (e) {
-              if (e.which == 13) {
-                e.preventDefault();
-                var $next = $("[tabIndex=" + (+this.tabIndex + 1) + "]");
-                console.log($next.length);
-                if (!$next.length) {
-                  $next = $("[tabIndex=1]");
-                }
-                $next.focus().click();
-              }
-            });
-            let j = 0;
-            let m = 0;
-            //   let e1 = 0;
-            //   let e2 = 0;
-            //   let e3 = 0;
-            //   let e4 = 0;
-            let k1 = 0;
-            let k2 = 0;
-            let k3 = 0;
-            let r1 = 0,
-              r2 = 0,
-              r3 = 0;
-            let arr = [
-              "fname",
-              "lname",
-              "designation",
-              "dob",
-              "email",
-              "number",
-              "city",
-              "zipcode",
-              "add1",
-              "add2",
-            ];
-            let ssc = ["board1", "py1", "pecentage1"];
-            let hsc = ["board2", "py2", "pecentage2"];
-            let bachelor = ["course1", "py11", "pecentage11"];
-            let master = ["course2", "py22", "pecentage22"];
-            let pref = ["notice", "exctc", "curctc"];
-            let ref1 = ["name1", "mobileno1", "rel1"];
-            let ref2 = ["name2", "mobileno2", "rel2"];
-            let ref3 = ["name3", "mobileno3", "rel3"];
-            let workarr1 = ["companyname1", "designation1", "date11", "date12"];
-            let workarr2 = ["companyname2", "designation2", "date21", "date22"];
-            let workarr3 = ["companyname3", "designation3", "date31", "date32"];
-            let lan = ["hindi", "eng", "guj"];
-            let tech = ["php", "mysql", "laravel", "oracle"];
+          <div class="row">
+            <div class="col">
+              <label for="name"> Name</label>
+              <input type="text" class="form-control" id="name3" name="name" />
+              <p class="ref3"></p>
+            </div>
+            <div class="col">
+              <label for="mobile_no">Contact Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="mobileno3"
+                name="mobileno"
+              />
+              <p class="ref3"></p>
+            </div>
+            <div class="col">
+              <label for="rel">Relation</label>
+              <input type="text" class="form-control" id="rel3" name="rel" />
+              <p class="ref3"></p>
+            </div>
+          </div>
+        </div>
+      </fieldset>
 
-            function validateForm() {
-              let date = document.getElementsByClassName("duration");
-              let date1 = document.getElementsByClassName("duration").length;
-              console.log(`date : `);
-              console.log(date);
-              console.log(date1);
-              for (let i = 0; i < date.length; i++) {
-                let dateString = new Date(date[i].value);
-                console.log(dateString);
-                if (!isNaN(dateString.getTime())) {
-                  let day = dateString.getDate();
-                  console.log(day);
-                  day = day < 10 ? "0" + day : day;
-                  let month = dateString.getMonth() + 1;
-                  month = month < 10 ? "0" + month : month;
-                  const year = dateString.getFullYear();
-                  const resultDate = `${year}/${day}/${month}`;
-                  console.log(resultDate);
-                  date[i].value = resultDate;
-                }
-              }
-              document.getElementsByClassName("error")[j].innerHTML = "";
-              document.getElementsByClassName("ssc")[j].innerHTML = "";
-              document.getElementsByClassName("hsc")[j].innerHTML = "";
-              document.getElementsByClassName("bachelor")[j].innerHTML = "";
-              document.getElementsByClassName("master")[j].innerHTML = "";
-              document.getElementsByClassName("msg")[m].innerHTML = "";
-              document.getElementsByClassName("workerr1")[k1].innerHTML = "";
-              document.getElementsByClassName("workerr2")[k2].innerHTML = "";
-              document.getElementsByClassName("workerr3")[k3].innerHTML = "";
-              document.getElementsByClassName("ref1")[r1].innerHTML = "";
-              document.getElementsByClassName("ref2")[r2].innerHTML = "";
-              document.getElementsByClassName("ref3")[r3].innerHTML = "";
-              let gender = document.forms["myForm"]["gender"].value;
+      <!-- ===================== section 7 ==================== -->
 
-              let text;
-              for (let i = 0; i < arr.length; i++) {
-                console.log(i);
-                console.log(arr[i]);
-                if (
-                  document.getElementById(arr[i]).value == "" ||
-                  document.getElementById(arr[i]).value == null
-                ) {
-                  document.getElementsByClassName("error")[
-                    i
-                  ].innerHTML = `This field is required`;
-                  j = i;
-                  return false;
-                }
-                if (i == 9) {
-                  if (gender == "") {
-                    text = "Must be filled out this Field";
-                    document.getElementById("p13").innerHTML = text;
-                    return false;
-                  }
-                }
-                if (arr[i] == "email") {
-                  ValidateEmail(document.getElementById(arr[i]).value);
-                  if (ValidateEmail(document.getElementById(arr[i]).value) != true) {
-                    return false;
-                  }
-                }
-                if (arr[i] == "number") {
-                  isNumber(document.getElementById(arr[i]).value);
-                  if (isNumber(document.getElementById(arr[i]).value) != true) {
-                    return false;
-                  }
-                }
-                if (arr[i] == "dob") {
-                  let dateObj = new Date(document.getElementById(arr[i]).value);
-                  console.log(dateObj);
-                  let day = dateObj.getDate();
-                  console.log(day);
-                  day = day < 10 ? "0" + day : day;
-                  let month = dateObj.getMonth() + 1;
-                  month = month < 10 ? "0" + month : month;
-                  const year = dateObj.getFullYear();
-                  const resultDate = `${year}-${day}-${month}`;
-                  console.log("data is");
-                  console.log(resultDate);
-                  document.getElementById("dob").value = resultDate;
-                }
-              }
-              //section 2
-              for (let i = 0; i < ssc.length; i++) {
-                if (document.getElementById(ssc[i]).value !== "") {
-                  for (let j = 0; j < ssc.length; j++) {
-                    if (
-                      document.getElementById(ssc[j]).value == "" ||
-                      document.getElementById(ssc[j]).value == null
-                    ) {
-                      document.getElementsByClassName("ssc")[
-                        j
-                      ].innerHTML = `This field is required`;
-                      e1 = j;
-                      return false;
-                    }
-                  }
-                }
-              }
-              for (let i = 0; i < hsc.length; i++) {
-                if (document.getElementById(hsc[i]).value !== "") {
-                  for (let j = 0; j < hsc.length; j++) {
-                    if (
-                      document.getElementById(hsc[j]).value == "" ||
-                      document.getElementById(hsc[j]).value == null
-                    ) {
-                      document.getElementsByClassName("hsc")[
-                        j
-                      ].innerHTML = `This field is required`;
-                      e2 = j;
-                      return false;
-                    }
-                  }
-                }
-              }
-              for (let i = 0; i < bachelor.length; i++) {
-                if (document.getElementById(bachelor[i]).value !== "") {
-                  for (let j = 0; j < bachelor.length; j++) {
-                    if (
-                      document.getElementById(bachelor[j]).value == "" ||
-                      document.getElementById(bachelor[j]).value == null
-                    ) {
-                      document.getElementsByClassName("bachelor")[
-                        j
-                      ].innerHTML = `This field is required`;
-                      e3 = j;
-                      return false;
-                    }
-                  }
-                }
-              }
-              for (let i = 0; i < master.length; i++) {
-                if (document.getElementById(master[i]).value !== "") {
-                  for (let j = 0; j < master.length; j++) {
-                    if (
-                      document.getElementById(master[j]).value == "" ||
-                      document.getElementById(master[j]).value == null
-                    ) {
-                      document.getElementsByClassName("master")[
-                        j
-                      ].innerHTML = `This field is required`;
-                      e4 = j;
-                      return false;
-                    }
-                  }
-                }
-              }
-              //section 3
-              for (let i = 0; i < workarr1.length; i++) {
-                if (document.getElementById(workarr1[i]).value !== "") {
-                  console.log(i);
-                  console.log("entered");
-                  console.log(document.getElementById(workarr1[i]).value);
-                  for (let j = 0; j < workarr1.length; j++) {
-                    if (
-                      document.getElementById(workarr1[j]).value == "" ||
-                      document.getElementById(workarr1[j]).value == null
-                    ) {
-                      document.getElementsByClassName("workerr1")[
-                        j
-                      ].innerHTML = `This field is required`;
-                      k1 = j;
-                      return false;
-                    }
-                  }
-                }
-              }
-              for (let i = 0; i < workarr2.length; i++) {
-                if (document.getElementById(workarr2[i]).value !== "") {
-                  console.log("entered");
-                  for (let j = 0; j < workarr2.length; j++) {
-                    if (
-                      document.getElementById(workarr2[j]).value == "" ||
-                      document.getElementById(workarr2[j]).value == null
-                    ) {
-                      document.getElementsByClassName("workerr2")[
-                        j
-                      ].innerHTML = `This field is required`;
-                      k2 = j;
-                      return false;
-                    }
-                  }
-                }
-              }
-              for (let i = 0; i < workarr3.length; i++) {
-                if (document.getElementById(workarr3[i]).value !== "") {
-                  console.log("entered");
-                  for (let j = 0; j < workarr3.length; j++) {
-                    if (
-                      document.getElementById(workarr3[j]).value == "" ||
-                      document.getElementById(workarr3[j]).value == null
-                    ) {
-                      document.getElementsByClassName("workerr3")[
-                        j
-                      ].innerHTML = `This field is required`;
-                      k3 = j;
-                      return false;
-                    }
-                  }
-                }
-              }
-              // section4
-              //for option check
-              console.log("section4");
+      <fieldset class="form-control" style="width: 850px">
+        <legend><b>Preferences</b></legend>
 
-              let check1 = document.getElementById(lan[0]);
-              if (check1.checked) {
-                console.log("ck1");
-                let read = document.getElementById("read1");
-                let write = document.getElementById("write1");
-                let speak = document.getElementById("speak1");
-                if (!read.checked && !write.checked && !speak.checked) {
-                  document.getElementById(
-                    "print"
-                  ).innerHTML = `please choose option of ${lan[0]}`;
-                  return false;
-                }
-              }
-              let check2 = document.getElementById(lan[1]);
-              if (check2.checked) {
-                console.log("ck2");
-                let read = document.getElementById("read2");
-                let write = document.getElementById("write2");
-                let speak = document.getElementById("speak2");
-                if (!read.checked && !write.checked && !speak.checked) {
-                  console.log("noo");
-                  document.getElementById(
-                    "print"
-                  ).innerHTML = `please choose option of ${lan[1]}`;
-                  return false;
-                }
-              }
-              let check3 = document.getElementById(lan[2]);
-              if (check3.checked) {
-                console.log("ck3");
-                let read = document.getElementById("read3");
-                let write = document.getElementById("write3");
-                let speak = document.getElementById("speak3");
-                if (!read.checked && !write.checked && !speak.checked) {
-                  document.getElementById(
-                    "print"
-                  ).innerHTML = `please choose option of ${lan[2]}`;
-                  return false;
-                }
-              }
-              //for main language check
-              let rd1 = document.getElementById("read1");
-              let wr1 = document.getElementById("write1");
-              let sp1 = document.getElementById("speak1");
-              if (rd1.checked || wr1.checked || sp1.checked) {
-                let check1 = document.getElementById(lan[0]);
-                if (!check1.checked) {
-                  document.getElementById(
-                    "print"
-                  ).innerHTML = `please choose Main option of read,write & speak`;
-                  return false;
-                }
-              }
-              let rd2 = document.getElementById("read2");
-              let wr2 = document.getElementById("write2");
-              let sp2 = document.getElementById("speak2");
-              if (rd2.checked || wr2.checked || sp2.checked) {
-                let check2 = document.getElementById(lan[1]);
-                if (!check2.checked) {
-                  document.getElementById(
-                    "print"
-                  ).innerHTML = `please choose Main option of read,write & speak`;
-                  return false;
-                }
-              }
-              let rd3 = document.getElementById("read3");
-              let wr3 = document.getElementById("write3");
-              let sp3 = document.getElementById("speak3");
-              if (rd3.checked || wr3.checked || sp3.checked) {
-                let check3 = document.getElementById(lan[2]);
-                if (!check3.checked) {
-                  document.getElementById(
-                    "print"
-                  ).innerHTML = `please choose Main option of read,write & speak`;
-                  return false;
-                }
-              }
-              //section 5
-              //for level check
-              let tech1 = document.getElementById(tech[0]);
-              if (tech1.checked) {
-                let level = document.forms["myForm"]["level1"].value;
-                if (level === "") {
-                  text = "plz select the level of technology!!";
-                  document.getElementById("showmsg").innerHTML = text;
-                  return false;
-                }
-              }
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <label for="location" class="form-label"
+                >Preferred Location :</label
+              >
+              <select class="custom-select" id="location" name="preloc">
+                <option value="Mumbai" name="preloc">Mumbai</option>
+                <option value="Ahmedabad" name="preloc">Ahmedabad</option>
+                <option value="Surat" name="preloc">Surat</option>
+                <option value="Rajkot" name="preloc">Rajkot</option>
+              </select>
+            </div>
 
-              let tech2 = document.getElementById(tech[1]);
-              if (tech2.checked) {
-                let level = document.forms["myForm"]["level2"].value;
-                if (level === "") {
-                  text = "plz select the level of technology!!";
-                  document.getElementById("showmsg").innerHTML = text;
-                  return false;
-                }
-              }
-              let tech3 = document.getElementById(tech[2]);
-              if (tech3.checked) {
-                let level = document.forms["myForm"]["level3"].value;
-                if (level === "") {
-                  text = "plz select the level of technology!!";
-                  document.getElementById("showmsg").innerHTML = text;
-                  return false;
-                }
-              }
-              let tech4 = document.getElementById(tech[3]);
-              if (tech4.checked) {
-                let level = document.forms["myForm"]["level4"].value;
-                if (level === "") {
-                  text = "plz select the level of technology!!";
-                  document.getElementById("showmsg").innerHTML = text;
-                  return false;
-                }
-              }
-              //for technology checked
-              let level1 = document.forms["myForm"]["level1"].value;
-              console.log(level1);
-              if (level1 !== "") {
-                console.log("enter in condition1");
-                let tech1 = document.getElementById(tech[0]);
-                if (!tech1.checked) {
-                  text = "plz select the technology first!!";
-                  document.getElementById("showmsg").innerHTML = text;
-                  return false;
-                }
-              }
+            <div class="col">
+              <label for="Notice period">Notice period</label>
+              <input
+                type="text"
+                class="form-control"
+                id="notice"
+                name="notice"
+              />
+              <p class="msg"></p>
+              <label for="Expected CTC">Expected CTC</label>
+              <input type="text" class="form-control" id="exctc" name="exctc" />
+              <p class="msg"></p>
+              <label for="Current CTC">Current CTC</label>
+              <input
+                type="text"
+                class="form-control"
+                id="curctc"
+                name="curctc"
+              />
+              <p class="msg"></p>
+            </div>
 
-              let level2 = document.forms["myForm"]["level2"].value;
-              console.log(level2);
-              if (level2 !== "") {
-                console.log("enter in condition2");
-                let tech2 = document.getElementById(tech[1]);
-                if (!tech2.checked) {
-                  text = "plz select the technology first!!";
-                  document.getElementById("showmsg").innerHTML = text;
-                  return false;
-                }
-              }
+            <div class="col">
+              <label for="department" class="form-label">Department</label>
+              <select class="custom-select" id="department" name="depa">
+                <option value="Development" name="depa">Development</option>
+                <option value="Design" name="depa">Design</option>
+                <option value="Marketing" name="depa">Marketing</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <br />
+      <br />
+      <input
+        type="submit"
+        class="btn btn-danger"
+        name="submit"
+        id="submit"
+        value="Submit"
+      />
+      <!-- <input type="reset" class="btn btn-danger" value="Reset" /> -->
+      <br />
+      <br />
+    </form>
 
-              let level3 = document.forms["myForm"]["level3"].value;
-              console.log(level3);
-              if (level3 !== "") {
-                console.log("enter in condition3");
-                let tech3 = document.getElementById(tech[2]);
-                if (!tech3.checked) {
-                  console.log("not enter?");
-                  text = "plz select the technology first!!";
-                  document.getElementById("showmsg").innerHTML = text;
-                  return false;
-                }
-              }
-              let level4 = document.forms["myForm"]["level4"].value;
-              console.log(level4);
-              if (level4 !== "") {
-                console.log("enter in condition4");
-                let tech4 = document.getElementById(tech[3]);
-                if (!tech4.checked) {
-                  text = "plz select the technology first!!";
-                  document.getElementById("showmsg").innerHTML = text;
-                  return false;
-                }
-              }
-              // section 6
-              for (let i = 0; i < ref1.length; i++) {
-                if (document.getElementById(ref1[i]).value !== "") {
-                  console.log(i);
-                  console.log("entered");
-                  console.log(document.getElementById(ref1[i]).value);
-                  for (let j = 0; j < ref1.length; j++) {
-                    if (
-                      document.getElementById(ref1[j]).value == "" ||
-                      document.getElementById(ref1[j]).value == null
-                    ) {
-                      document.getElementsByClassName("ref1")[
-                        j
-                      ].innerHTML = `This field is required`;
-                      r1 = j;
-                      return false;
-                    }
-                  }
-                }
-              }
-              for (let i = 0; i < ref2.length; i++) {
-                if (document.getElementById(ref2[i]).value !== "") {
-                  console.log(i);
-                  console.log("entered");
-                  console.log(document.getElementById(ref2[i]).value);
-                  for (let j = 0; j < ref2.length; j++) {
-                    if (
-                      document.getElementById(ref2[j]).value == "" ||
-                      document.getElementById(ref2[j]).value == null
-                    ) {
-                      document.getElementsByClassName("ref1")[
-                        j
-                      ].innerHTML = `This field is required`;
-                      r2 = j;
-                      return false;
-                    }
-                  }
-                }
-              }
-              for (let i = 0; i < ref3.length; i++) {
-                if (document.getElementById(ref3[i]).value !== "") {
-                  console.log(i);
-                  console.log("entered");
-                  console.log(document.getElementById(ref3[i]).value);
-                  for (let j = 0; j < ref3.length; j++) {
-                    if (
-                      document.getElementById(ref3[j]).value == "" ||
-                      document.getElementById(ref3[j]).value == null
-                    ) {
-                      document.getElementsByClassName("ref1")[
-                        j
-                      ].innerHTML = `This field is required`;
-                      r3 = j;
-                      return false;
-                    }
-                  }
-                }
-              }
-              //section 7
-              let show;
-              for (let i = 0; i < pref.length; i++) {
-                console.log(i);
-                console.log(pref[i]);
-                if (
-                  document.getElementById(pref[i]).value == "" ||
-                  document.getElementById(pref[i]).value == null
-                ) {
-                  document.getElementsByClassName("msg")[
-                    i
-                  ].innerHTML = `This field is required`;
-                  m = i;
-                  return false;
-                }
-              }
-              let checknum = [
-                "fname",
-                "lname",
-                "designation",
-                "city",
-                "board1",
-                "board2",
-                "course1",
-                "university1",
-                "course2",
-                "university2",
-              ];
-              for (let i = 0; i < checknum.length; i++) {
-                var hasNumber = /\d/;
-                let id = document.getElementById(checknum[i]).value;
-                if (hasNumber.test(id)) {
-                  console.log("define");
-                  console.log(id);
-                  document.getElementsByClassName("error")[
-                    i
-                  ].innerHTML = `Number is not Allowed!!`;
-                  j = i;
-                  return false;
-                }
-              }
-              let checkalpha = [
-                "number",
-                "py1",
-                "pecentage1",
-                "py2",
-                "pecentage2",
-                "py11",
-                "pecentage11",
-                "py22",
-                "pecentage22",
-              ];
-              for (let i = 0; i < checkalpha.length; i++) {
-                var hasalpha = /[^a-z\d]/i;
-                let id = document.getElementById(checkalpha[i]).value;
-                if (hasalpha.test(id)) {
-                  console.log("define");
-                  console.log(id);
-                  document.getElementsByClassName("error")[
-                    i
-                  ].innerHTML = `Alphabets is not Allowed!!`;
-                  j = i;
-                  return false;
-                }
-              }
-              return true;
+    <script type="text/javascript">
+      $(document).on("keypress", "input,select", function (e) {
+        if (e.which == 13) {
+          e.preventDefault();
+          var $next = $("[tabIndex=" + (+this.tabIndex + 1) + "]");
+          console.log($next.length);
+          if (!$next.length) {
+            $next = $("[tabIndex=1]");
+          }
+          $next.focus().click();
+        }
+      });
+      let j = 0;
+      let m = 0;
+      let k1 = 0;
+      let k2 = 0;
+      let k3 = 0;
+      let r1 = 0,
+        r2 = 0,
+        r3 = 0;
+      let arr = [
+        "fname",
+        "lname",
+        "designation",
+        "dob",
+        "email",
+        "number",
+        "city",
+        "zipcode",
+        "add1",
+        "add2",
+      ];
+      let ssc = ["board1", "py1", "pecentage1"];
+      let hsc = ["board2", "py2", "pecentage2"];
+      let bachelor = ["course1", "py11", "pecentage11"];
+      let master = ["course2", "py22", "pecentage22"];
+      let pref = ["notice", "exctc", "curctc"];
+      let ref1 = ["name1", "mobileno1", "rel1"];
+      let ref2 = ["name2", "mobileno2", "rel2"];
+      let ref3 = ["name3", "mobileno3", "rel3"];
+      let workarr1 = ["companyname1", "designation1", "date11", "date12"];
+      let workarr2 = ["companyname2", "designation2", "date21", "date22"];
+      let workarr3 = ["companyname3", "designation3", "date31", "date32"];
+      let lan = ["hindi", "eng", "guj"];
+      let tech = ["php", "mysql", "laravel", "oracle"];
+
+      function validateForm() {
+        let date = document.getElementsByClassName("duration");
+        let date1 = document.getElementsByClassName("duration").length;
+        // console.log(`date : `);
+        // console.log(date);
+        // console.log(date1);
+        for (let i = 0; i < date.length; i++) {
+          let dateString = new Date(date[i].value);
+          // console.log(dateString);
+          if (!isNaN(dateString.getTime())) {
+            let day = dateString.getDate();
+            // console.log(day);
+            day = day < 10 ? "0" + day : day;
+            let month = dateString.getMonth() + 1;
+            month = month < 10 ? "0" + month : month;
+            const year = dateString.getFullYear();
+            const resultDate = `${year}/${day}/${month}`;
+            // console.log(resultDate);
+            date[i].value = resultDate;
+          }
+        }
+        document.getElementsByClassName("error")[j].innerHTML = "";
+        document.getElementsByClassName("ssc")[j].innerHTML = "";
+        document.getElementsByClassName("hsc")[j].innerHTML = "";
+        document.getElementsByClassName("bachelor")[j].innerHTML = "";
+        document.getElementsByClassName("master")[j].innerHTML = "";
+        document.getElementsByClassName("msg")[m].innerHTML = "";
+        document.getElementsByClassName("workerr1")[k1].innerHTML = "";
+        document.getElementsByClassName("workerr2")[k2].innerHTML = "";
+        document.getElementsByClassName("workerr3")[k3].innerHTML = "";
+        document.getElementsByClassName("ref1")[r1].innerHTML = "";
+        document.getElementsByClassName("ref2")[r2].innerHTML = "";
+        document.getElementsByClassName("ref3")[r3].innerHTML = "";
+        let gender = document.forms["myForm"]["gender"].value;
+
+        let text;
+        for (let i = 0; i < arr.length; i++) {
+          // console.log(i);
+          // console.log(arr[i]);
+          if (
+            document.getElementById(arr[i]).value == "" ||
+            document.getElementById(arr[i]).value == null
+          ) {
+            document.getElementsByClassName("error")[
+              i
+            ].innerHTML = `This field is required`;
+            j = i;
+            return false;
+          }
+          if (i == 9) {
+            if (gender == "") {
+              text = "Must be filled out this Field";
+              document.getElementById("p13").innerHTML = text;
+              return false;
             }
-
-            function ValidateEmail(email) {
-              if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-                return true;
-              } else {
-                text = "Please Enter Valid Email";
-                document.getElementById("p5").innerHTML = text;
+          }
+          if (arr[i] == "email") {
+            ValidateEmail(document.getElementById(arr[i]).value);
+            if (ValidateEmail(document.getElementById(arr[i]).value) != true) {
+              return false;
+            }
+          }
+          if (arr[i] == "number") {
+            isNumber(document.getElementById(arr[i]).value);
+            if (isNumber(document.getElementById(arr[i]).value) != true) {
+              return false;
+            }
+          }
+          if (arr[i] == "dob") {
+            let dateObj = new Date(document.getElementById(arr[i]).value);
+            console.log(dateObj);
+            let day = dateObj.getDate();
+            console.log(day);
+            day = day < 10 ? "0" + day : day;
+            let month = dateObj.getMonth() + 1;
+            month = month < 10 ? "0" + month : month;
+            const year = dateObj.getFullYear();
+            const resultDate = `${year}-${day}-${month}`;
+            console.log("data is");
+            console.log(resultDate);
+            document.getElementById("dob").value = resultDate;
+          }
+        }
+        //section 2
+        for (let i = 0; i < ssc.length; i++) {
+          if (document.getElementById(ssc[i]).value !== "") {
+            for (let j = 0; j < ssc.length; j++) {
+              if (
+                document.getElementById(ssc[j]).value == "" ||
+                document.getElementById(ssc[j]).value == null
+              ) {
+                document.getElementsByClassName("ssc")[
+                  j
+                ].innerHTML = `This field is required`;
+                e1 = j;
                 return false;
               }
             }
-
-            function isNumber(number) {
-              if (number.length < 10 || number.length > 10) {
-                text = " Please Enter 10 Digit Mobile No";
-                document.getElementById("p6").innerHTML = text;
-                return false;
-              }
-              if (/^\d{10}$/.test(number)) {
-                return true;
-              } else {
-                text = "Please Enter only number";
-                document.getElementById("p6").innerHTML = text;
+          }
+        }
+        for (let i = 0; i < hsc.length; i++) {
+          if (document.getElementById(hsc[i]).value !== "") {
+            for (let j = 0; j < hsc.length; j++) {
+              if (
+                document.getElementById(hsc[j]).value == "" ||
+                document.getElementById(hsc[j]).value == null
+              ) {
+                document.getElementsByClassName("hsc")[
+                  j
+                ].innerHTML = `This field is required`;
+                e2 = j;
                 return false;
               }
             }
-          </script>
-</body>
+          }
+        }
+        for (let i = 0; i < bachelor.length; i++) {
+          if (document.getElementById(bachelor[i]).value !== "") {
+            for (let j = 0; j < bachelor.length; j++) {
+              if (
+                document.getElementById(bachelor[j]).value == "" ||
+                document.getElementById(bachelor[j]).value == null
+              ) {
+                document.getElementsByClassName("bachelor")[
+                  j
+                ].innerHTML = `This field is required`;
+                e3 = j;
+                return false;
+              }
+            }
+          }
+        }
+        for (let i = 0; i < master.length; i++) {
+          if (document.getElementById(master[i]).value !== "") {
+            for (let j = 0; j < master.length; j++) {
+              if (
+                document.getElementById(master[j]).value == "" ||
+                document.getElementById(master[j]).value == null
+              ) {
+                document.getElementsByClassName("master")[
+                  j
+                ].innerHTML = `This field is required`;
+                e4 = j;
+                return false;
+              }
+            }
+          }
+        }
+        //section 3
+        for (let i = 0; i < workarr1.length; i++) {
+          if (document.getElementById(workarr1[i]).value !== "") {
+            // console.log(i);
+            // console.log("entered");
+            // console.log(document.getElementById(workarr1[i]).value);
+            for (let j = 0; j < workarr1.length; j++) {
+              if (
+                document.getElementById(workarr1[j]).value == "" ||
+                document.getElementById(workarr1[j]).value == null
+              ) {
+                document.getElementsByClassName("workerr1")[
+                  j
+                ].innerHTML = `This field is required`;
+                k1 = j;
+                return false;
+              }
+            }
+          }
+        }
+        for (let i = 0; i < workarr2.length; i++) {
+          if (document.getElementById(workarr2[i]).value !== "") {
+            // console.log("entered");
+            for (let j = 0; j < workarr2.length; j++) {
+              if (
+                document.getElementById(workarr2[j]).value == "" ||
+                document.getElementById(workarr2[j]).value == null
+              ) {
+                document.getElementsByClassName("workerr2")[
+                  j
+                ].innerHTML = `This field is required`;
+                k2 = j;
+                return false;
+              }
+            }
+          }
+        }
+        for (let i = 0; i < workarr3.length; i++) {
+          if (document.getElementById(workarr3[i]).value !== "") {
+            // console.log("entered");
+            for (let j = 0; j < workarr3.length; j++) {
+              if (
+                document.getElementById(workarr3[j]).value == "" ||
+                document.getElementById(workarr3[j]).value == null
+              ) {
+                document.getElementsByClassName("workerr3")[
+                  j
+                ].innerHTML = `This field is required`;
+                k3 = j;
+                return false;
+              }
+            }
+          }
+        }
+        // section4
+        //for option check
+        // console.log("section4");
 
+        let check1 = document.getElementById(lan[0]);
+        if (check1.checked) {
+          // console.log("ck1");
+          let read = document.getElementById("read1");
+          let write = document.getElementById("write1");
+          let speak = document.getElementById("speak1");
+          if (!read.checked && !write.checked && !speak.checked) {
+            document.getElementById(
+              "print"
+            ).innerHTML = `please choose option of ${lan[0]}`;
+            return false;
+          }
+        }
+        let check2 = document.getElementById(lan[1]);
+        if (check2.checked) {
+          // console.log("ck2");
+          let read = document.getElementById("read2");
+          let write = document.getElementById("write2");
+          let speak = document.getElementById("speak2");
+          if (!read.checked && !write.checked && !speak.checked) {
+            // console.log("noo");
+            document.getElementById(
+              "print"
+            ).innerHTML = `please choose option of ${lan[1]}`;
+            return false;
+          }
+        }
+        let check3 = document.getElementById(lan[2]);
+        if (check3.checked) {
+          // console.log("ck3");
+          let read = document.getElementById("read3");
+          let write = document.getElementById("write3");
+          let speak = document.getElementById("speak3");
+          if (!read.checked && !write.checked && !speak.checked) {
+            document.getElementById(
+              "print"
+            ).innerHTML = `please choose option of ${lan[2]}`;
+            return false;
+          }
+        }
+        //for main language check
+        let rd1 = document.getElementById("read1");
+        let wr1 = document.getElementById("write1");
+        let sp1 = document.getElementById("speak1");
+        if (rd1.checked || wr1.checked || sp1.checked) {
+          let check1 = document.getElementById(lan[0]);
+          if (!check1.checked) {
+            document.getElementById(
+              "print"
+            ).innerHTML = `please choose Main option of read,write & speak`;
+            return false;
+          }
+        }
+        let rd2 = document.getElementById("read2");
+        let wr2 = document.getElementById("write2");
+        let sp2 = document.getElementById("speak2");
+        if (rd2.checked || wr2.checked || sp2.checked) {
+          let check2 = document.getElementById(lan[1]);
+          if (!check2.checked) {
+            document.getElementById(
+              "print"
+            ).innerHTML = `please choose Main option of read,write & speak`;
+            return false;
+          }
+        }
+        let rd3 = document.getElementById("read3");
+        let wr3 = document.getElementById("write3");
+        let sp3 = document.getElementById("speak3");
+        if (rd3.checked || wr3.checked || sp3.checked) {
+          let check3 = document.getElementById(lan[2]);
+          if (!check3.checked) {
+            document.getElementById(
+              "print"
+            ).innerHTML = `please choose Main option of read,write & speak`;
+            return false;
+          }
+        }
+        //section 5
+        //for level check
+        let tech1 = document.getElementById(tech[0]);
+        if (tech1.checked) {
+          let level = document.forms["myForm"]["level1"].value;
+          if (level === "") {
+            text = "plz select the level of technology!!";
+            document.getElementById("showmsg").innerHTML = text;
+            return false;
+          }
+        }
+
+        let tech2 = document.getElementById(tech[1]);
+        if (tech2.checked) {
+          let level = document.forms["myForm"]["level2"].value;
+          if (level === "") {
+            text = "plz select the level of technology!!";
+            document.getElementById("showmsg").innerHTML = text;
+            return false;
+          }
+        }
+        let tech3 = document.getElementById(tech[2]);
+        if (tech3.checked) {
+          let level = document.forms["myForm"]["level3"].value;
+          if (level === "") {
+            text = "plz select the level of technology!!";
+            document.getElementById("showmsg").innerHTML = text;
+            return false;
+          }
+        }
+        let tech4 = document.getElementById(tech[3]);
+        if (tech4.checked) {
+          let level = document.forms["myForm"]["level4"].value;
+          if (level === "") {
+            text = "plz select the level of technology!!";
+            document.getElementById("showmsg").innerHTML = text;
+            return false;
+          }
+        }
+        //for technology checked
+        let level1 = document.forms["myForm"]["level1"].value;
+        // console.log(level1);
+        if (level1 !== "") {
+          // console.log("enter in condition1");
+          let tech1 = document.getElementById(tech[0]);
+          if (!tech1.checked) {
+            text = "plz select the technology first!!";
+            document.getElementById("showmsg").innerHTML = text;
+            return false;
+          }
+        }
+
+        let level2 = document.forms["myForm"]["level2"].value;
+        // console.log(level2);
+        if (level2 !== "") {
+          // console.log("enter in condition2");
+          let tech2 = document.getElementById(tech[1]);
+          if (!tech2.checked) {
+            text = "plz select the technology first!!";
+            document.getElementById("showmsg").innerHTML = text;
+            return false;
+          }
+        }
+
+        let level3 = document.forms["myForm"]["level3"].value;
+        // console.log(level3);
+        if (level3 !== "") {
+          // console.log("enter in condition3");
+          let tech3 = document.getElementById(tech[2]);
+          if (!tech3.checked) {
+            // console.log("not enter?");
+            text = "plz select the technology first!!";
+            document.getElementById("showmsg").innerHTML = text;
+            return false;
+          }
+        }
+        let level4 = document.forms["myForm"]["level4"].value;
+        // console.log(level4);
+        if (level4 !== "") {
+          // console.log("enter in condition4");
+          let tech4 = document.getElementById(tech[3]);
+          if (!tech4.checked) {
+            text = "plz select the technology first!!";
+            document.getElementById("showmsg").innerHTML = text;
+            return false;
+          }
+        }
+        // section 6
+        for (let i = 0; i < ref1.length; i++) {
+          if (document.getElementById(ref1[i]).value !== "") {
+            // console.log(i);
+            // console.log("entered");
+            // console.log(document.getElementById(ref1[i]).value);
+            for (let j = 0; j < ref1.length; j++) {
+              if (
+                document.getElementById(ref1[j]).value == "" ||
+                document.getElementById(ref1[j]).value == null
+              ) {
+                document.getElementsByClassName("ref1")[
+                  j
+                ].innerHTML = `This field is required`;
+                r1 = j;
+                return false;
+              }
+            }
+          }
+        }
+        for (let i = 0; i < ref2.length; i++) {
+          if (document.getElementById(ref2[i]).value !== "") {
+            // console.log(i);
+            // console.log("entered");
+            // console.log(document.getElementById(ref2[i]).value);
+            for (let j = 0; j < ref2.length; j++) {
+              if (
+                document.getElementById(ref2[j]).value == "" ||
+                document.getElementById(ref2[j]).value == null
+              ) {
+                document.getElementsByClassName("ref1")[
+                  j
+                ].innerHTML = `This field is required`;
+                r2 = j;
+                return false;
+              }
+            }
+          }
+        }
+        for (let i = 0; i < ref3.length; i++) {
+          if (document.getElementById(ref3[i]).value !== "") {
+            // console.log(i);
+            // console.log("entered");
+            // console.log(document.getElementById(ref3[i]).value);
+            for (let j = 0; j < ref3.length; j++) {
+              if (
+                document.getElementById(ref3[j]).value == "" ||
+                document.getElementById(ref3[j]).value == null
+              ) {
+                document.getElementsByClassName("ref1")[
+                  j
+                ].innerHTML = `This field is required`;
+                r3 = j;
+                return false;
+              }
+            }
+          }
+        }
+        //section 7
+        let show;
+        for (let i = 0; i < pref.length; i++) {
+          console.log(i);
+          console.log(pref[i]);
+          if (
+            document.getElementById(pref[i]).value == "" ||
+            document.getElementById(pref[i]).value == null
+          ) {
+            document.getElementsByClassName("msg")[
+              i
+            ].innerHTML = `This field is required`;
+            m = i;
+            return false;
+          }
+        }
+        let checknum = [
+          "fname",
+          "lname",
+          "designation",
+          "city",
+          "board1",
+          "board2",
+          "course1",
+          "university1",
+          "course2",
+          "university2",
+        ];
+        for (let i = 0; i < checknum.length; i++) {
+          var hasNumber = /\d/;
+          let id = document.getElementById(checknum[i]).value;
+          if (hasNumber.test(id)) {
+            // console.log("define");
+            // console.log(id);
+            document.getElementsByClassName("error")[
+              i
+            ].innerHTML = `Number is not Allowed!!`;
+            j = i;
+            return false;
+          }
+        }
+        let checkalpha = [
+          "number",
+          "py1",
+          "pecentage1",
+          "py2",
+          "pecentage2",
+          "py11",
+          "pecentage11",
+          "py22",
+          "pecentage22",
+        ];
+        for (let i = 0; i < checkalpha.length; i++) {
+          var hasalpha = /[^a-z\d]/i;
+          let id = document.getElementById(checkalpha[i]).value;
+          if (hasalpha.test(id)) {
+            // console.log("define");
+            // console.log(id);
+            document.getElementsByClassName("error")[
+              i
+            ].innerHTML = `Alphabets is not Allowed!!`;
+            j = i;
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function ValidateEmail(email) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+          return true;
+        } else {
+          text = "Please Enter Valid Email";
+          document.getElementById("p5").innerHTML = text;
+          return false;
+        }
+      }
+
+      function isNumber(number) {
+        if (number.length < 10 || number.length > 10) {
+          text = " Please Enter 10 Digit Mobile No";
+          document.getElementById("p6").innerHTML = text;
+          return false;
+        }
+        if (/^\d{10}$/.test(number)) {
+          return true;
+        } else {
+          text = "Please Enter only number";
+          document.getElementById("p6").innerHTML = text;
+          return false;
+        }
+      }
+    </script>
+  </body>
 </html>

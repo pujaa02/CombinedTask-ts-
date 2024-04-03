@@ -21,7 +21,7 @@ route.post("/sch", (req, res) => {
   let search = jsonData["query"];
   // console.log(search);
   let str = search.replace(/(?=[$-/:-?{-~!"^_`\[\]])/gi, ",");
-  console.log(str);
+  // console.log(str);
   let val = str.split(",");
   // console.log(`str is ${val}`);
   // console.log(val.length);
@@ -30,7 +30,7 @@ route.post("/sch", (req, res) => {
     if (val[i].startsWith("_")) {
       let firstname = val[i].replace("_", "");
       fname.push(firstname);
-      console.log(fname);
+      // console.log(fname);
     }
     if (val[i].startsWith("^")) {
       let lastname = val[i].replace("^", "");
@@ -50,7 +50,7 @@ route.post("/sch", (req, res) => {
     }
     if (val[i].startsWith(":")) {
       let blood = val[i].replace(":", "");
-      bodyParser.push(blood);
+      bg.push(blood);
     }
   }
   let q1 = `select * from student_master26 where `;

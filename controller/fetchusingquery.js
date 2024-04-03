@@ -9,16 +9,16 @@ route.get("/fetch", checkAuth, (req, res) => {
   res.render("taskzero/home");
 });
 route.post("/fetch", async function (req, res) {
-  console.log("post");
+  // console.log("post");
   // const search = JSON.stringify(req.body);
   let jsonData = req.body;
-  console.log(jsonData);
+  // console.log(jsonData);
   let search = jsonData["query"];
-  console.log("search", search);
+  // console.log("search", search);
   let perPage = 20;
   let page = parseInt(req.query.page) || 1;
   const offset = (page - 1) * perPage;
-  console.log(search.search("limit"));
+  // console.log(search.search("limit"));
   // console.log("check", search.startsWith("delete"));
   if (search === "") {
     res.send("Please Write Query First");

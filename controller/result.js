@@ -24,7 +24,7 @@ route.get("/result", checkAuth, (req, res) => {
       con.query(q3, (err, result3) => {
         if (err) throw err;
         // console.log(result3, field);
-        console.log(result3[3]);
+        // console.log(result3[3]); 
         con.query(q4, (err, result4) => {
           if (err) throw err;
           // console.log(result4);

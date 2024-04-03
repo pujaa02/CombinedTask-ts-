@@ -29,13 +29,15 @@
   </body>
   <script>
     let curtime = document.getElementById("input").value;
-    let s1 = new Date(curtime).toLocaleDateString();
-    let s2 = new Date(curtime).toLocaleTimeString();
+    let s = new Date(curtime).toLocaleString();
+    // let s1 = new Date(curtime).toLocaleDateString();
+    // let s2 = new Date(curtime).toLocaleTimeString();
 
     function myFunction() {
-      console.log("calling");
-      console.log(curtime);
-      document.getElementById("demo").innerHTML = s1 + " " + s2;
+      // console.log("calling");
+      // console.log(curtime);
+      // document.getElementById("demo").innerHTML = s1 + " " + s2;
+      document.getElementById("demo").innerHTML = s;
     }
     var aryIanaTimeZones = Intl.supportedValuesOf("timeZone");
     // console.log(aryIanaTimeZones);
@@ -51,12 +53,12 @@
       fetchtime(value);
     }
     function fetchtime(value) {
-      console.log(value);
+      // console.log(value);
       let date = new Date(curtime);
-      console.log(date.toLocaleDateString());
-      console.log(date.toLocaleTimeString());
+      // console.log(date.toLocaleDateString());
+      // console.log(date.toLocaleTimeString());
       let strTime = date.toLocaleString("en-US", { timeZone: `${value}` });
-      console.log(value, strTime);
+      // console.log(value, strTime);
       document.getElementById("demo").innerHTML = strTime;
     }
   </script>

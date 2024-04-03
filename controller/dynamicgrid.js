@@ -11,9 +11,9 @@ route.get("/fetch2", checkAuth, (req, res) => {
 
 route.post("/fetch2", (req, res) => {
   let jsonData = req.body;
-  console.log(jsonData);
+  // console.log(jsonData);
   let search = jsonData["query"];
-  console.log(search);
+  // console.log(search);
   let perPage = 5;
   let page = parseInt(req.query.page) || 1;
   const offset = (page - 1) * perPage;
@@ -52,17 +52,19 @@ let fname, lname, email, city, bg;
 
 route.post("/view", (req, res) => {
   let data = JSON.stringify(req.body);
-  console.log(`data is : ${data}`);
+  // console.log(`data is : ${data}`);
   let jsonData = req.body;
-  console.log(jsonData);
+  // console.log(jsonData);
   fname = jsonData["fname"];
-  console.log(fname);
+  // console.log(fname);
   lname = jsonData["lname"];
   email = jsonData["email"];
   city = jsonData["city"];
   bg = jsonData["bg"];
+  //
   let opa = jsonData["opa"];
-  console.log(opa);
+  //opa define selected =>>> and / or
+  // console.log(opa);
   let perPage = 20;
   let page = parseInt(req.params.page) || 1;
   const offset = (page - 1) * perPage;
@@ -70,11 +72,12 @@ route.post("/view", (req, res) => {
   let q = `select * from student_master26 where firstname like '%${fname}%' ${opa} lastname like '%${lname}%' ${opa} email like '%${email}%' ${opa}  city like '%${city}%' ${opa} blood_group like '%${bg}%' limit ?,? ;`;
   con.query(q1);
   con.query(q1, (err, ans) => {
+    // console.log(ans);
     if (err) throw err;
     con.query(q, [offset, perPage], (err, result) => {
       if (err) throw err;
-      console.log("ans.length/20 : ");
-      console.log(ans.length / 20);
+      // console.log("ans.length/20 : ");
+      // console.log(ans.length / 20);
       res.render("taskone/data2", {
         users: result,
         page,
@@ -86,11 +89,11 @@ route.post("/view", (req, res) => {
 });
 
 route.get("/view/:page/:jsonData", checkAuth, (req, res) => {
-  console.log(`we are at pagination`);
+  // console.log(`we are at pagination`);
   let jsonData = req.params.jsonData;
   let data = JSON.parse(jsonData);
-  console.log(`In paging page : jsondata is : `);
-  console.log(data);
+  // console.log(`In paging page : jsondata is : `);
+  // console.log(data);
   fname = data.fname;
   // console.log(fname);
   lname = data.lname;
