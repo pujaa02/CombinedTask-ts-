@@ -34,14 +34,14 @@ function validateForm() {
 }
 const set = document.getElementById("set");
 let lt = window.location.href;
-console.log(lt);
+// console.log(lt);
 set.addEventListener("click", async () => {
   const check = validateForm();
-  console.log(lt.split("/")[3]);
+  // console.log(lt.split("/")[3]);
   if (check) {
     if (lt.substring(22).startsWith("secondpage")) {
       let mail = lt.split("/")[4];
-      console.log("mail", mail);
+      // console.log("mail", mail);
       var response;
       response = await fetch(`/updatepass/${mail}`, {
         method: "POST",
@@ -49,13 +49,13 @@ set.addEventListener("click", async () => {
           new FormData(document.getElementById("form"))
         ),
       });
-      console.log(response);
+      // console.log(response);
       var result2 = await response.json();
-      console.log(result2);
+      // console.log(result2);
       window.location.href = `http://localhost:5065/login`;
     } else {
       let code = lt.split("/")[4];
-      console.log("code", code);
+      // console.log("code", code);
       var response;
       response = await fetch(`/successreg/${code}`, {
         method: "POST",
@@ -63,9 +63,9 @@ set.addEventListener("click", async () => {
           new FormData(document.getElementById("form"))
         ),
       });
-      console.log(response);
+      // console.log(response);
       var result2 = await response.json();
-      console.log(result2);
+      // console.log(result2);
       window.location.href = `http://localhost:5065/login`;
     }
   }

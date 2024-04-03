@@ -19,7 +19,7 @@ route.get("/", (req, res) => {
 route.post("/register/:str", async (req, res) => {
   console.log("this is register post");
   let formData = req.body;
-//   console.log(formData);
+  console.log(formData);
   let str = req.params.str;
   fname = formData.fname;
   lname = formData.lname;
@@ -41,13 +41,13 @@ route.get("/create_password/:actcode", (req, res) => {
 //===================after insert data ================
 route.get("/afterregister/:str", (req, res) => {
   let actcode = req.params.str;
-//   console.log(actcode);
+  //   console.log(actcode);
   res.render("frontpage/activationpage", { lastid, actcode });
 });
 //================checktime while update password======================
 route.get("/checktime/:actcode", (req, res) => {
   let actcode = req.params.actcode;
-//   console.log(actcode);
+  //   console.log(actcode);
   let q1 = `select date_time from login where activatecode='${actcode}'`;
   con.query(q1, (err, result) => {
     if (err) throw err;
@@ -56,14 +56,14 @@ route.get("/checktime/:actcode", (req, res) => {
       let d1 = new Date();
       let d2 = new Date(result[0].date_time);
 
-    //   console.log(d1.getTime() - d2.getTime());
+      //   console.log(d1.getTime() - d2.getTime());
       var diff = (d1.getTime() - d2.getTime()) / 1000;
       var diffsec = d1.getSeconds() - d2.getSeconds();
       diff /= 60 * 60;
       let final = Math.round(diff);
       let final2 = Math.round(diffsec);
-    //   console.log(final, final2);
-      if (final2 <= 5 && final2 > 0) {
+      //   console.log(final, final2);
+      if (final <= 5 && final > 0) {
         res.json("0");
       } else {
         let q2 = `delete from login where activatecode='${actcode}'`;
@@ -96,17 +96,17 @@ function genesalt() {
 //===========regtration password set==============
 route.post("/successreg/:actcd", (req, res) => {
   let code = req.params.actcd;
-//   console.log("code", code);
+  //   console.log("code", code);
   let formData = req.body;
-//   console.log(formData);
+  //   console.log(formData);
 
   let pass = formData.pass;
 
   let salt = genesalt();
   let combine = pass + salt;
-//   console.log(combine);
+  //   console.log(combine);
   let finalpass = md5(combine);
-//   console.log(finalpass);
+  //   console.log(finalpass);
 
   let q4 = `update login set password='${finalpass}', salt='${salt}',status='active' where  activatecode='${code}'`;
   con.query(q4, (err, result1) => {
@@ -121,15 +121,15 @@ route.post("/successreg/:actcd", (req, res) => {
 route.post("/updatepass/:mail", (req, res) => {
   let mail = req.params.mail;
   let formData = req.body;
-//   console.log(formData);
-//   console.log("mail", mail);
+  //   console.log(formData);
+  //   console.log("mail", mail);
   pass = formData.pass;
 
   let salt = genesalt();
   let combine = pass + salt;
-//   console.log(combine);
+  //   console.log(combine);
   let finalpass = md5(combine);
-//   console.log(finalpass);
+  //   console.log(finalpass);
 
   let q1 = `update login set password='${finalpass}', salt='${salt}' where email='${mail}'`;
   con.query(q1, (err, result1) => {
@@ -150,9 +150,9 @@ route.get("/secondpage/:str", (req, res) => {
 
 var token;
 route.post("/loginpage", async (req, res) => {
-//   console.log("this is login post");
+  //   console.log("this is login post");
   let formData = req.body;
-//   console.log(formData);
+  //   console.log(formData);
   user = formData.user;
   pass = formData.pass;
   let combine;
@@ -166,7 +166,7 @@ route.post("/loginpage", async (req, res) => {
       //   console.log("match");
       combine = pass + result[0].salt;
       let resPassword = md5(combine);
-    //   console.log("res", res, "+++++++++++++++++++++++++++++++++");
+      //   console.log("res", res, "+++++++++++++++++++++++++++++++++");
       //   console.log("pass", result[0].password);
       if (resPassword == result[0].password) {
         // console.log("password is right");
@@ -192,7 +192,7 @@ route.get("/completelogin", checkAuth, (req, res) => {
   res.render("Home");
 });
 route.get("/redirect/:mail", checkAuth, async (req, res) => {
-//   console.log("redirect");
+  //   console.log("redirect");
   let mail = req.params.mail;
   let q6 = `select * from login where email='${mail}' `;
   // res.render("password");
