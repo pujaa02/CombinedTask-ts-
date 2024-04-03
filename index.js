@@ -6,7 +6,7 @@ const main = require("./routes/router");
 app.use(cookieParser());
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
-app.use(express.static(__dirname + "/img_videos"));
+// app.use(express.static(__dirname + "/img_videos"));
 
 let port = process.env.PORT || 5065;
 
