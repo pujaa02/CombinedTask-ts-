@@ -74,27 +74,27 @@
         count++;
         document.getElementById("score").innerHTML = count;
 
-        var opa = document.getElementById("opa");
-        var table = document.getElementById("tab");
+        let opa = document.getElementById("opa");
+        let table = document.getElementById("tab");
         let tds = document.querySelectorAll("#tab td");
 
         opa.setAttribute("id", "");
         opa.setAttribute("onClick", "");
 
-        var length = table.rows[0].cells.length;
+        let length = table.rows[0].cells.length;
         console.log(length);
-        var row_rand = Math.floor(Math.random() * length);
-        var col_rand = Math.floor(Math.random() * length);
+        let row_rand = Math.floor(Math.random() * length);
+        let col_rand = Math.floor(Math.random() * length);
         tds[row_rand * col_rand].setAttribute("id", "opa");
         opa = tds[row_rand * col_rand];
         opa.setAttribute("onClick", "append()");
 
         //set color----
 
-        var x = Math.floor(Math.random() * 225);
-        var y = Math.floor(Math.random() * 225);
-        var z = Math.floor(Math.random() * 225);
-        var bgColor = "rgb(" + x + "," + y + "," + z + ")";
+        let x = Math.floor(Math.random() * 225);
+        let y = Math.floor(Math.random() * 225);
+        let z = Math.floor(Math.random() * 225);
+        let bgColor = "rgb(" + x + "," + y + "," + z + ")";
         for (td of tds) {
           td.style.background = bgColor;
         }

@@ -17,20 +17,19 @@ route.get("/result", checkAuth, (req, res) => {
 
   con.query(q1, (err, result1) => {
     if (err) throw err;
-    // console.log(result1);
+  
     con.query(q2, (err, result2) => {
       if (err) throw err;
-      // console.log(result2);
+      
       con.query(q3, (err, result3) => {
         if (err) throw err;
-        // console.log(result3, field);
-        // console.log(result3[3]); 
+        
         con.query(q4, (err, result4) => {
           if (err) throw err;
-          // console.log(result4);
+          
           con.query(q5, (err, result5) => {
             if (err) throw err;
-            // console.log(result5);
+           
             res.render("result/result27", {
               users: result1,
               user2: result2,
@@ -58,28 +57,28 @@ route.get("/datares/:id", checkAuth, (req, res) => {
   let q6 = `  select student_master26.id,sum(exam_result.total_mark) as Alltotal from student_master26 join exam_result
     on student_master26.id=exam_result.stu_id  where student_master26.id=${id};`;
   let q7 = `select sub_name from subject_master;`;
-  //  con.query(q1, (err, result1) => {
+ 
   con.query(q1, (err, ans1) => {
     if (err) throw err;
-    // console.log(ans1);
+    
     con.query(q2, (err, ans2) => {
       if (err) throw err;
-      // console.log(ans2);
+      
       con.query(q3, (err, ans3) => {
         if (err) throw err;
-        // console.log(ans3);
+       
         con.query(q4, (err, ans4) => {
           if (err) throw err;
-          // console.log(ans4);
+         
           con.query(q5, (err, ans5) => {
             if (err) throw err;
-            // console.log(ans5);
+          
             con.query(q6, (err, ans6) => {
               if (err) throw err;
-              // console.log("Answer 6:", ans6);
+             
               con.query(q7, (err, ans7) => {
                 if (err) throw err;
-                // console.log(ans6);
+               
                 res.render("result/data27", {
                   key1: ans1,
                   key2: ans2,

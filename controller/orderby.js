@@ -23,9 +23,9 @@ route.get("/data", checkAuth, (req, res) => {
     (error, results) => {
       if (error) throw error;
 
-      // Fetch total count of data for pagination
+      
       con.query("SELECT COUNT(*) AS count FROM student_master26", (error) => {
-        // console.log(page);
+    
         if (error) throw error;
         res.render("order/orderpagination26", {
           users: results,

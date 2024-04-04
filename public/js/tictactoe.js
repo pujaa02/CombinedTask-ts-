@@ -40,11 +40,11 @@ const gamedrawn=()=>{
     msg.innerText=`Game Drawn`;
     msgContainer.classList.remove("hide");
     disabledbox();
-    // restart();
+   
 }
 const checkwinner =()=>{
     for(pattern of winPatterns){
-        // console.log(pattern);
+     
         var value1=boxes[pattern[0]].innerText;
         var value2=boxes[pattern[1]].innerText;
         var value3=boxes[pattern[2]].innerText;

@@ -36,7 +36,6 @@ route.get("/att/:fd", checkAuth, (req, res) => {
     m = 12;
     y = 2023;
   }
-  // let order = desc;
   let perPage = 20;
   let page = parseInt(req.query.page) || 1;
   const offset = (page - 1) * perPage;
@@ -62,7 +61,7 @@ route.get("/data/:fd", checkAuth, (req, res) => {
     m = 12;
     y = 2023;
   }
-  // let order = desc;
+  
   let perPage = 20;
   let page = parseInt(req.query.page) || 1;
   const offset = (page - 1) * perPage;

@@ -1,6 +1,6 @@
 const route = require("express").Router();
 var checkAuth = require("../middlewares/checkauth");
-// var con = require("../models/database");
+
 var get_data = require("../public/js/ajaxcityfetch/get_data");
 var get_city = require("../public/js/ajaxcityfetch/get_cities");
 

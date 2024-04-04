@@ -17,24 +17,21 @@ route.post("/sch", (req, res) => {
     city = [],
     bg = [];
   let jsonData = req.body;
-  // console.log(jsonData.query);
+  
   let search = jsonData["query"];
-  // console.log(typeof search);
-  // console.log(search);
+ 
   var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   if (format.test(`${search}`)) {
-    // console.log("matched");
+  
     let str = search.replace(/(?=[$-/:-?{-~!"^_`\[\]])/gi, ",");
-    // console.log(str);
+ 
     let val = str.split(",");
-    // console.log(`str is ${val}`);
-    // console.log(val.length);
-
+   
     for (var i = 0; i < val.length; i++) {
       if (val[i].startsWith("_")) {
         let firstname = val[i].replace("_", "");
         fname.push(firstname);
-        // console.log(fname);
+       
       }
       if (val[i].startsWith("^")) {
         let lastname = val[i].replace("^", "");
@@ -58,8 +55,7 @@ route.post("/sch", (req, res) => {
       }
     }
     let q1 = `select * from student_master26 where `;
-    // console.log(fname.length);
-    // console.log(fname);
+  
     if (fname.length >= 1) {
       for (let i = 0; i < fname.length; i++) {
         q1 += `firstname like '%${fname[i]}%' or `;
@@ -97,14 +93,9 @@ route.post("/sch", (req, res) => {
       q1 = q1.slice(0, q1.length - 3) + "and ";
     }
     q1 = q1.slice(0, q1.length - 4);
-    // console.log(q1);
 
     con.query(q1, (err, result) => {
       if (err) throw err;
-      // console.log(result);
-      // result = JSON.stringify(result);
-      // console.log(result);
-      // res.send("hello");
       res.render("specialchar/data.ejs", { users: result });
     });
   } else {

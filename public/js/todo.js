@@ -22,14 +22,14 @@ button.addEventListener("click", (e) => {
     span.appendChild(button);
     li.appendChild(span);
     ul.appendChild(li);
-    // console.log(string);
+    
     input.value = "";
 
     let allbtn = document.querySelectorAll(".delbtn");
     allbtn.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         var x = btn.parentElement.nodeName;
-        //   console.log(x);
+       
         var y = btn.parentNode;
         var z = y.parentNode;
         console.log(z);

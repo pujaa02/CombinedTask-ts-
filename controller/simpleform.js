@@ -44,7 +44,7 @@ route.post(
     let id;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      // return res.status(422).jsonp(errors.array())
+    
       const alert = errors.array();
       res.render("forminu/home", {
         alert,
@@ -52,7 +52,7 @@ route.post(
     }
     let jsondata = req.body;
 
-    // console.log(jsondata);
+    
 
     fname = req.body.fname;
     lname = req.body.lname;
@@ -76,21 +76,21 @@ route.post(
 
     lan1[1] = req.body.lan1;
     if (req.body.able1) {
-      // console.log("enter1");
+      
       lan1[2] = req.body.able1.toString();
     }
 
     lan2[1] = req.body.lan2;
     if (req.body.able2) {
-      // console.log("enter2========");
+      
       lan2[2] = req.body.able2.toString();
     }
     lan3[1] = req.body.lan3;
     if (req.body.able3) {
-      // console.log("enter3========");
+     
       lan3[2] = req.body.able3.toString();
     }
-    // console.log(basic_detail);
+  
 
     let tech1 = ["", "", ""];
     let tech2 = ["", "", ""];
@@ -134,14 +134,13 @@ route.post(
     pre[5] = req.body.depa;
 
     let q = `insert into emp_details(fname,lname,designation,email,phone,gender,rel_status,address1,address2,city,state,zipcode, bd) values ("${fname}","${lname}","${designation}","${email}","${phone}","${gender}","${rel_status}","${address1}","${address2}","${city}","${state}","${zipcode}","${bd}") `;
-    // console.log(q);
+   
     con.query(q, (err, result) => {
-      // console.log(q);
+      
       if (err) throw err;
-      // console.log("result is : ");
-      // console.log(result.insertId);
+     
       id = result.insertId;
-      // console.log(id);
+     
 
       let len = req.body.board_name;
       for (let i = 0; i < len.length; i++) {
@@ -152,10 +151,9 @@ route.post(
               Percentage) values('${id}','${edu[i]}','${req.body.board_name[i]}','${req.body.py[i]}','${req.body.percentage[i]}');`;
         if (req.body.board_name[i]) {
           con.query(q1, (err, result1) => {
-            // console.log(q1);
+          
             if (err) throw err;
-            // console.log("result is : ");
-            // console.log(result1);
+          
           });
         }
       }
@@ -166,10 +164,9 @@ route.post(
               company_name ,designation ,from_date, to_date) values('${id}','${req.body.companyname[i]}','${req.body.designation[i]}','${req.body.from[i]}','${req.body.to[i]}');`;
         if (req.body.companyname[i]) {
           con.query(q2, (err, result1) => {
-            // console.log(q2);
+           
             if (err) throw err;
-            // console.log("result is : ");
-            // console.log(result1);
+            
           });
         }
       }
@@ -182,24 +179,21 @@ route.post(
         lan1[0] = id;
         con.query(q3, [lan1], (err, result) => {
           if (err) throw err;
-          // console.log("result is : ");
-          // console.log(result);
+         
         });
       }
       if (req.body.lan2) {
         lan2[0] = id;
         con.query(q3, [lan2], (err, result) => {
           if (err) throw err;
-          // console.log("result is : ");
-          // console.log(result);
+         
         });
       }
       if (req.body.lan3) {
         lan3[0] = id;
         con.query(q3, [lan3], (err, result) => {
           if (err) throw err;
-          // console.log("result is : ");
-          // console.log(result);
+         
         });
       }
 
@@ -208,32 +202,28 @@ route.post(
       if (req.body.tech1) {
         con.query(q4, [tech1], (err, result) => {
           if (err) throw err;
-          // console.log("result is : ");
-          // console.log(result);
+         
         });
       }
       tech2[0] = id;
       if (req.body.tech2) {
         con.query(q4, [tech2], (err, result) => {
           if (err) throw err;
-          // console.log("result is : ");
-          // console.log(result);
+         
         });
       }
       tech3[0] = id;
       if (req.body.tech3) {
         con.query(q4, [tech3], (err, result) => {
           if (err) throw err;
-          // console.log("result is : ");
-          // console.log(result);
+        
         });
       }
       tech4[0] = id;
       if (req.body.tech4) {
         con.query(q4, [tech4], (err, result) => {
           if (err) throw err;
-          // console.log("result is : ");
-          // console.log(result);
+          
         });
       }
       //section ref
@@ -243,10 +233,9 @@ route.post(
               contact_number ,relation) values('${id}','${req.body.name[i]}','${req.body.mobileno[i]}','${req.body.rel[i]}');`;
         if (req.body.name[i]) {
           con.query(q5, (err, result1) => {
-            // console.log(q5);
+          
             if (err) throw err;
-            // console.log("result is : ");
-            // console.log(result1);
+           
           });
         }
       }
@@ -257,11 +246,9 @@ route.post(
       pre[0] = id;
       con.query(q6, [pre], (err, result) => {
         if (err) throw err;
-        // console.log("result is : ");
-        // console.log(result);
+        
       });
-      // res.render("show");
-      // res.send(`result id is : ${result.insertId} `);
+    
       res.render("forminu/fetchuser");
     });
   }
@@ -271,7 +258,7 @@ route.get("/alluser", checkAuth, (req, res) => {
 });
 route.get("/normalupdate/:id", checkAuth, async (req, res) => {
   let id = req.params.id;
-  // console.log(id);
+ 
 
   if (req.params.id) {
     let query = (str) => {
@@ -290,7 +277,7 @@ route.get("/normalupdate/:id", checkAuth, async (req, res) => {
     );
     if (count[0].lt >= 1) {
       let result = await query(`select * from emp_details where emp_id=${id};`);
-      // console.log(result);
+      
       let result1 = await query(`select * from edu_detail where emp_id=${id};`);
       let result2 = await query(
         `select * from work_experience where emp_id=${id};`
@@ -318,7 +305,7 @@ route.get("/normalupdate/:id", checkAuth, async (req, res) => {
       let arr1 = [];
       let arr2 = [];
       let arr3 = [];
-      // console.log(result3[0].language_know);
+     
 
       for (let i = 0; i < result3.length; i++) {
         if (result3[i]) {
@@ -337,9 +324,7 @@ route.get("/normalupdate/:id", checkAuth, async (req, res) => {
         }
       }
 
-      // console.log(lan);
-      // console.log(arr1, arr2, arr3);
-      // arr3.indexOf("speak") >= 0 ? console.log("hello") : console.log("nice");
+   
       res.render("forminu/update", {
         id,
         result,
@@ -393,7 +378,7 @@ route.post(
     let id = req.params.id;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      // return res.status(422).jsonp(errors.array())
+   
       const alert = errors.array();
       res.render("forminu/home", {
         alert,
@@ -401,16 +386,15 @@ route.post(
     }
     let jsondata = req.body;
 
-    // console.log(jsondata);
-
+   
     if (req.params.id) {
       let query = (str) => {
         return new Promise((resolve, reject) => {
           con.query(str, (err, result) => {
-            // console.log(str);
+          
             if (err) throw err;
             else {
-              // console.log(str);
+             
               resolve(result);
             }
           });
@@ -437,7 +421,7 @@ route.post(
           state='${state}',zipcode='${zipcode}',bd='${bd}'
           WHERE emp_id='${id}';`
       );
-      // console.log(emp_detail);
+    
       //==========section2=============
       let edu = ["ssc", "hsc", "bachelor", "master"];
       let len = req.body.board_name;
@@ -446,12 +430,12 @@ route.post(
       );
       console.log("arr6", arr6.length);
       for (let i = 0; i < len.length; i++) {
-        // console.log(i);
+       
         if (arr6[i]) {
           let edu_detail = await query(`UPDATE edu_detail
           SET Name_of_board_or_course='${req.body.board_name[i]}',Passing_year='${req.body.py[i]}',Percentage='${req.body.percentage[i]}'
           WHERE emp_id='${id}' and type_of_result='${edu[i]}' and edu_id='${arr6[i].edu_id}';`);
-          // console.log(edu_detail);
+     
         } else {
           if (len[i]) {
             let inser_edu = await query(`insert into edu_detail( emp_id,
@@ -466,8 +450,7 @@ route.post(
       let arr = await query(
         `select id as work_id from emp.work_experience where emp_id in(${id});`
       );
-      // console.log(arr);
-      // console.log(arr[0].work_id);
+     
 
       let wklen = req.body.companyname;
       for (let i = 0; i < wklen.length; i++) {
@@ -527,7 +510,7 @@ route.post(
       let arr5 = await query(
         `select id as tech_id from emp.know_techno where emp_id in(${id});`
       );
-      // console.log(arr5[0]);
+     
       for (let i = 0; i < tech.length; i++) {
         if (arr5[i]) {
           let tech_edit = await query(`UPDATE know_techno set

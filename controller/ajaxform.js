@@ -105,7 +105,7 @@ route.post(
       console.log("enter3========");
       lan3[2] = formData.able3.toString();
     }
-    // console.log(basic_detail);
+
     let tech1 = ["", "", ""];
     let tech2 = ["", "", ""];
     let tech3 = ["", "", ""];
@@ -141,7 +141,6 @@ route.post(
     ("${fname}","${lname}","${designation}","${email}","${phone}","${gender}","${rel_status}","${address1}","${address2}","${city}","${state}","${zipcode}","${bd}") `;
     console.log(q);
     con.query(q, (err, result) => {
-      // console.log(q);
       if (err) throw err;
       console.log("result is : ");
       console.log(result.insertId);
@@ -251,7 +250,7 @@ route.post(
         console.log("result is : ");
         console.log(result);
       });
-      // res.render("show");
+
       res.json(`result id is : ${result.insertId} `);
     });
   }
@@ -295,7 +294,6 @@ route.post(
     console.log("this is update post");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      // return res.status(422).jsonp(errors.array())
       const alert = errors.array();
       res.render("ajaxinup/home", {
         alert,
@@ -336,7 +334,7 @@ route.post(
           state='${state}',zipcode='${zipcode}',bd='${bd}'
           WHERE emp_id='${id}';`
       );
-      // console.log(emp_detail);
+
       //   //==========section2=============
       let edu = ["ssc", "hsc", "bachelor", "master"];
       let len = formData.board_name;
@@ -351,7 +349,6 @@ route.post(
           let edu_detail = await query(`UPDATE edu_detail
           SET Name_of_board_or_course='${formData.board_name[i]}',Passing_year='${formData.py[i]}',Percentage='${formData.percentage[i]}'
           WHERE emp_id='${id}' and type_of_result='${edu[i]}' and edu_id='${arr6[i].edu_id}';`);
-          // console.log(edu_detail);
         } else {
           if (len[i]) {
             let inser_edu = await query(`insert into edu_detail( emp_id,
@@ -366,8 +363,6 @@ route.post(
       let arr = await query(
         `select id as work_id from emp.work_experience where emp_id in(${id});`
       );
-      console.log(arr);
-      // console.log(arr[0].work_id);
 
       let wklen = formData.companyname;
       for (let i = 0; i < wklen.length; i++) {
@@ -469,7 +464,6 @@ route.post(
         SET prefered_location='${formData.preloc}', notice_period='${formData.notice}',expected_ctc='${formData.exctc}',current_ctc='${formData.curctc}',department='${formData.depa}'
         WHERE emp_id='${id}';`
       );
-      //   //end
     }
     res.json("data updated");
   }

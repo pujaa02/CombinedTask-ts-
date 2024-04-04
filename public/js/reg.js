@@ -52,17 +52,14 @@ const sub = document.getElementById("submit");
 sub.addEventListener("click", async () => {
   const check = validateForm();
   if (check) {
-    // console.log("checked");
+    
     const checkdata = await fetch(`/getData?email=${email.value}`);
     const result = await checkdata.json();
-    // console.log(result.length);
-    // console.log(result);
-    // let flag = true;
+    
     if (result.length > 0) {
-      // console.log("match");
-      // console.log("if fire");
+    
       document.getElementById("demo").innerHTML = "Email already Exists!!";
-      // flag = false;
+    
     } else {
       var response;
       response = await fetch(`/register/${str}`, {
@@ -71,9 +68,9 @@ sub.addEventListener("click", async () => {
           new FormData(document.getElementById("form"))
         ),
       });
-      // console.log(response);
+      
       const result = await response.json();
-      // console.log(result);
+     
       window.location.href = `http://localhost:5065/afterregister/${str}`;
     }
   }
