@@ -318,19 +318,26 @@ route.get("/normalupdate/:id", checkAuth, async (req, res) => {
       let arr1 = [];
       let arr2 = [];
       let arr3 = [];
+      // console.log(result3[0].language_know);
 
-      if (result3[0]) {
-        let str = result3[0].rws;
-        arr1 = str.split(",");
+      for (let i = 0; i < result3.length; i++) {
+        if (result3[i]) {
+          if (result3[i].language_know == "hindi") {
+            let str = result3[i].rws;
+            arr1 = str.split(",");
+          }
+          if (result3[i].language_know == "english") {
+            let str = result3[i].rws;
+            arr2 = str.split(",");
+          }
+          if (result3[i].language_know == "gujarati") {
+            let str = result3[i].rws;
+            arr3 = str.split(",");
+          }
+        }
       }
-      if (result3[1]) {
-        let str = result3[1].rws;
-        arr2 = str.split(",");
-      }
-      if (result3[2]) {
-        let str = result3[2].rws;
-        arr3 = str.split(",");
-      }
+
+      // console.log(lan);
       // console.log(arr1, arr2, arr3);
       // arr3.indexOf("speak") >= 0 ? console.log("hello") : console.log("nice");
       res.render("forminu/update", {

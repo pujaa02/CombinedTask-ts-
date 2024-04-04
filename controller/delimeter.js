@@ -23,7 +23,7 @@ route.post("/sch", (req, res) => {
   // console.log(search);
   var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   if (format.test(`${search}`)) {
-    console.log("matched");
+    // console.log("matched");
     let str = search.replace(/(?=[$-/:-?{-~!"^_`\[\]])/gi, ",");
     // console.log(str);
     let val = str.split(",");
