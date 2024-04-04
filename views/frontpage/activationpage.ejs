@@ -20,7 +20,7 @@
       const checkdata = await fetch(`/checktime/<%=actcode%>`);
       const result = await checkdata.json();
       // console.log(result.length);
-      console.log(result);
+      // console.log(result);
       if (result == "0") {
         document
           .getElementById("activate")

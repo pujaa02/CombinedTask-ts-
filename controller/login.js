@@ -17,9 +17,9 @@ route.get("/", (req, res) => {
 });
 //==========================  insert reg data ========================
 route.post("/register/:str", async (req, res) => {
-  console.log("this is register post");
+  // console.log("this is register post");
   let formData = req.body;
-  console.log(formData);
+  // console.log(formData);
   let str = req.params.str;
   fname = formData.fname;
   lname = formData.lname;
@@ -63,7 +63,7 @@ route.get("/checktime/:actcode", (req, res) => {
       let final = Math.round(diff);
       let final2 = Math.round(diffsec);
       //   console.log(final, final2);
-      if (final <= 5 && final > 0) {
+      if (final2 <= 50 && final2 > 0) {
         res.json("0");
       } else {
         let q2 = `delete from login where activatecode='${actcode}'`;
