@@ -13,6 +13,7 @@ const ajaxform = require("../controller/ajaxform");
 const fetchcity = require("../controller/fetchcity");
 const timestamp = require("../controller/timestamp");
 const login = require("../controller/login");
+const error = require("../controller/error");
 
 route.use(singletask);
 route.use(orderby);
@@ -28,5 +29,6 @@ route.use(fetchcity);
 route.use(timestamp);
 route.use(frame);
 route.use(login);
+route.use(error);
 
 module.exports = route;
