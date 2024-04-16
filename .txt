@@ -1,0 +1,27 @@
+{
+  "name": "7_3_24",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "express-validator": "^7.0.1",
+    "fastify-cookie": "^5.7.0",
+    "jsonwebtoken": "^9.0.2",
+    "md5": "^2.3.0",
+    "mysql2": "^3.9.2",
+    "path": "^0.12.7"
+  }
+}
