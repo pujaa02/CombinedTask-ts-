@@ -1,11 +1,13 @@
 import * as express from "express";
 let route = express.Router();
-import {Request,Response} from "express";
-import checkAuth from "../middlewares/checkauth"
-import con from "../models/database"
-const { check, validationResult } = require("express-validator");
+import { Request, Response } from "express";
+import checkAuth from "../middlewares/checkauth";
+import con from "../models/database";
+// const { check, validationResult } = require("express-validator");
+import { check, validationResult } from "express-validator";
 // import  { check, validationResult }  = require('express-validator');
 import parser from "body-parser";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
 route.use(parser.json());
 route.use(parser.urlencoded({ extended: false }));
 const urlencodedParser = parser.urlencoded({ extended: false });
@@ -27,10 +29,79 @@ route.get("/tech", checkAuth, techno);
 route.get("/ref", checkAuth, ref);
 route.get("/pre", checkAuth, pre);
 
-route.get("/inuajax", checkAuth, (req, res) => {
+interface FormData {
+  fname: string;
+  lname: string;
+  designa: string;
+  dob: string;
+  email: string;
+  number: string;
+  zipcode: string;
+  add1: string;
+  add2: string;
+  city: string;
+  state: string;
+  gender: string;
+  relstatus: string;
+  lan1: string;
+  able1?: boolean;
+  lan2: string;
+  able2?: boolean;
+  lan3: string;
+  able3?: boolean;
+  tech1: string;
+  level1: string;
+  tech2: string;
+  level2: string;
+  tech3: string;
+  level3: string;
+  tech4: string;
+  level4: string;
+  name1: string;
+  mobileno1: string;
+  rel1: string;
+  name2: string;
+  mobileno2: string;
+  rel2: string;
+  name3: string;
+  mobileno3: string;
+  rel3: string;
+  preloc: string;
+  notice: string;
+  exctc: string;
+  curctc: string;
+  depa: string;
+  board_name: string[];
+  py: string[];
+  percentage: string[];
+  companyname: string[];
+  designation: string[];
+  from: string[];
+  to: string[];
+  name: string[];
+  mobileno: string[];
+  rel: string[];
+}
+
+interface IStringArray extends Array<string | number | boolean> {}
+
+const query = (str: string): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    con.query(str, (err: any | null, result: any) => {
+      console.log(str);
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+route.get("/inuajax", checkAuth, (req: Request, res: Response) => {
   res.render("ajaxinup/home");
 });
-route.get("/update", checkAuth, (req, res) => {
+route.get("/update", checkAuth, (req: Request, res: Response) => {
   res.render("ajaxinup/fetchuser");
 });
 
@@ -49,7 +120,7 @@ route.post(
       .isLength({ min: 3 }),
     check("dob", "Enter date-of-birth in yyyy-mm-dd formate").isDate(),
     check("email", "Email is not valid").isEmail().normalizeEmail(),
-    check("number", "Please enter valid Mobile Number").isMobilePhone(),
+    // check("number", "Please enter valid Mobile Number").isMobilePhone(),
     check("zipcode", "zipcode length should be 6 characters").isLength({
       min: 6,
       max: 6,
@@ -63,36 +134,39 @@ route.post(
       max: 45,
     }),
   ],
-  (req, res) => {
+  (req: Request, res: Response) => {
     console.log("this is update post");
-    let formData = req.body;
+    const formData: FormData = req.body;
     console.log(formData);
-    let id;
+    let id: number;
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const alert = errors.array();
-      res.render("ajaxinup/home", {
-        alert,
-      });
+      return res.render("ajaxinup/home", { alert });
     }
 
-    fname = formData.fname;
-    lname = formData.lname;
-    designation = formData.designa;
-    email = formData.email;
-    phone = formData.number;
-    gender = formData.gender;
-    rel_status = formData.relstatus;
-    address1 = formData.add1;
-    address2 = formData.add2;
-    city = formData.city;
-    state = formData.state;
-    zipcode = formData.zipcode;
-    bd = formData.dob;
-    let edu = ["ssc", "hsc", "bachelor", "master"];
-    let lan1 = ["", "", ""];
-    let lan2 = ["", "", ""];
-    let lan3 = ["", "", ""];
+    const {
+      fname,
+      lname,
+      designa: designation,
+      email,
+      number: phone,
+      gender,
+      relstatus: rel_status,
+      add1: address1,
+      add2: address2,
+      city,
+      state,
+      zipcode,
+      dob: bd,
+    } = formData;
+
+    const edu = ["ssc", "hsc", "bachelor", "master"];
+
+    const lan1: IStringArray = ["", "", ""];
+    const lan2: IStringArray = ["", "", ""];
+    const lan3: IStringArray = ["", "", ""];
     lan1[1] = formData.lan1;
     if (formData.able1) {
       console.log("enter1");
@@ -109,10 +183,10 @@ route.post(
       lan3[2] = formData.able3.toString();
     }
 
-    let tech1 = ["", "", ""];
-    let tech2 = ["", "", ""];
-    let tech3 = ["", "", ""];
-    let tech4 = ["", "", ""];
+    const tech1: IStringArray = ["", "", ""];
+    const tech2: IStringArray = ["", "", ""];
+    const tech3: IStringArray = ["", "", ""];
+    const tech4: IStringArray = ["", "", ""];
     tech1[1] = formData.tech1;
     tech1[2] = formData.level1;
     tech2[1] = formData.tech2;
@@ -121,9 +195,10 @@ route.post(
     tech3[2] = formData.level3;
     tech4[1] = formData.tech4;
     tech4[2] = formData.level4;
-    let ref1 = ["", "", "", ""];
-    let ref2 = ["", "", "", ""];
-    let ref3 = ["", "", "", ""];
+
+    const ref1: IStringArray = ["", "", "", ""];
+    const ref2: IStringArray = ["", "", "", ""];
+    const ref3: IStringArray = ["", "", "", ""];
     ref1[1] = formData.name1;
     ref1[2] = formData.mobileno1;
     ref1[3] = formData.rel1;
@@ -133,53 +208,82 @@ route.post(
     ref3[1] = formData.name3;
     ref3[2] = formData.mobileno3;
     ref3[3] = formData.rel3;
-    let pre = ["", "", "", "", "", ""];
+
+    const pre: IStringArray = ["", "", "", "", "", ""];
     pre[1] = formData.preloc;
     pre[2] = formData.notice;
     pre[3] = formData.exctc;
     pre[4] = formData.curctc;
     pre[5] = formData.depa;
-    let q = `insert into
-    emp_details(fname,lname,designation,email,phone,gender,rel_status,address1,address2,city,state,zipcode, bd) values
-    ("${fname}","${lname}","${designation}","${email}","${phone}","${gender}","${rel_status}","${address1}","${address2}","${city}","${state}","${zipcode}","${bd}") `;
+
+    const q: string = `INSERT INTO emp_details (fname, lname, designation, email, phone, gender, rel_status, address1, address2, city, state, zipcode, bd) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const values = [
+      fname,
+      lname,
+      designation,
+      email,
+      phone,
+      gender,
+      rel_status,
+      address1,
+      address2,
+      city,
+      state,
+      zipcode,
+      bd,
+    ];
     console.log(q);
-    con.query(q, (err, result) => {
+
+    con.query(q, values, (err: any | null, result?: any) => {
       if (err) throw err;
-      console.log("result is : ");
-      console.log(result.insertId);
       id = result.insertId;
-      console.log(id);
-      let len = formData.board_name;
-      for (let i = 0; i < len.length; i++) {
-        let q1 = `insert into edu_detail( emp_id,type_of_result,Name_of_board_or_course,Passing_year,Percentage)values('${id}','${edu[i]}','${formData.board_name[i]}','${formData.py[i]}','${formData.percentage[i]}');`;
+      const len: number = formData.board_name.length;
+
+      for (let i = 0; i < len; i++) {
+        const q1 = `INSERT INTO edu_detail (emp_id, type_of_result, Name_of_board_or_course, Passing_year, Percentage) VALUES (?, ?, ?, ?, ?)`;
+        const eduValues = [
+          id,
+          edu[i],
+          formData.board_name[i],
+          formData.py[i],
+          formData.percentage[i],
+        ];
         if (formData.board_name[i]) {
-          con.query(q1, (err, result1) => {
+          con.query(q1, eduValues, (err, result1) => {
             console.log(q1);
             if (err) throw err;
-            console.log("result is : ");
+            console.log("result is: ");
             console.log(result1);
           });
         }
       }
-      let wklen = formData.companyname;
-      for (let i = 0; i < wklen.length; i++) {
-        let q2 = `insert into work_experience( emp_id,company_name ,designation ,from_date, to_date)
-    values('${id}','${formData.companyname[i]}','${formData.designation[i]}','${formData.from[i]}','${formData.to[i]}');`;
+
+      const wklen = formData.companyname.length;
+      for (let i = 0; i < wklen; i++) {
+        const q2 = `INSERT INTO work_experience (emp_id, company_name, designation, from_date, to_date) VALUES (?, ?, ?, ?, ?)`;
+        const workValues = [
+          id,
+          formData.companyname[i],
+          formData.designation[i],
+          formData.from[i],
+          formData.to[i],
+        ];
         if (formData.companyname[i]) {
-          con.query(q2, (err, result1) => {
+          con.query(q2, workValues, (err, result1) => {
             console.log(q2);
             if (err) throw err;
-            console.log("result is : ");
+            console.log("result is: ");
             console.log(result1);
           });
         }
       }
-      let q3 = `insert into language(emp_id ,language_know,rws) values(?)`;
+
+      const q3 = `INSERT INTO language (emp_id, language_know, rws) VALUES (?)`;
       if (formData.lan1) {
         lan1[0] = id;
         con.query(q3, [lan1], (err, result) => {
           if (err) throw err;
-          console.log("result is : ");
+          console.log("result is: ");
           console.log(result);
         });
       }
@@ -187,7 +291,7 @@ route.post(
         lan2[0] = id;
         con.query(q3, [lan2], (err, result) => {
           if (err) throw err;
-          console.log("result is : ");
+          console.log("result is: ");
           console.log(result);
         });
       }
@@ -195,7 +299,7 @@ route.post(
         lan3[0] = id;
         con.query(q3, [lan3], (err, result) => {
           if (err) throw err;
-          console.log("result is : ");
+          console.log("result is: ");
           console.log(result);
         });
       }
@@ -258,10 +362,11 @@ route.post(
     });
   }
 );
-route.get("/update/:id", checkAuth, (req, res) => {
+route.get("/update/:id", checkAuth, (req: Request, res: Response) => {
   let id = req.params.id;
   res.render("ajaxinup/home", { id });
 });
+
 route.post(
   "/update/:id",
   urlencodedParser,
@@ -277,7 +382,7 @@ route.post(
       .isLength({ min: 3 }),
     check("dob", "Enter date-of-birth in yyyy-mm-dd formate").isDate(),
     check("email", "Email is not valid").isEmail().normalizeEmail(),
-    check("number", "Please enter valid Mobile Number").isMobilePhone(),
+    // check("number", "Please enter valid Mobile Number").isMobilePhone(),
     check("zipcode", "zipcode length should be 6 characters").isLength({
       min: 6,
       max: 6,
@@ -291,123 +396,103 @@ route.post(
       max: 45,
     }),
   ],
-  async (req, res) => {
+  async (req: Request, res: Response) => {
     let id = req.params.id;
     console.log(id);
     console.log("this is update post");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const alert = errors.array();
-      res.render("ajaxinup/home", {
+      return res.render("ajaxinup/home", {
         alert,
       });
     }
-    let formData = req.body;
+    const formData: FormData = req.body;
     console.log(formData);
+
     if (req.params.id) {
-      let query = (str) => {
-        return new Promise((resolve, reject) => {
-          con.query(str, (err, result) => {
-            console.log(str);
-            if (err) throw err;
-            else {
-              resolve(result);
-            }
-          });
-        });
-      };
-      // =========section1===============
-      fname = formData.fname;
-      lname = formData.lname;
-      designation = formData.designa;
-      email = formData.email;
-      phone = formData.number;
-      gender = formData.gender;
-      rel_status = formData.relstatus;
-      address1 = formData.add1;
-      address2 = formData.add2;
-      city = formData.city;
-      state = formData.state;
-      zipcode = formData.zipcode;
-      bd = formData.dob;
-      let emp_detail = await query(
-        `UPDATE emp_details
-          SET fname='${fname}', lname='${lname}',designation='${designation}',email='${email}',phone='${phone}',gender='${gender}',
-          rel_status='${rel_status}',address1='${address1}',address2='${address2}',city='${city}',
-          state='${state}',zipcode='${zipcode}',bd='${bd}'
-          WHERE emp_id='${id}';`
-      );
+      // Section 1
+      const {
+        fname,
+        lname,
+        designa,
+        email,
+        number,
+        gender,
+        relstatus,
+        add1,
+        add2,
+        city,
+        state,
+        zipcode,
+        dob,
+      } = formData;
+      await query(`UPDATE emp_details
+        SET fname='${fname}', lname='${lname}', designation='${designa}', email='${email}', phone='${number}', gender='${gender}',
+        rel_status='${relstatus}', address1='${add1}', address2='${add2}', city='${city}', state='${state}', zipcode='${zipcode}', bd='${dob}'
+        WHERE emp_id='${id}';`);
 
-      //   //==========section2=============
-      let edu = ["ssc", "hsc", "bachelor", "master"];
-      let len = formData.board_name;
-      let arr6 = await query(
-        `select edu_id as edu_id from edu_detail where emp_id in(${id});`
+      // Section 2
+      const edu = ["ssc", "hsc", "bachelor", "master"];
+      const len = formData.board_name.length;
+      const eduDetails = await query(
+        `SELECT edu_id FROM edu_detail WHERE emp_id IN (${id});`
       );
-      console.log(arr6);
-      console.log(len.length);
-      for (let i = 0; i < len.length; i++) {
-        console.log(i);
-        if (arr6[i]) {
-          let edu_detail = await query(`UPDATE edu_detail
-          SET Name_of_board_or_course='${formData.board_name[i]}',Passing_year='${formData.py[i]}',Percentage='${formData.percentage[i]}'
-          WHERE emp_id='${id}' and type_of_result='${edu[i]}' and edu_id='${arr6[i].edu_id}';`);
+      for (let i = 0; i < len; i++) {
+        if (eduDetails[i]) {
+          await query(`UPDATE edu_detail
+            SET Name_of_board_or_course='${formData.board_name[i]}', Passing_year='${formData.py[i]}', Percentage='${formData.percentage[i]}'
+            WHERE emp_id='${id}' AND type_of_result='${edu[i]}' AND edu_id='${eduDetails[i].edu_id}';`);
         } else {
-          if (len[i]) {
-            let inser_edu = await query(`insert into edu_detail( emp_id,
-                type_of_result,
-                Name_of_board_or_course,
-                Passing_year,
-                Percentage) values('${id}','${edu[i]}','${formData.board_name[i]}','${formData.py[i]}','${formData.percentage[i]}');`);
-          }
-        }
-      }
-      //   //============section3============
-      let arr = await query(
-        `select id as work_id from emp.work_experience where emp_id in(${id});`
-      );
-
-      let wklen = formData.companyname;
-      for (let i = 0; i < wklen.length; i++) {
-        if (arr[i]) {
-          let work_exp = await query(`UPDATE work_experience
-              SET company_name='${formData.companyname[i]}',designation='${formData.designation[i]}',from_date='${formData.from[i]}',to_date='${formData.to[i]}'
-              WHERE emp_id='${id}' and id='${arr[i].work_id}';`);
-        } else {
-          if (wklen[i]) {
-            let work_ins = await query(`insert into work_experience( emp_id,
-              company_name ,designation ,from_date, to_date) values('${id}','${formData.companyname[i]}','${formData.designation[i]}','${formData.from[i]}','${formData.to[i]}');`);
+          if (formData.board_name[i]) {
+            await query(`INSERT INTO edu_detail (emp_id, type_of_result, Name_of_board_or_course, Passing_year, Percentage)
+              VALUES ('${id}', '${edu[i]}', '${formData.board_name[i]}', '${formData.py[i]}', '${formData.percentage[i]}');`);
           }
         }
       }
 
-      //   //language
+      // Section 3
+      const workExperience = await query(
+        `SELECT id AS work_id FROM work_experience WHERE emp_id IN (${id});`
+      );
+      const wklen = formData.companyname.length;
+      for (let i = 0; i < wklen; i++) {
+        if (workExperience[i]) {
+          await query(`UPDATE work_experience
+            SET company_name='${formData.companyname[i]}', designation='${formData.designation[i]}', from_date='${formData.from[i]}', to_date='${formData.to[i]}'
+            WHERE emp_id='${id}' AND id='${workExperience[i].work_id}';`);
+        } else {
+          if (formData.companyname[i]) {
+            await query(`INSERT INTO work_experience (emp_id, company_name, designation, from_date, to_date)
+              VALUES ('${id}', '${formData.companyname[i]}', '${formData.designation[i]}', '${formData.from[i]}', '${formData.to[i]}');`);
+          }
+        }
+      }
 
-      let languagearr = [];
-      let rwsarr = [];
+      // Languages
+      const languages = [];
+      const rws = [];
       if (formData.lan1) {
-        languagearr.push(formData.lan1);
-        rwsarr.push(formData.able1);
+        languages.push(formData.lan1);
+        rws.push(formData.able1);
       }
       if (formData.lan2) {
-        languagearr.push(formData.lan2);
-        rwsarr.push(formData.able2);
+        languages.push(formData.lan2);
+        rws.push(formData.able2);
       }
       if (formData.lan3) {
-        languagearr.push(formData.lan3);
-        rwsarr.push(formData.able3);
+        languages.push(formData.lan3);
+        rws.push(formData.able3);
       }
-      let del = await query(`delete from language where emp_id='${id}';`);
-      for (let i = 0; i < languagearr.length; i++) {
-        let lan_edit = await query(`insert into language(emp_id ,
-              language_know,
-             rws) values('${id}','${languagearr[i]}','${rwsarr[i]}')`);
+      await query(`DELETE FROM language WHERE emp_id='${id}';`);
+      for (let i = 0; i < languages.length; i++) {
+        await query(`INSERT INTO language (emp_id, language_know, rws)
+          VALUES ('${id}', '${languages[i]}', '${rws[i]}');`);
       }
 
-      //   //techno
-
-      let tech = [];
-      let level = [];
+      // Technologies
+      const tech = [];
+      const level = [];
       if (formData.tech1) {
         tech.push(formData.tech1);
         level.push(formData.level1);
@@ -424,55 +509,52 @@ route.post(
         tech.push(formData.tech4);
         level.push(formData.level4);
       }
-      let arr5 = await query(
-        `select id as tech_id from emp.know_techno where emp_id in(${id});`
+      const technoDetails = await query(
+        `SELECT id AS tech_id FROM know_techno WHERE emp_id IN (${id});`
       );
-      console.log(arr5[0]);
       for (let i = 0; i < tech.length; i++) {
-        if (arr5[i]) {
-          let tech_edit = await query(`UPDATE know_techno set
-                   tech_know='${tech[i]}',
-                   level_of_technology= '${level[i]}'
-                    where emp_id='${id}' and id='${arr5[i].tech_id}';`);
+        if (technoDetails[i]) {
+          await query(`UPDATE know_techno
+            SET tech_know='${tech[i]}', level_of_technology='${level[i]}'
+            WHERE emp_id='${id}' AND id='${technoDetails[i].tech_id}';`);
         } else {
           if (tech[i]) {
-            let insert_tech = await query(
-              `insert into know_techno(emp_id,tech_know ,level_of_technology) values('${id}','${tech[i]}','${level[i]}')`
-            );
-          }
-        }
-      }
-      //   //section ref
-      let arr2 = await query(
-        `select ref_id as ref_id from reference_contact where emp_id in(${id});`
-      );
-      let reflen = formData.name;
-      for (let i = 0; i < reflen.length; i++) {
-        if (arr2[i]) {
-          let work_exep = await query(`UPDATE reference_contact
-            SET name='${formData.name[i]}',contact_number='${formData.mobileno[i]}',relation='${formData.rel[i]}'
-            WHERE emp_id='${id}' and ref_id='${arr2[i].ref_id}';`);
-        } else {
-          if (reflen[i]) {
-            let ins_workexp =
-              await query(`insert into reference_contact(emp_id, name ,
-                contact_number ,relation) values('${id}','${formData.name[i]}','${formData.mobileno[i]}','${formData.rel[i]}');`);
+            await query(`INSERT INTO know_techno (emp_id, tech_know, level_of_technology)
+              VALUES ('${id}', '${tech[i]}', '${level[i]}');`);
           }
         }
       }
 
-      //   //section ended
-      let pref = await query(
-        `UPDATE preferences
-        SET prefered_location='${formData.preloc}', notice_period='${formData.notice}',expected_ctc='${formData.exctc}',current_ctc='${formData.curctc}',department='${formData.depa}'
-        WHERE emp_id='${id}';`
+      // References
+      const references = await query(
+        `SELECT ref_id FROM reference_contact WHERE emp_id IN (${id});`
       );
+      const refLen = formData.name.length;
+      for (let i = 0; i < refLen; i++) {
+        if (references[i]) {
+          await query(`UPDATE reference_contact
+            SET name='${formData.name[i]}', contact_number='${formData.mobileno[i]}', relation='${formData.rel[i]}'
+            WHERE emp_id='${id}' AND ref_id='${references[i].ref_id}';`);
+        } else {
+          if (formData.name[i]) {
+            await query(`INSERT INTO reference_contact (emp_id, name, contact_number, relation)
+              VALUES ('${id}', '${formData.name[i]}', '${formData.mobileno[i]}', '${formData.rel[i]}');`);
+          }
+        }
+      }
+
+      // Preferences
+      const { preloc, notice, exctc, curctc, depa } = formData;
+      await query(`UPDATE preferences
+        SET prefered_location='${preloc}', notice_period='${notice}', expected_ctc='${exctc}', current_ctc='${curctc}', department='${depa}'
+        WHERE emp_id='${id}';`);
     }
+
     res.json("data updated");
   }
 );
-route.get("/showupdate", checkAuth, (req, res) => {
+route.get("/showupdate", checkAuth, (req: Request, res: Response) => {
   res.send("Data is Succesfully Updated!!");
 });
 
-module.exports = route;
+export default route;
