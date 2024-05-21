@@ -52,41 +52,33 @@ route.post("/fetch", async function (req, res) {
     }
     else if (search.search("limit") > 1) {
         let q = `${search}`;
-        database_1.default.query(q, [offset, perPage], (err, result, field) => {
-            if (err) {
-                res.render("taskzero/home2", { error: err });
-            }
-            else {
-                res.render("taskzero/nolimit", { users: result, field: field });
-            }
-        });
+        try {
+            let [rows, fields] = await database_1.default.getall(q, [offset, perPage]);
+            res.render("taskzero/nolimit", { users: rows, field: fields });
+        }
+        catch (error) {
+            res.render("taskzero/home2", { error: error });
+        }
     }
     else {
         let str = search;
         str = str.replace(";", " Limit ?,? ;");
         let q = `${str}`;
         let q2 = `${search}`;
-        database_1.default.query(q2, (err, ans) => {
-            if (err) {
-                res.render("taskzero/home2", { error: err });
-            }
-            else {
-                database_1.default.query(q, [offset, perPage], (err, result, field) => {
-                    if (err) {
-                        res.render("home2", { error: err });
-                    }
-                    else {
-                        res.render("taskzero/data", {
-                            users: result,
-                            field: field,
-                            page,
-                            search,
-                            len: ans,
-                        });
-                    }
-                });
-            }
-        });
+        try {
+            let [rows1, fields1] = await database_1.default.getall(q2);
+            let [rows2, fields2] = await database_1.default.getall(q, [offset, perPage]);
+            res.render("taskzero/data", {
+                users: rows2,
+                field: fields2,
+                page,
+                search,
+                len: rows1,
+            });
+        }
+        catch (error) {
+            res.render("taskzero/home2", { error: error });
+        }
     }
 });
 route.get("/fetchdata/:page/:query", checkauth_1.default, async function (req, res) {
@@ -98,20 +90,14 @@ route.get("/fetchdata/:page/:query", checkauth_1.default, async function (req, r
     sql = sql.replace(";", " Limit ?,? ;");
     let q = `${sql}`;
     let q2 = `${search}`;
-    database_1.default.query(q2, (err, ans) => {
-        if (err)
-            throw err;
-        database_1.default.query(q, [offset, perPage], (err, result, field) => {
-            if (err)
-                throw err;
-            res.render("taskzero/data", {
-                users: result,
-                field: field,
-                search,
-                page,
-                len: ans,
-            });
-        });
+    let [rows3, fields3] = await database_1.default.getall(q2);
+    let [rows4, fields4] = await database_1.default.getall(q, [offset, perPage]);
+    res.render("taskzero/data", {
+        users: rows4,
+        field: fields4,
+        search,
+        page,
+        len: rows3,
     });
 });
 exports.default = route;

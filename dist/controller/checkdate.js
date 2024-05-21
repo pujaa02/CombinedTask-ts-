@@ -4,13 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importDefault(require("../models/database"));
-function checkmail(req, res) {
-    database_1.default.query(`select * from login where email='${req.query.email}'`, async function (err, result) {
-        if (err)
-            throw err;
-        const data = await result;
-        res.json(data);
-    });
+async function checkmail(req, res) {
+    let query = await database_1.default.getall(`select * from login where email='${req.query.email}'`);
+    res.json(query);
 }
 exports.default = checkmail;
 //# sourceMappingURL=checkdate.js.map

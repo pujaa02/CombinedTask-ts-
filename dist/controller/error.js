@@ -22,10 +22,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = __importStar(require("express"));
 let route = express.Router();
-route.get("*", (req, res) => {
+const checkauth_1 = __importDefault(require("../middlewares/checkauth"));
+route.get("*", checkauth_1.default, (req, res) => {
     res.render("error");
 });
 exports.default = route;

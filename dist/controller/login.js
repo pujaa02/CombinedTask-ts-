@@ -39,25 +39,21 @@ route.use(body_parser_1.default.urlencoded({ extended: false }));
 // import {Md5} from 'ts-md5';
 var md5 = require("md5");
 dotenv.config();
-let lastid;
 route.get("/getData", checkdate_1.default);
 route.get("/", (req, res) => {
     res.render("frontpage/home");
 });
 //==========================  insert reg data ========================
+let lastid;
 route.post("/register/:str", async (req, res) => {
     let formData = req.body;
     let str = req.params.str;
     let fname = formData.fname;
     let lname = formData.lname;
     let email = formData.email;
-    let q = `insert into login(fname,lname,email,activatecode,date_time,status) values('${fname}','${lname}','${email}','${str}',CURRENT_TIMESTAMP(),'deactive')`;
-    database_1.default.query(q, (err, result1) => {
-        if (err)
-            throw err;
-        lastid = result1.insertId;
-        res.json("123");
-    });
+    const result1 = await database_1.default.getall(`insert into login(fname,lname,email,activatecode,date_time,status) values('${fname}','${lname}','${email}','${str}',CURRENT_TIMESTAMP(),'deactive')`);
+    lastid = result1;
+    res.json("123");
 });
 // ==============actcode to password page================
 route.get("/create_password/:actcode", (req, res) => {
@@ -72,34 +68,26 @@ route.get("/afterregister/:str", (req, res) => {
 //================checktime while update password======================
 route.get("/checktime/:actcode", async (req, res) => {
     let actcode = req.params.actcode;
-    let q1 = `select date_time from login where activatecode='${actcode}'`;
-    database_1.default.query(q1, (err, result) => {
-        if (err)
-            throw err;
-        if (result.length > 0) {
-            let d1 = new Date();
-            let d2 = new Date(result[0].date_time);
-            var diff = (d1.getTime() - d2.getTime()) / 1000;
-            var diffsec = d1.getSeconds() - d2.getSeconds();
-            diff /= 60 * 60;
-            let final = Math.round(diff);
-            let final2 = Math.round(diffsec);
-            if (final2 <= 50 && final2 > 0) {
-                res.json("0");
-            }
-            else {
-                let q2 = `delete from login where activatecode='${actcode}'`;
-                database_1.default.query(q2, (err, result1) => {
-                    if (err)
-                        throw err;
-                });
-                res.json("1");
-            }
+    let result = await database_1.default.getall(`select date_time from login where activatecode='${actcode}'`);
+    if (result.length > 0) {
+        let d1 = new Date();
+        let d2 = new Date(result[0].date_time);
+        var diff = (d1.getTime() - d2.getTime()) / 1000;
+        var diffsec = d1.getSeconds() - d2.getSeconds();
+        diff /= 60 * 60;
+        let final = Math.round(diff);
+        let final2 = Math.round(diffsec);
+        if (final2 <= 50 && final2 > 0) {
+            res.json("0");
         }
         else {
-            res.json("2");
+            let result1 = await database_1.default.delete(`delete from login where activatecode='${actcode}'`);
+            res.json("1");
         }
-    });
+    }
+    else {
+        res.json("2");
+    }
 });
 //===============generate salt=============
 function genesalt() {
@@ -115,22 +103,18 @@ function genesalt() {
     return result;
 }
 //===========regtration password set==============
-route.post("/successreg/:actcd", (req, res) => {
+route.post("/successreg/:actcd", async (req, res) => {
     let code = req.params.actcd;
     let formData = req.body;
     let pass = formData.pass;
     let salt = genesalt(); // Assuming genesalt() is defined elsewhere
     let combine = pass + salt;
     let finalpass = md5(combine); // Assuming Md5() is defined elsewhere
-    let q4 = `update login set password='${finalpass}', salt='${salt}',status='active' where  activatecode='${code}'`;
-    database_1.default.query(q4, (err, result1) => {
-        if (err)
-            throw err;
-        res.json("123");
-    });
+    let result1 = await database_1.default.update(`update login set password='${finalpass}', salt='${salt}',status='active' where  activatecode='${code}'`);
+    res.json("123");
 });
 //===========regtration password update==============
-route.post("/updatepass/:mail", (req, res) => {
+route.post("/updatepass/:mail", async (req, res) => {
     let mail = req.params.mail;
     let formData = req.body;
     let pass = formData.pass;
@@ -138,12 +122,8 @@ route.post("/updatepass/:mail", (req, res) => {
     let combine = pass + salt;
     let finalpass = md5(combine);
     // Assuming Md5() is defined elsewhere
-    let q1 = `update login set password='${finalpass}', salt='${salt}' where email='${mail}'`;
-    database_1.default.query(q1, (err, result1) => {
-        if (err)
-            throw err;
-        res.json("123");
-    });
+    let result1 = await database_1.default.update(`update login set password='${finalpass}', salt='${salt}' where email='${mail}'`);
+    res.json("123");
 });
 //==============login==================
 route.get("/login/", (req, res) => {
@@ -160,44 +140,35 @@ route.post("/loginpage", async (req, res) => {
     let pass = formData.pass;
     let combine;
     let flag = true;
-    let q5 = `select email,password,salt from login where email='${user}'`;
-    database_1.default.query(q5, (err, result) => {
-        if (err)
-            throw err;
-        if (result.length > 0 && result[0].email === user) {
-            combine = pass + result[0].salt;
-            let resPassword = md5(combine);
-            if (resPassword === result[0].password) {
-                token = jsonwebtoken_1.default.sign({ email: result[0].email }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
-                res.cookie("token", token);
-            }
-            else {
-                flag = false;
-            }
+    let result = await database_1.default.getall(`select email,password,salt from login where email='${user}'`);
+    if (result.length > 0 && result[0].email === user) {
+        combine = pass + result[0].salt;
+        let resPassword = md5(combine);
+        if (resPassword === result[0].password) {
+            token = jsonwebtoken_1.default.sign({ email: result[0].email }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
+            res.cookie("token", token);
         }
         else {
             flag = false;
         }
-        res.json({ flag, token });
-    });
+    }
+    else {
+        flag = false;
+    }
+    res.json({ flag, token });
 });
 route.get("/completelogin", checkauth_1.default, (req, res) => {
     res.render("Home");
 });
 route.get("/redirect/:mail", checkauth_1.default, async (req, res) => {
     let mail = req.params.mail;
-    let q6 = `select * from login where email='${mail}' `;
-    database_1.default.query(q6, (err, result1) => {
-        if (err)
-            throw err;
-        console.log(result1[0]);
-        if (result1.length > 0) {
-            res.json("email valid");
-        }
-        else {
-            res.json("email not valid");
-        }
-    });
+    let result1 = await database_1.default.getall(`select * from login where email='${mail}' `);
+    if (result1.length > 0) {
+        res.json("email valid");
+    }
+    else {
+        res.json("email not valid");
+    }
 });
 exports.default = route;
 //# sourceMappingURL=login.js.map

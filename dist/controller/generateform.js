@@ -36,18 +36,14 @@ route.use(body_parser_1.default.urlencoded({ extended: false }));
 route.get("/geneform", checkauth_1.default, (req, res) => {
     res.render("generateform/home");
 });
-route.post("/geneform", (req, res) => {
+route.post("/geneform", checkauth_1.default, async (req, res) => {
     let jsonData = req.body;
     let search = jsonData.query;
     let type = jsonData.type;
-    let q = `select selection_master.sel_id,selection_master.type,option_master.op_name from selection_master
-    join option_master on selection_master.sel_id=option_master.sel_id 
-   where selection_master.sel_name="${search}";`;
-    database_1.default.query(q, (err, result) => {
-        if (err)
-            throw err;
-        res.render("generateform/data.ejs", { users: result, search, type });
-    });
+    let result = await database_1.default.getall(`select selection_master.sel_id,selection_master.type,option_master.op_name from selection_master
+  join option_master on selection_master.sel_id=option_master.sel_id 
+  where selection_master.sel_name="${search}";`);
+    res.render("generateform/data.ejs", { users: result, search, type });
 });
 exports.default = route;
 //# sourceMappingURL=generateform.js.map

@@ -5,6 +5,7 @@ import checkAuth from "../middlewares/checkauth";
 import con from "../models/database";
 
 import parser from "body-parser";
+import { RowDataPacket } from "mysql2";
 
 route.use(parser.json());
 route.use(parser.urlencoded({ extended: false }));
@@ -13,7 +14,7 @@ route.get("/sch", checkAuth, (req: Request, res: Response) => {
   res.render("specialchar/home");
 });
 
-route.post("/sch", (req: Request, res: Response) => {
+route.post("/sch",checkAuth, async(req: Request, res: Response) => {
   let fname: string[] = [],
     lname: string[] = [],
     email: string[] = [],
@@ -56,7 +57,9 @@ route.post("/sch", (req: Request, res: Response) => {
         bg.push(blood);
       }
     }
-    let q1 = `select * from student_master26 where `;
+
+
+    let q1:string = `select * from student_master26 where `;
 
     if (fname.length >= 1) {
       for (let i = 0; i < fname.length; i++) {
@@ -96,10 +99,8 @@ route.post("/sch", (req: Request, res: Response) => {
     }
     q1 = q1.slice(0, q1.length - 4);
 
-    con.query(q1, (err, result) => {
-      if (err) throw err;
+    const result=await con.getall(q1) as Array<RowDataPacket>;
       res.render("specialchar/data.ejs", { users: result });
-    });
   } else {
     res.render("specialchar/home2.ejs");
   }

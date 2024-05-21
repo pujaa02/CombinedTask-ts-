@@ -36,7 +36,7 @@ route.use(body_parser_1.default.urlencoded({ extended: false }));
 route.get("/sch", checkauth_1.default, (req, res) => {
     res.render("specialchar/home");
 });
-route.post("/sch", (req, res) => {
+route.post("/sch", checkauth_1.default, async (req, res) => {
     let fname = [], lname = [], email = [], number = [], city = [], bg = [];
     let jsonData = req.body;
     let search = jsonData["query"];
@@ -108,11 +108,8 @@ route.post("/sch", (req, res) => {
             q1 = q1.slice(0, q1.length - 3) + "and ";
         }
         q1 = q1.slice(0, q1.length - 4);
-        database_1.default.query(q1, (err, result) => {
-            if (err)
-                throw err;
-            res.render("specialchar/data.ejs", { users: result });
-        });
+        const result = await database_1.default.getall(q1);
+        res.render("specialchar/data.ejs", { users: result });
     }
     else {
         res.render("specialchar/home2.ejs");

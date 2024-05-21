@@ -36,50 +36,29 @@ route.use(body_parser_1.default.urlencoded({ extended: false }));
 route.get("/fetch2", checkauth_1.default, (req, res) => {
     res.render("taskone/home");
 });
-route.post("/fetch2", (req, res) => {
+route.post("/fetch2", checkauth_1.default, async (req, res) => {
     let jsonData = req.body;
     let search = jsonData["query"];
     let perPage = 5;
     let page = parseInt(req.query.page) || 1;
     const offset = (page - 1) * perPage;
-    let q1 = `SELECT * FROM student_master26 WHERE id LIKE '%${search}%'`;
-    let q = `SELECT * FROM student_master26 WHERE id LIKE '%${search}%' LIMIT ?, ?`;
-    database_1.default.query(q1, (err, ans) => {
-        if (err)
-            throw err;
-        database_1.default.query(q, [offset, perPage], (err, result) => {
-            if (err)
-                throw err;
-            res.render("taskone/data", { users: result, page, search, len: ans });
-        });
-    });
+    const ans = await database_1.default.getall(`SELECT * FROM student_master26 WHERE id LIKE '%${search}%'`);
+    const result = await database_1.default.getall(`SELECT * FROM student_master26 WHERE id LIKE '%${search}%' LIMIT ?, ?`, [offset, perPage]);
+    res.render("taskone/data", { users: result, page, search, len: ans });
 });
-route.get("/fetch2/:page/:search", checkauth_1.default, (req, res) => {
+route.get("/fetch2/:page/:search", checkauth_1.default, async (req, res) => {
     let search = req.params.search;
     let perPage = 5;
     let page = parseInt(req.params.page) || 1;
     const offset = (page - 1) * perPage;
-    let q1 = `SELECT * FROM student_master26 WHERE id LIKE '%${search}%'`;
-    let q = `SELECT * FROM student_master26 WHERE id LIKE '%${search}%' LIMIT ?, ?`;
-    database_1.default.query(q1, (err, ans) => {
-        if (err)
-            throw err;
-        database_1.default.query(q, [offset, perPage], (err, result) => {
-            if (err)
-                throw err;
-            res.render("taskone/data", { users: result, page, search, len: ans });
-        });
-    });
+    const ans1 = await database_1.default.getall(`SELECT * FROM student_master26 WHERE id LIKE '%${search}%'`);
+    const result1 = await database_1.default.getall(`SELECT * FROM student_master26 WHERE id LIKE '%${search}%' LIMIT ?, ?`, [offset, perPage]);
+    res.render("taskone/data", { users: result1, page, search, len: ans1 });
 });
 route.get("/view", checkauth_1.default, (req, res) => {
     res.render("taskone/form2");
 });
-let fname;
-let lname;
-let email;
-let city;
-let bg;
-route.post("/view", (req, res) => {
+route.post("/view", checkauth_1.default, async (req, res) => {
     let data = JSON.stringify(req.body);
     let jsonData = req.body;
     let fname = jsonData["fname"];
@@ -93,23 +72,16 @@ route.post("/view", (req, res) => {
     const offset = (page - 1) * perPage;
     let q1 = `SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa}  city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%'`;
     let q = `SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa}  city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%' LIMIT ?, ?`;
-    database_1.default.query(q1);
-    database_1.default.query(q, [offset, perPage], (err, ans) => {
-        if (err)
-            throw err;
-        database_1.default.query(q, [offset, perPage], (err, result) => {
-            if (err)
-                throw err;
-            res.render("taskone/data2", {
-                users: result,
-                page,
-                len: ans,
-                data,
-            });
-        });
+    const ans2 = await database_1.default.getall(`SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa}  city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%'`, [offset, perPage]);
+    const result2 = await database_1.default.getall(`SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa}  city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%' LIMIT ?, ?`, [offset, perPage]);
+    res.render("taskone/data2", {
+        users: result2,
+        page,
+        len: ans2,
+        data,
     });
 });
-route.get("/view/:page/:jsonData", checkauth_1.default, (req, res) => {
+route.get("/view/:page/:jsonData", checkauth_1.default, async (req, res) => {
     let jsonData = req.params.jsonData;
     let data = JSON.parse(jsonData);
     let fname = data.fname;
@@ -121,22 +93,13 @@ route.get("/view/:page/:jsonData", checkauth_1.default, (req, res) => {
     let perPage = 20;
     let page = parseInt(req.params.page) || 1;
     const offset = (page - 1) * perPage;
-    let q1 = `SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa} city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%'`;
-    let q = `SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa} city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%' LIMIT ?, ?`;
-    database_1.default.query(q1);
-    database_1.default.query(q, [offset, perPage], (err, ans) => {
-        if (err)
-            throw err;
-        database_1.default.query(q, [offset, perPage], (err, result) => {
-            if (err)
-                throw err;
-            res.render("taskone/data2", {
-                users: result,
-                page,
-                len: ans,
-                data: jsonData,
-            });
-        });
+    const ans3 = await database_1.default.getall(`SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa} city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%'`, [offset, perPage]);
+    const result3 = await database_1.default.getall(`SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa} city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%' LIMIT ?, ?`, [offset, perPage]);
+    res.render("taskone/data2", {
+        users: result3,
+        page,
+        len: ans3,
+        data: jsonData,
     });
 });
 exports.default = route;

@@ -38,7 +38,7 @@ const urlencodedParser = body_parser_1.default.urlencoded({ extended: false });
 route.get("/inu", checkauth_1.default, (req, res) => {
     res.render("forminu/home");
 });
-route.post("/inu", urlencodedParser, [
+route.post("/inu", checkauth_1.default, urlencodedParser, [
     (0, express_validator_1.check)("fname", "This username must be 3+ characters long")
         .exists()
         .isLength({ min: 3 }),
@@ -63,7 +63,7 @@ route.post("/inu", urlencodedParser, [
         min: 6,
         max: 45,
     }),
-], (req, res) => {
+], async (req, res) => {
     let id;
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
@@ -132,102 +132,59 @@ route.post("/inu", urlencodedParser, [
     pre[3] = req.body.exctc;
     pre[4] = req.body.curctc;
     pre[5] = req.body.depa;
-    let q = `INSERT INTO emp_details(fname, lname, designation, email, phone, gender, rel_status, address1, address2, city, state, zipcode, bd) VALUES ("${fname}", "${lname}", "${designation}", "${email}", "${phone}", "${gender}", "${rel_status}", "${address1}", "${address2}", "${city}", "${state}", "${zipcode}", "${bd}")`;
-    database_1.default.query(q, (err, result) => {
-        if (err)
-            throw err;
-        id = result.insertId;
-        let len = req.body.board_name;
-        for (let i = 0; i < len.length; i++) {
-            let q1 = `INSERT INTO edu_detail(emp_id, type_of_result, Name_of_board_or_course, Passing_year, Percentage) VALUES ('${id}', '${edu[i]}', '${req.body.board_name[i]}', '${req.body.py[i]}', '${req.body.percentage[i]}')`;
-            if (req.body.board_name[i]) {
-                database_1.default.query(q1, (err, result1) => {
-                    if (err)
-                        throw err;
-                });
-            }
+    let result = await database_1.default.insert(`INSERT INTO emp_details(fname, lname, designation, email, phone, gender, rel_status, address1, address2, city, state, zipcode, bd) VALUES("${fname}", "${lname}", "${designation}", "${email}", "${phone}", "${gender}", "${rel_status}", "${address1}", "${address2}", "${city}", "${state}", "${zipcode}", "${bd}"`);
+    id = result;
+    let len = req.body.board_name;
+    for (let i = 0; i < len.length; i++) {
+        if (req.body.board_name[i]) {
+            await database_1.default.insert(`INSERT INTO edu_detail(emp_id, type_of_result, Name_of_board_or_course, Passing_year, Percentage) VALUES('${id}', '${edu[i]}', '${req.body.board_name[i]}', '${req.body.py[i]}', '${req.body.percentage[i]}')`);
         }
-        let wklen = req.body.companyname;
-        for (let i = 0; i < wklen.length; i++) {
-            let q2 = `INSERT INTO work_experience(emp_id, company_name, designation, from_date, to_date) VALUES ('${id}', '${req.body.companyname[i]}', '${req.body.designation[i]}', '${req.body.from[i]}', '${req.body.to[i]}')`;
-            if (req.body.companyname[i]) {
-                database_1.default.query(q2, (err, result1) => {
-                    if (err)
-                        throw err;
-                });
-            }
+    }
+    let wklen = req.body.companyname;
+    for (let i = 0; i < wklen.length; i++) {
+        if (req.body.companyname[i]) {
+            await database_1.default.insert(`INSERT INTO work_experience(emp_id, company_name, designation, from_date, to_date) VALUES('${id}', '${req.body.companyname[i]}', '${req.body.designation[i]}', '${req.body.from[i]}', '${req.body.to[i]}')`);
         }
-        let q3 = `INSERT INTO language(emp_id, language_know, rws) VALUES (?)`;
-        if (req.body.lan1) {
-            lan1[0] = id;
-            database_1.default.query(q3, [lan1], (err, result) => {
-                if (err)
-                    throw err;
-            });
+    }
+    if (req.body.lan1) {
+        lan1[0] = id;
+        await database_1.default.insert(`INSERT INTO language(emp_id, language_know, rws) VALUES(?)`, [lan1]);
+    }
+    if (req.body.lan2) {
+        lan2[0] = id;
+        await database_1.default.insert(`INSERT INTO language(emp_id, language_know, rws) VALUES(?)`, [lan2]);
+    }
+    if (req.body.lan3) {
+        lan3[0] = id;
+        await database_1.default.insert(`INSERT INTO language(emp_id, language_know, rws) VALUES(?)`, [lan3]);
+    }
+    tech1[0] = id;
+    if (req.body.tech1) {
+        await database_1.default.insert(`INSERT INTO know_techno(emp_id, tech_know, level_of_technology) VALUES(?)`, [tech1]);
+    }
+    tech2[0] = id;
+    if (req.body.tech2) {
+        await database_1.default.insert(`INSERT INTO know_techno(emp_id, tech_know, level_of_technology) VALUES(?)`, [tech2]);
+    }
+    tech3[0] = id;
+    if (req.body.tech3) {
+        await database_1.default.insert(`INSERT INTO know_techno(emp_id, tech_know, level_of_technology) VALUES(?)`, [tech3]);
+    }
+    tech4[0] = id;
+    if (req.body.tech4) {
+        await database_1.default.insert(`INSERT INTO know_techno(emp_id, tech_know, level_of_technology) VALUES(?)`, [tech4]);
+    }
+    //section ref
+    let reflen = req.body.name;
+    for (let i = 0; i < reflen.length; i++) {
+        if (req.body.name[i]) {
+            await database_1.default.insert(`INSERT INTO reference_contact(emp_id, name, contact_number, relation) VALUES('${id}', '${req.body.name[i]}', '${req.body.mobileno[i]}', '${req.body.rel[i]}')`);
         }
-        if (req.body.lan2) {
-            lan2[0] = id;
-            database_1.default.query(q3, [lan2], (err, result) => {
-                if (err)
-                    throw err;
-            });
-        }
-        if (req.body.lan3) {
-            lan3[0] = id;
-            database_1.default.query(q3, [lan3], (err, result) => {
-                if (err)
-                    throw err;
-            });
-        }
-        let q4 = `INSERT INTO know_techno(emp_id, tech_know, level_of_technology) VALUES (?)`;
-        tech1[0] = id;
-        if (req.body.tech1) {
-            database_1.default.query(q4, [tech1], (err, result) => {
-                if (err)
-                    throw err;
-            });
-        }
-        tech2[0] = id;
-        if (req.body.tech2) {
-            database_1.default.query(q4, [tech2], (err, result) => {
-                if (err)
-                    throw err;
-            });
-        }
-        tech3[0] = id;
-        if (req.body.tech3) {
-            database_1.default.query(q4, [tech3], (err, result) => {
-                if (err)
-                    throw err;
-            });
-        }
-        tech4[0] = id;
-        if (req.body.tech4) {
-            database_1.default.query(q4, [tech4], (err, result) => {
-                if (err)
-                    throw err;
-            });
-        }
-        //section ref
-        let reflen = req.body.name;
-        for (let i = 0; i < reflen.length; i++) {
-            let q5 = `INSERT INTO reference_contact(emp_id, name, contact_number, relation) VALUES ('${id}', '${req.body.name[i]}', '${req.body.mobileno[i]}', '${req.body.rel[i]}')`;
-            if (req.body.name[i]) {
-                database_1.default.query(q5, (err, result1) => {
-                    if (err)
-                        throw err;
-                });
-            }
-        }
-        //section ended
-        let q6 = `INSERT INTO preferences(emp_id, prefered_location, notice_period, expected_ctc, current_ctc, department) VALUES (?)`;
-        pre[0] = id;
-        database_1.default.query(q6, [pre], (err, result) => {
-            if (err)
-                throw err;
-        });
-        res.render("forminu/fetchuser");
-    });
+    }
+    //section ended
+    pre[0] = id;
+    await database_1.default.insert(`INSERT INTO preferences(emp_id, prefered_location, notice_period, expected_ctc, current_ctc, department) VALUES(?)`, [pre]);
+    res.render("forminu/fetchuser");
 });
 route.get("/alluser", checkauth_1.default, (req, res) => {
     res.render("forminu/fetchuser");
@@ -235,29 +192,16 @@ route.get("/alluser", checkauth_1.default, (req, res) => {
 route.get("/normalupdate/:id", checkauth_1.default, async (req, res) => {
     const id = req.params.id;
     if (id) {
-        const query = (str) => {
-            return new Promise((resolve, reject) => {
-                database_1.default.query(str, (err, result) => {
-                    if (err)
-                        reject(err);
-                    else
-                        resolve(result);
-                });
-            });
-        };
         try {
-            const count = await query(`select count(*) as lt from edu_detail where emp_id=${id};`);
+            const count = await database_1.default.getall(`select count(*) as lt from edu_detail where emp_id = ${id}; `);
             if (count[0].lt >= 1) {
-                const result = await query(`select * from emp_details where emp_id=${id};`);
-                const queries = [
-                    `select * from edu_detail where emp_id=${id};`,
-                    `select * from work_experience where emp_id=${id};`,
-                    `select * from language where emp_id=${id};`,
-                    `select * from know_techno where emp_id=${id};`,
-                    `select * from reference_contact where emp_id=${id};`,
-                    `select * from preferences where emp_id=${id};`,
-                ];
-                const [result1, result2, result3, result4, result5, result6] = await Promise.all(queries.map(query));
+                const result = await database_1.default.getall(`select * from emp_details where emp_id = ${id}; `);
+                const result1 = await database_1.default.getall(`select * from edu_detail where emp_id = ${id}; `);
+                const result2 = await database_1.default.getall(`select * from work_experience where emp_id = ${id}; `);
+                const result3 = await database_1.default.getall(`select * from language where emp_id = ${id}; `);
+                const result4 = await database_1.default.getall(`select * from know_techno where emp_id = ${id}; `);
+                const result5 = await database_1.default.getall(`select * from reference_contact where emp_id = ${id}; `);
+                const result6 = await database_1.default.getall(`select * from preferences where emp_id = ${id}; `);
                 const tech = result4.map((item) => item.tech_know);
                 const techlevel = result4.map((item) => item.tech_know + item.level_of_technology);
                 const lan = result3.map((item) => item.language_know);
@@ -330,59 +274,48 @@ route.post("/normalupdate/:id", urlencodedParser, [
     }
     let jsondata = req.body;
     if (req.params.id) {
-        let query = (str) => {
-            return new Promise((resolve, reject) => {
-                database_1.default.query(str, (err, result) => {
-                    if (err)
-                        throw err;
-                    else {
-                        resolve(result);
-                    }
-                });
-            });
-        };
         // =========section1===============
         const { fname, lname, designation, email, phone, gender, rel_status, address1, address2, city, state, zipcode, bd, } = jsondata;
-        let emp_detail = await query(`UPDATE emp_details
-          SET fname='${fname}', lname='${lname}',designation='${designation}',email='${email}',phone='${phone}',gender='${gender}',
-          rel_status='${rel_status}',address1='${address1}',address2='${address2}',city='${city}',
-          state='${state}',zipcode='${zipcode}',bd='${bd}'
-          WHERE emp_id='${id}';`);
+        let emp_detail = await database_1.default.update(`UPDATE emp_details
+          SET fname = '${fname}', lname = '${lname}', designation = '${designation}', email = '${email}', phone = '${phone}', gender = '${gender}',
+            rel_status = '${rel_status}', address1 = '${address1}', address2 = '${address2}', city = '${city}',
+            state = '${state}', zipcode = '${zipcode}', bd = '${bd}'
+          WHERE emp_id = '${id}'; `);
         //==========section2=============
         let edu = ["ssc", "hsc", "bachelor", "master"];
         let len = req.body.board_name;
-        let arr6 = await query(`select edu_id as edu_id from edu_detail where emp_id in(${id});`);
+        let arr6 = await database_1.default.getall(`select edu_id as edu_id from edu_detail where emp_id in (${id}); `);
         for (let i = 0; i < len.length; i++) {
             if (arr6[i]) {
-                let edu_detail = await query(`UPDATE edu_detail
-          SET Name_of_board_or_course='${req.body.board_name[i]}',Passing_year='${req.body.py[i]}',Percentage='${req.body.percentage[i]}'
-          WHERE emp_id='${id}' and type_of_result='${edu[i]}' and edu_id='${arr6[i].edu_id}';`);
+                let edu_detail = await database_1.default.update(`UPDATE edu_detail
+          SET Name_of_board_or_course = '${req.body.board_name[i]}', Passing_year = '${req.body.py[i]}', Percentage = '${req.body.percentage[i]}'
+          WHERE emp_id = '${id}' and type_of_result = '${edu[i]}' and edu_id = '${arr6[i].edu_id}'; `);
             }
             else {
                 if (len[i]) {
-                    let inser_edu = await query(`insert into edu_detail( emp_id,
-              type_of_result,
-              Name_of_board_or_course,
-              Passing_year,
-              Percentage) values('${id}','${edu[i]}','${req.body.board_name[i]}','${req.body.py[i]}','${req.body.percentage[i]}');`);
+                    let inser_edu = await database_1.default.insert(`insert into edu_detail(emp_id,
+                type_of_result,
+                Name_of_board_or_course,
+                Passing_year,
+                Percentage) values('${id}', '${edu[i]}', '${req.body.board_name[i]}', '${req.body.py[i]}', '${req.body.percentage[i]}'); `);
                 }
             }
         }
         //============section3============
-        let arr = await query(`select id as work_id from emp.work_experience where emp_id in(${id});`);
+        let arr = await database_1.default.getall(`select id as work_id from emp.work_experience where emp_id in (${id}); `);
         ;
         let wklen = req.body.companyname;
         for (let i = 0; i < wklen.length; i++) {
             if (arr[i]) {
-                let work_exp = await query(`UPDATE work_experience
-              SET company_name='${req.body.companyname[i]}',designation='${req.body.designation[i]}',from_date='${req.body.from[i]}',to_date='${req.body.to[i]}'
-              WHERE emp_id='${id}' and id='${arr[i].work_id}';`);
+                let work_exp = await database_1.default.update(`UPDATE work_experience
+              SET company_name = '${req.body.companyname[i]}', designation = '${req.body.designation[i]}', from_date = '${req.body.from[i]}', to_date = '${req.body.to[i]}'
+              WHERE emp_id = '${id}' and id = '${arr[i].work_id}'; `);
                 ;
             }
             else {
                 if (wklen[i]) {
-                    let work_ins = await query(`insert into work_experience( emp_id,
-            company_name ,designation ,from_date, to_date) values('${id}','${req.body.companyname[i]}','${req.body.designation[i]}','${req.body.from[i]}','${req.body.to[i]}');`);
+                    let work_ins = await database_1.default.insert(`insert into work_experience(emp_id,
+                    company_name, designation, from_date, to_date) values('${id}', '${req.body.companyname[i]}', '${req.body.designation[i]}', '${req.body.from[i]}', '${req.body.to[i]}'); `);
                 }
             }
         }
@@ -401,11 +334,11 @@ route.post("/normalupdate/:id", urlencodedParser, [
             languagearr.push(req.body.lan3);
             rwsarr.push(req.body.able3);
         }
-        let del = await query(`delete from language where emp_id='${id}';`);
+        let del = await database_1.default.delete(`delete from language where emp_id = '${id}'; `);
         for (let i = 0; i < languagearr.length; i++) {
-            let lan_edit = await query(`insert into language(emp_id ,
-              language_know,
-             rws) values('${id}','${languagearr[i]}','${rwsarr[i]}')`);
+            let lan_edit = await database_1.default.insert(`insert into language(emp_id,
+                        language_know,
+                        rws) values('${id}', '${languagearr[i]}', '${rwsarr[i]}')`);
         }
         let tech = [];
         let level = [];
@@ -425,45 +358,51 @@ route.post("/normalupdate/:id", urlencodedParser, [
             tech.push(req.body.tech4);
             level.push(req.body.level4);
         }
-        let arr5 = await query(`select id as tech_id from emp.know_techno where emp_id in(${id});`);
+        let arr5 = await database_1.default.getall(`select id as tech_id from emp.know_techno where emp_id in (${id}); `);
         ;
         for (let i = 0; i < tech.length; i++) {
             if (arr5[i]) {
-                let tech_edit = await query(`UPDATE know_techno set
-                   tech_know='${tech[i]}',
-                   level_of_technology= '${level[i]}'
-                    where emp_id='${id}' and id='${arr5[i].tech_id}';`);
+                let tech_edit = await database_1.default.update(`UPDATE know_techno set
+tech_know = '${tech[i]}',
+    level_of_technology = '${level[i]}'
+                    where emp_id = '${id}' and id = '${arr5[i].tech_id}'; `);
             }
             else {
                 if (tech[i]) {
-                    let insert_tech = await query(`insert into know_techno(emp_id,tech_know ,level_of_technology) values('${id}','${tech[i]}','${level[i]}')`);
+                    let insert_tech = await database_1.default.insert(`insert into know_techno(emp_id, tech_know, level_of_technology) values('${id}', '${tech[i]}', '${level[i]}')`);
+                    ;
                 }
             }
         }
         //section ref
-        let arr2 = await query(`select ref_id as ref_id from reference_contact where emp_id in(${id});`);
+        let arr2 = await database_1.default.getall(`select ref_id as ref_id from reference_contact where emp_id in (${id}); `);
         ;
         let reflen = req.body.name;
         for (let i = 0; i < reflen.length; i++) {
             if (arr2[i]) {
-                let work_exep = await query(`UPDATE reference_contact
-            SET name='${req.body.name[i]}',contact_number='${req.body.mobileno[i]}',relation='${req.body.rel[i]}'
-            WHERE emp_id='${id}' and ref_id='${arr2[i].ref_id}';`);
+                let work_exep = await database_1.default.update(`UPDATE reference_contact
+            SET name = '${req.body.name[i]}', contact_number = '${req.body.mobileno[i]}', relation = '${req.body.rel[i]}'
+            WHERE emp_id = '${id}' and ref_id = '${arr2[i].ref_id}'; `);
+                ;
             }
             else {
                 if (reflen[i]) {
-                    let ins_workexp = await query(`insert into reference_contact(emp_id, name ,
-              contact_number ,relation) values('${id}','${req.body.name[i]}','${req.body.mobileno[i]}','${req.body.rel[i]}');`);
+                    let ins_workexp = await database_1.default.insert(`insert into reference_contact(emp_id, name,
+        contact_number, relation) values('${id}', '${req.body.name[i]}', '${req.body.mobileno[i]}', '${req.body.rel[i]}'); `);
+                    ;
+                    ;
                 }
             }
         }
         //section ended
-        let pref = await query(`UPDATE preferences
-        SET prefered_location='${req.body.preloc}', notice_period='${req.body.notice}',expected_ctc='${req.body.exctc}',current_ctc='${req.body.curctc}',department='${req.body.depa}'
-        WHERE emp_id='${id}';`);
+        let pref = await database_1.default.update(`UPDATE preferences
+        SET prefered_location = '${req.body.preloc}', notice_period = '${req.body.notice}', expected_ctc = '${req.body.exctc}', current_ctc = '${req.body.curctc}', department = '${req.body.depa}'
+        WHERE emp_id = '${id}'; `);
+        ;
+        ;
         //end
     }
-    res.send(`data is succesfully updated `);
+    res.send(`data is succesfully updated`);
 });
 exports.default = route;
 //# sourceMappingURL=simpleform.js.map

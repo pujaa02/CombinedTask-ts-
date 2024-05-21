@@ -4,13 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importDefault(require("../../models/database"));
-function get_state(req, res) {
-    database_1.default.query(`select * from states`, async function (err, result) {
-        if (err)
-            throw err;
-        const data = await result;
-        res.json(data);
-    });
+async function get_state(req, res) {
+    let query = await database_1.default.getall(`select * from states`);
+    res.json(query);
 }
 exports.default = get_state;
 //# sourceMappingURL=get_data.js.map

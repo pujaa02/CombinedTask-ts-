@@ -3,9 +3,10 @@ let route = express.Router();
 import { Request, Response } from "express";
 import checkAuth from "../middlewares/checkauth";
 import con from "../models/database";
+import { RowDataPacket } from "mysql2";
 
 var name: string;
-route.get("/data", checkAuth, (req: Request, res: Response) => {
+route.get("/data", checkAuth, async(req: Request, res: Response) => {
   let name: string;
   if (req.query.field) {
     name = req.query.field as string;
@@ -20,20 +21,12 @@ route.get("/data", checkAuth, (req: Request, res: Response) => {
   //offset= (perPage * page) - perPage
 
   // Fetch data for current page
-  con.query(
-    `SELECT * FROM student_master26 order by ${name} LIMIT ?, ?`,
-    [offset, perPage],
-    (error, results) => {
-      if (error) throw error;
-
-      con.query("SELECT COUNT(*) AS count FROM student_master26", (error) => {
-        if (error) throw error;
+  let results=await con.getall(`SELECT * FROM student_master26 order by ${name} LIMIT ?, ?`,[offset,perPage]) as Array<RowDataPacket>;
+  await con.getall("SELECT COUNT(*) AS count FROM student_master26")as Array<RowDataPacket>;
         res.render("order/orderpagination26", {
           users: results,
           page: page,
           field: req.query.field,
-        });
-      });
     }
   );
 });

@@ -4,13 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importDefault(require("../../models/database"));
-function tech(req, res) {
-    database_1.default.query(`select * from know_techno `, async function (err, result, fields) {
-        if (err)
-            throw err;
-        const data = await result;
-        res.json(data);
-    });
+async function tech(req, res) {
+    let query = await database_1.default.getall(`select * from know_techno`);
+    res.json(query);
 }
 exports.default = tech;
 //# sourceMappingURL=techno.js.map

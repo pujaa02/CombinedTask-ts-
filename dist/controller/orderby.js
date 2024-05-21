@@ -31,7 +31,7 @@ let route = express.Router();
 const checkauth_1 = __importDefault(require("../middlewares/checkauth"));
 const database_1 = __importDefault(require("../models/database"));
 var name;
-route.get("/data", checkauth_1.default, (req, res) => {
+route.get("/data", checkauth_1.default, async (req, res) => {
     let name;
     if (req.query.field) {
         name = req.query.field;
@@ -45,18 +45,12 @@ route.get("/data", checkauth_1.default, (req, res) => {
     const offset = (page - 1) * perPage;
     //offset= (perPage * page) - perPage
     // Fetch data for current page
-    database_1.default.query(`SELECT * FROM student_master26 order by ${name} LIMIT ?, ?`, [offset, perPage], (error, results) => {
-        if (error)
-            throw error;
-        database_1.default.query("SELECT COUNT(*) AS count FROM student_master26", (error) => {
-            if (error)
-                throw error;
-            res.render("order/orderpagination26", {
-                users: results,
-                page: page,
-                field: req.query.field,
-            });
-        });
+    let results = await database_1.default.getall(`SELECT * FROM student_master26 order by ${name} LIMIT ?, ?`, [offset, perPage]);
+    await database_1.default.getall("SELECT COUNT(*) AS count FROM student_master26");
+    res.render("order/orderpagination26", {
+        users: results,
+        page: page,
+        field: req.query.field,
     });
 });
 exports.default = route;

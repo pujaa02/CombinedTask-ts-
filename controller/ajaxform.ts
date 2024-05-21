@@ -3,9 +3,7 @@ let route = express.Router();
 import { Request, Response } from "express";
 import checkAuth from "../middlewares/checkauth";
 import con from "../models/database";
-// const { check, validationResult } = require("express-validator");
 import { check, validationResult } from "express-validator";
-// import  { check, validationResult }  = require('express-validator');
 import parser from "body-parser";
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 route.use(parser.json());
@@ -22,12 +20,12 @@ import ref from "./ajaxinsertupdate/ref";
 import pre from "./ajaxinsertupdate/pre";
 
 
-route.get("/users", checkAuth, get_user);
-route.get("/emp", checkAuth, get_emp);
-route.get("/edu", checkAuth, edu_det);
-route.get("/work", checkAuth, work_exp);
-route.get("/lan", checkAuth, lan);
-route.get("/tech", checkAuth, techno);
+route.get("/users",checkAuth, get_user);
+route.get("/emp",checkAuth, get_emp);
+route.get("/edu",checkAuth, edu_det);
+route.get("/work",checkAuth, work_exp);
+route.get("/lan", checkAuth,lan);
+route.get("/tech",checkAuth,  techno);
 route.get("/ref", checkAuth, ref);
 route.get("/pre", checkAuth, pre);
 
@@ -87,28 +85,16 @@ interface FormData {
 
 interface IStringArray extends Array<string | number | boolean> {}
 
-const query = (str: string): Promise<any> => {
-  return new Promise((resolve, reject) => {
-    con.query(str, (err: any | null, result: any) => {
-      console.log(str);
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result);
-      }
-    });
-  });
-};
 
 route.get("/inuajax", checkAuth, (req: Request, res: Response) => {
   res.render("ajaxinup/home");
 });
-route.get("/update", checkAuth, (req: Request, res: Response) => {
+route.get("/update", checkAuth,(req: Request, res: Response) => {
   res.render("ajaxinup/fetchuser");
 });
 
 route.post(
-  "/submit",
+  "/submit",checkAuth,
   urlencodedParser,
   [
     check("fname", "This username must me 3+ characters long")
@@ -136,10 +122,8 @@ route.post(
       max: 45,
     }),
   ],
-  (req: Request, res: Response) => {
-    console.log("this is update post");
+  async (req: Request, res: Response) => {
     const formData: FormData = req.body;
-    console.log(formData);
     let id: number;
 
     const errors = validationResult(req);
@@ -171,17 +155,14 @@ route.post(
     const lan3: IStringArray = ["", "", ""];
     lan1[1] = formData.lan1;
     if (formData.able1) {
-      console.log("enter1");
       lan1[2] = formData.able1.toString();
     }
     lan2[1] = formData.lan2;
     if (formData.able2) {
-      console.log("enter2========");
       lan2[2] = formData.able2.toString();
     }
     lan3[1] = formData.lan3;
     if (formData.able3) {
-      console.log("enter3========");
       lan3[2] = formData.able3.toString();
     }
 
@@ -217,8 +198,7 @@ route.post(
     pre[3] = formData.exctc;
     pre[4] = formData.curctc;
     pre[5] = formData.depa;
-
-    const q: string = `INSERT INTO emp_details (fname, lname, designation, email, phone, gender, rel_status, address1, address2, city, state, zipcode, bd) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    
     const values = [
       fname,
       lname,
@@ -234,32 +214,24 @@ route.post(
       zipcode,
       bd,
     ];
-    console.log(q);
+   
+    let emp_detail:number=await con.insert(`INSERT INTO emp_details (fname, lname, designation, email, phone, gender, rel_status, address1, address2, city, state, zipcode, bd) VALUES (?)`, [values]);
 
-    con.query(q, values, (err: any | null, result?: any) => {
-      if (err) throw err;
-      id = result.insertId;
-      const len: number = formData.board_name.length;
-
-      for (let i = 0; i < len; i++) {
-        const q1 = `INSERT INTO edu_detail (emp_id, type_of_result, Name_of_board_or_course, Passing_year, Percentage) VALUES (?, ?, ?, ?, ?)`;
-        const eduValues = [
-          id,
-          edu[i],
-          formData.board_name[i],
-          formData.py[i],
-          formData.percentage[i],
-        ];
-        if (formData.board_name[i]) {
-          con.query(q1, eduValues, (err, result1) => {
-            console.log(q1);
-            if (err) throw err;
-            console.log("result is: ");
-            console.log(result1);
-          });
-        }
+    id=emp_detail;
+    const len: number = formData.board_name.length;
+    
+    for (let i = 0; i < len; i++) {
+      const eduValues = [
+        id,
+        edu[i],
+        formData.board_name[i],
+        formData.py[i],
+        formData.percentage[i],
+      ];
+      if (formData.board_name[i]) {
+        let educationdata:number=await con.insert(`INSERT INTO edu_detail (emp_id, type_of_result, Name_of_board_or_course, Passing_year, Percentage) VALUES (?)`, [eduValues]);
       }
-
+    }
       const wklen = formData.companyname.length;
       for (let i = 0; i < wklen; i++) {
         const q2 = `INSERT INTO work_experience (emp_id, company_name, designation, from_date, to_date) VALUES (?, ?, ?, ?, ?)`;
@@ -271,106 +243,59 @@ route.post(
           formData.to[i],
         ];
         if (formData.companyname[i]) {
-          con.query(q2, workValues, (err, result1) => {
-            console.log(q2);
-            if (err) throw err;
-            console.log("result is: ");
-            console.log(result1);
-          });
-        }
+            let workdata:number=await con.insert(`INSERT INTO work_experience (emp_id, company_name, designation, from_date, to_date) VALUES (?)`, [workValues]);
       }
-
-      const q3 = `INSERT INTO language (emp_id, language_know, rws) VALUES (?)`;
+    }
       if (formData.lan1) {
         lan1[0] = id;
-        con.query(q3, [lan1], (err, result) => {
-          if (err) throw err;
-          console.log("result is: ");
-          console.log(result);
-        });
+        const landata1:number=await con.insert(`INSERT INTO language (emp_id, language_know, rws) VALUES (?)`, [lan1]);
       }
       if (formData.lan2) {
         lan2[0] = id;
-        con.query(q3, [lan2], (err, result) => {
-          if (err) throw err;
-          console.log("result is: ");
-          console.log(result);
-        });
+        const landata2:number=await con.insert(`INSERT INTO language (emp_id, language_know, rws) VALUES (?)`, [lan2]);
       }
       if (formData.lan3) {
         lan3[0] = id;
-        con.query(q3, [lan3], (err, result) => {
-          if (err) throw err;
-          console.log("result is: ");
-          console.log(result);
-        });
+        const landata3:number=await con.insert(`INSERT INTO language (emp_id, language_know, rws) VALUES (?)`, [lan3]);
       }
+    // ======  techno ===
       let q4 = `insert into know_techno(emp_id,tech_know ,level_of_technology) values( ? )`;
       tech1[0] = id;
       if (formData.tech1) {
-        con.query(q4, [tech1], (err, result) => {
-          if (err) throw err;
-          console.log("result is : ");
-          console.log(result);
-        });
+        const techdata1 :number=await con.insert(`insert into know_techno(emp_id,tech_know ,level_of_technology) values( ? )`, [tech1]);
       }
       tech2[0] = id;
       if (formData.tech2) {
-        con.query(q4, [tech2], (err, result) => {
-          if (err) throw err;
-          console.log("result is : ");
-          console.log(result);
-        });
+        const techdata2 :number=await con.insert(`insert into know_techno(emp_id,tech_know ,level_of_technology) values( ? )`, [tech2]);
       }
       tech3[0] = id;
       if (formData.tech3) {
-        con.query(q4, [tech3], (err, result) => {
-          if (err) throw err;
-          console.log("result is : ");
-          console.log(result);
-        });
+        const techdata3 :number=await con.insert(`insert into know_techno(emp_id,tech_know ,level_of_technology) values( ? )`, [tech3]);
       }
       tech4[0] = id;
       if (formData.tech4) {
-        con.query(q4, [tech4], (err, result) => {
-          if (err) throw err;
-          console.log("result is : ");
-          console.log(result);
-        });
+        const techdata4 :number=await con.insert(`insert into know_techno(emp_id,tech_know ,level_of_technology) values( ? )`, [tech4]);
       }
       //section ref
       let reflen = formData.name;
       for (let i = 0; i < reflen.length; i++) {
-        let q5 = `insert into reference_contact(emp_id, name ,contact_number ,relation) values('${id}','${formData.name[i]}','${formData.mobileno[i]}','${formData.rel[i]}');`;
         if (formData.name[i]) {
-          con.query(q5, (err, result1) => {
-            console.log(q5);
-            if (err) throw err;
-            console.log("result is : ");
-            console.log(result1);
-          });
+            const refdata :number=await con.insert(`insert into reference_contact(emp_id, name ,contact_number ,relation) values('${id}','${formData.name[i]}','${formData.mobileno[i]}','${formData.rel[i]}'`);
         }
       }
       //section ended
-      let q6 = `insert into preferences(emp_id, prefered_location,notice_period , expected_ctc,current_ctc , department) values( ? )`;
       pre[0] = id;
-      con.query(q6, [pre], (err, result) => {
-        if (err) throw err;
-        console.log("result is : ");
-        console.log(result);
-      });
-
-      res.json(`result id is : ${result.insertId} `);
-    });
+      const predata :number=await con.insert(`insert into preferences(emp_id, prefered_location,notice_period , expected_ctc,current_ctc , department) values( ? )`, [pre]);
+      res.json(id)
   }
 );
-route.get("/update/:id", checkAuth, (req: Request, res: Response) => {
+route.get("/update/:id", checkAuth,(req: Request, res: Response) => {
   let id = req.params.id;
   res.render("ajaxinup/home", { id });
 });
 
 route.post(
-  "/update/:id",
+  "/update/:id",checkAuth,
   urlencodedParser,
   [
     check("fname", "This username must me 3+ characters long")
@@ -400,8 +325,6 @@ route.post(
   ],
   async (req: Request, res: Response) => {
     let id = req.params.id;
-    console.log(id);
-    console.log("this is update post");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const alert = errors.array();
@@ -410,7 +333,6 @@ route.post(
       });
     }
     const formData: FormData = req.body;
-    console.log(formData);
 
     if (req.params.id) {
       // Section 1
@@ -429,43 +351,43 @@ route.post(
         zipcode,
         dob,
       } = formData;
-      await query(`UPDATE emp_details
-        SET fname='${fname}', lname='${lname}', designation='${designa}', email='${email}', phone='${number}', gender='${gender}',
-        rel_status='${relstatus}', address1='${add1}', address2='${add2}', city='${city}', state='${state}', zipcode='${zipcode}', bd='${dob}'
-        WHERE emp_id='${id}';`);
-
+      const predata :number=await con.update(`UPDATE emp_details
+      SET fname='${fname}', lname='${lname}', designation='${designa}', email='${email}', phone='${number}', gender='${gender}',
+      rel_status='${relstatus}', address1='${add1}', address2='${add2}', city='${city}', state='${state}', zipcode='${zipcode}', bd='${dob}'
+      WHERE emp_id='${id}';`);
+     
       // Section 2
       const edu = ["ssc", "hsc", "bachelor", "master"];
-      const len = formData.board_name.length;
-      const eduDetails = await query(
-        `SELECT edu_id FROM edu_detail WHERE emp_id IN (${id});`
-      );
+      const len:number = formData.board_name.length;
+      const eduDetails= await con.getall( `SELECT edu_id FROM edu_detail WHERE emp_id IN (${id});`) as Array<RowDataPacket>;
+      console.log("edudetails",eduDetails);
+      console.log(eduDetails[0]);
+      
       for (let i = 0; i < len; i++) {
         if (eduDetails[i]) {
-          await query(`UPDATE edu_detail
+          await con.update(`UPDATE edu_detail
             SET Name_of_board_or_course='${formData.board_name[i]}', Passing_year='${formData.py[i]}', Percentage='${formData.percentage[i]}'
             WHERE emp_id='${id}' AND type_of_result='${edu[i]}' AND edu_id='${eduDetails[i].edu_id}';`);
         } else {
           if (formData.board_name[i]) {
-            await query(`INSERT INTO edu_detail (emp_id, type_of_result, Name_of_board_or_course, Passing_year, Percentage)
+            await con.update(`INSERT INTO edu_detail (emp_id, type_of_result, Name_of_board_or_course, Passing_year, Percentage)
               VALUES ('${id}', '${edu[i]}', '${formData.board_name[i]}', '${formData.py[i]}', '${formData.percentage[i]}');`);
           }
         }
       }
 
       // Section 3
-      const workExperience = await query(
-        `SELECT id AS work_id FROM work_experience WHERE emp_id IN (${id});`
-      );
-      const wklen = formData.companyname.length;
+     
+      const workExperience=await con.getall( `SELECT id AS work_id FROM work_experience WHERE emp_id IN (${id});`)as Array<RowDataPacket>;
+      const wklen:number = formData.companyname.length;
       for (let i = 0; i < wklen; i++) {
         if (workExperience[i]) {
-          await query(`UPDATE work_experience
+          await con.update(`UPDATE work_experience
             SET company_name='${formData.companyname[i]}', designation='${formData.designation[i]}', from_date='${formData.from[i]}', to_date='${formData.to[i]}'
             WHERE emp_id='${id}' AND id='${workExperience[i].work_id}';`);
         } else {
           if (formData.companyname[i]) {
-            await query(`INSERT INTO work_experience (emp_id, company_name, designation, from_date, to_date)
+            await con.update(`INSERT INTO work_experience (emp_id, company_name, designation, from_date, to_date)
               VALUES ('${id}', '${formData.companyname[i]}', '${formData.designation[i]}', '${formData.from[i]}', '${formData.to[i]}');`);
           }
         }
@@ -486,9 +408,9 @@ route.post(
         languages.push(formData.lan3);
         rws.push(formData.able3);
       }
-      await query(`DELETE FROM language WHERE emp_id='${id}';`);
+      await con.delete(`DELETE FROM language WHERE emp_id='${id}';`);
       for (let i = 0; i < languages.length; i++) {
-        await query(`INSERT INTO language (emp_id, language_know, rws)
+        await con.insert(`INSERT INTO language (emp_id, language_know, rws)
           VALUES ('${id}', '${languages[i]}', '${rws[i]}');`);
       }
 
@@ -511,35 +433,35 @@ route.post(
         tech.push(formData.tech4);
         level.push(formData.level4);
       }
-      const technoDetails = await query(
+      const technoDetails = await con.getall(
         `SELECT id AS tech_id FROM know_techno WHERE emp_id IN (${id});`
-      );
+      )as Array<RowDataPacket>;
       for (let i = 0; i < tech.length; i++) {
         if (technoDetails[i]) {
-          await query(`UPDATE know_techno
+          await con.update(`UPDATE know_techno
             SET tech_know='${tech[i]}', level_of_technology='${level[i]}'
             WHERE emp_id='${id}' AND id='${technoDetails[i].tech_id}';`);
         } else {
           if (tech[i]) {
-            await query(`INSERT INTO know_techno (emp_id, tech_know, level_of_technology)
+            await con.insert(`INSERT INTO know_techno (emp_id, tech_know, level_of_technology)
               VALUES ('${id}', '${tech[i]}', '${level[i]}');`);
           }
         }
       }
 
       // References
-      const references = await query(
+      const references = await con.getall(
         `SELECT ref_id FROM reference_contact WHERE emp_id IN (${id});`
-      );
+      )as Array<RowDataPacket>;
       const refLen = formData.name.length;
       for (let i = 0; i < refLen; i++) {
         if (references[i]) {
-          await query(`UPDATE reference_contact
+          await con.update(`UPDATE reference_contact
             SET name='${formData.name[i]}', contact_number='${formData.mobileno[i]}', relation='${formData.rel[i]}'
             WHERE emp_id='${id}' AND ref_id='${references[i].ref_id}';`);
         } else {
           if (formData.name[i]) {
-            await query(`INSERT INTO reference_contact (emp_id, name, contact_number, relation)
+            await con.insert(`INSERT INTO reference_contact (emp_id, name, contact_number, relation)
               VALUES ('${id}', '${formData.name[i]}', '${formData.mobileno[i]}', '${formData.rel[i]}');`);
           }
         }
@@ -547,11 +469,10 @@ route.post(
 
       // Preferences
       const { preloc, notice, exctc, curctc, depa } = formData;
-      await query(`UPDATE preferences
+      await con.update(`UPDATE preferences
         SET prefered_location='${preloc}', notice_period='${notice}', expected_ctc='${exctc}', current_ctc='${curctc}', department='${depa}'
         WHERE emp_id='${id}';`);
     }
-
     res.json("data updated");
   }
 );

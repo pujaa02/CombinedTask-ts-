@@ -1841,9 +1841,7 @@
         // let res7 = pre_result[id - 1];
         console.log("res7", res7);
 
-        document
-          .getElementById("fname")
-          .setAttribute("value", `${res1.fname}`);
+        document.getElementById("fname").setAttribute("value", `${res1[0].fname}`);
         document
           .getElementById("lname")
           .setAttribute("value", `${res1[0].lname}`);

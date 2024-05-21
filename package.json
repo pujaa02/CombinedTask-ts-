@@ -21,7 +21,7 @@
   "name": "myrepo_001(ts)",
   "description": "",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "nodemon dist/index.js",
