@@ -6,11 +6,16 @@ import { check, validationResult } from "express-validator";
 import con from "../models/database";
 
 import parser from "body-parser";
-import { RowDataPacket } from "mysql2";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
 route.use(parser.json());
 route.use(parser.urlencoded({ extended: false }));
 const urlencodedParser = parser.urlencoded({ extended: false });
 interface FormData {
+  phone:string,
+  rel_status:string,
+  address1:string,
+   address2:string,
+  bd:string,
   fname: string;
   lname: string;
   designa: string;
@@ -417,19 +422,22 @@ route.post(
         });
       };
       // =========section1===============
-      // fname = req.body.fname;
-      // lname = req.body.lname;
-      // designation = req.body.designa;
-      // email = req.body.email;
-      // phone = req.body.number;
-      // gender = req.body.gender;
-      // rel_status = req.body.relstatus;
-      // address1 = req.body.add1;
-      // address2 = req.body.add2;
-      // city = req.body.city;
-      // state = req.body.state;
-      // zipcode = req.body.zipcode;
-      // bd = req.body.dob;
+      const {
+        fname,
+        lname,
+        designation,
+        email,
+        phone,
+        gender,
+        rel_status,
+        address1,
+        address2,
+        city,
+        state,
+        zipcode,
+        bd,
+        
+      } = jsondata;
       let emp_detail = await query(
         `UPDATE emp_details
           SET fname='${fname}', lname='${lname}',designation='${designation}',email='${email}',phone='${phone}',gender='${gender}',
@@ -443,8 +451,7 @@ route.post(
       let len = req.body.board_name;
       let arr6 = await query(
         `select edu_id as edu_id from edu_detail where emp_id in(${id});`
-      );
-      console.log("arr6", arr6.length);
+      )as Array<RowDataPacket>;
       for (let i = 0; i < len.length; i++) {
         if (arr6[i]) {
           let edu_detail = await query(`UPDATE edu_detail
@@ -463,14 +470,14 @@ route.post(
       //============section3============
       let arr = await query(
         `select id as work_id from emp.work_experience where emp_id in(${id});`
-      );
+      )as Array<RowDataPacket>;;
 
       let wklen = req.body.companyname;
       for (let i = 0; i < wklen.length; i++) {
         if (arr[i]) {
           let work_exp = await query(`UPDATE work_experience
               SET company_name='${req.body.companyname[i]}',designation='${req.body.designation[i]}',from_date='${req.body.from[i]}',to_date='${req.body.to[i]}'
-              WHERE emp_id='${id}' and id='${arr[i].work_id}';`);
+              WHERE emp_id='${id}' and id='${arr[i].work_id}';`)as Array<ResultSetHeader>;;
         } else {
           if (wklen[i]) {
             let work_ins = await query(`insert into work_experience( emp_id,
@@ -522,7 +529,7 @@ route.post(
       }
       let arr5 = await query(
         `select id as tech_id from emp.know_techno where emp_id in(${id});`
-      );
+      )as Array<RowDataPacket>;;
 
       for (let i = 0; i < tech.length; i++) {
         if (arr5[i]) {
@@ -541,7 +548,7 @@ route.post(
       //section ref
       let arr2 = await query(
         `select ref_id as ref_id from reference_contact where emp_id in(${id});`
-      );
+      )as Array<RowDataPacket>;;
       let reflen = req.body.name;
       for (let i = 0; i < reflen.length; i++) {
         if (arr2[i]) {

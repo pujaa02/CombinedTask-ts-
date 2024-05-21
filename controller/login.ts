@@ -6,12 +6,14 @@ import con from "../models/database";
 import parser from "body-parser";
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
-let getdata = require("../public/js/checkdate");
+import getdata from "./checkdate"
 route.use(parser.json());
 route.use(parser.urlencoded({ extended: false }));
-import { Md5 } from "ts-Md5";
+// import {Md5} from 'ts-md5';
+var md5 = require("md5");
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 dotenv.config();
+
 
 let lastid: number;
 route.get("/getData", getdata);
@@ -48,11 +50,11 @@ route.get("/afterregister/:str", (req: Request, res: Response) => {
   res.render("frontpage/activationpage", { lastid, actcode });
 });
 //================checktime while update password======================
-route.get("/checktime/:actcode", (req: Request, res: Response) => {
+route.get("/checktime/:actcode",async (req: Request, res: Response) => {
   let actcode = req.params.actcode;
-
   let q1 = `select date_time from login where activatecode='${actcode}'`;
-  con.query(q1, (err, result) => {
+  
+  con.query(q1 , (err: any | null, result?: any) => {
     if (err) throw err;
 
     if (result.length > 0) {
@@ -105,7 +107,7 @@ route.post("/successreg/:actcd", (req: Request, res: Response) => {
   let salt: string = genesalt(); // Assuming genesalt() is defined elsewhere
   let combine: string = pass + salt;
 
-  let finalpass: string = Md5(combine); // Assuming Md5() is defined elsewhere
+  let finalpass = md5(combine); // Assuming Md5() is defined elsewhere
 
   let q4: string = `update login set password='${finalpass}', salt='${salt}',status='active' where  activatecode='${code}'`;
   con.query(q4, (err, result1) => {
@@ -121,10 +123,11 @@ route.post("/updatepass/:mail", (req: Request, res: Response) => {
 
   let pass: string = formData.pass;
 
-  let salt: string = genesalt(); // Assuming genesalt() is defined elsewhere
-  let combine: string = pass + salt;
-
-  let finalpass: string = Md5(combine); // Assuming Md5() is defined elsewhere
+  let salt:string = genesalt();
+  let combine :string= pass + salt;
+  
+  let finalpass = md5(combine);
+ // Assuming Md5() is defined elsewhere
 
   let q1: string = `update login set password='${finalpass}', salt='${salt}' where email='${mail}'`;
   con.query(q1, (err, result1) => {
@@ -158,7 +161,7 @@ route.post("/loginpage", async (req: Request, res: Response) => {
 
     if (result.length > 0 && result[0].email === user) {
       combine = pass + result[0].salt;
-      let resPassword: string = Md5(combine);
+      let resPassword = md5(combine);
 
       if (resPassword === result[0].password) {
         token = jwt.sign(

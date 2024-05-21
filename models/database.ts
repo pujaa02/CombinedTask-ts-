@@ -15,3 +15,13 @@ con.connect((err) => {
 });
 
 export default con;
+// import Db from 'mysql2-async'
+// export const db = new Db({
+//   host: 'yourhost',
+//   ...
+// })
+
+// async function main() {
+//   const row = await db.getrow('SELECT ...')
+// }
+// main().catch(e => console.error(e))

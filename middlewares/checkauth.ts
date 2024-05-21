@@ -1,10 +1,13 @@
 import {Request,Response, NextFunction } from "express";
 import jwt  from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 function checkAuth(req:Request, res:Response, next:NextFunction) {
   try {
-    var token2 = req.cookies.token;
-    const verified = jwt.verify(token2, process.env.JWT_SECRET_KEY);
+    var token2:string = req.cookies.token;
+    let key:any=process.env.JWT_SECRET_KEY
+    const verified = jwt.verify(token2, key);
 
     if (verified) {
       next();

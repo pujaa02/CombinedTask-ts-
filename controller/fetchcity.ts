@@ -3,8 +3,8 @@ let route = express.Router();
 import { Request, Response } from "express";
 import checkAuth from "../middlewares/checkauth";
 
-var get_data = require("../public/js/ajaxcityfetch/get_data");
-var get_city = require("../public/js/ajaxcityfetch/get_cities");
+import get_data from "./ajaxcityfetch/get_data"
+import get_city from "./ajaxcityfetch/get_cities";
 
 route.get("/state", checkAuth, get_data);
 route.get("/cities", checkAuth, get_city);

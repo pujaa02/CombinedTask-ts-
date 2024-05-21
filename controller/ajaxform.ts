@@ -11,14 +11,16 @@ import { ResultSetHeader, RowDataPacket } from "mysql2";
 route.use(parser.json());
 route.use(parser.urlencoded({ extended: false }));
 const urlencodedParser = parser.urlencoded({ extended: false });
-var get_user = require("../public/js/ajaxinsertupdate/get_user");
-var get_emp = require("../public/js/ajaxinsertupdate/get_emp_det");
-var edu_det = require("../public/js/ajaxinsertupdate/get_edu_det");
-var work_exp = require("../public/js/ajaxinsertupdate/work_exp");
-var lan = require("../public/js/ajaxinsertupdate/language");
-var techno = require("../public/js/ajaxinsertupdate/techno");
-var ref = require("../public/js/ajaxinsertupdate/ref");
-var pre = require("../public/js/ajaxinsertupdate/pre");
+
+import get_user from "./ajaxinsertupdate/get_user";
+import get_emp from "./ajaxinsertupdate/get_emp_det"
+import edu_det from "./ajaxinsertupdate/get_edu_det";
+import work_exp from "./ajaxinsertupdate/work_exp";
+import lan from "./ajaxinsertupdate/language";
+import techno from "./ajaxinsertupdate/techno";
+import ref from "./ajaxinsertupdate/ref";
+import pre from "./ajaxinsertupdate/pre";
+
 
 route.get("/users", checkAuth, get_user);
 route.get("/emp", checkAuth, get_emp);

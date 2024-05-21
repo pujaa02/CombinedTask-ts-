@@ -1,15 +1,19 @@
-{
-  "compilerOptions": {
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "target": "es6",
-    "noImplicitAny": true,
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*", "/types/*"]
-    }
-  }
+{    
+    "compilerOptions": {        
+        "module": "commonjs",
+        "moduleResolution": "node",        
+        "esModuleInterop": true,
+        "pretty":true,        
+        "sourceMap": true,
+        "target": "ES2022",
+        "outDir": "./dist",   
+        "baseUrl": "./lib",        
+         "strict": true,       
+        "typeRoots": [
+          "./types",
+          "./node_modules/@types"
+        ]
+    },
+    "exclude": [ "node_modules" ]
 }
+
