@@ -110,7 +110,7 @@ route.post("/successreg/:actcd", async (req, res) => {
     let salt = genesalt(); // Assuming genesalt() is defined elsewhere
     let combine = pass + salt;
     let finalpass = md5(combine); // Assuming Md5() is defined elsewhere
-    let result1 = await database_1.default.update(`update login set password='${finalpass}', salt='${salt}',status='active' where  activatecode='${code}'`);
+    await database_1.default.update(`update login set password='${finalpass}', salt='${salt}',status='active' where  activatecode='${code}'`);
     res.json("123");
 });
 //===========regtration password update==============
@@ -122,7 +122,7 @@ route.post("/updatepass/:mail", async (req, res) => {
     let combine = pass + salt;
     let finalpass = md5(combine);
     // Assuming Md5() is defined elsewhere
-    let result1 = await database_1.default.update(`update login set password='${finalpass}', salt='${salt}' where email='${mail}'`);
+    await database_1.default.update(`update login set password='${finalpass}', salt='${salt}' where email='${mail}'`);
     res.json("123");
 });
 //==============login==================

@@ -279,7 +279,7 @@ route.post(
     let reflen = formData.name;
     for (let i = 0; i < reflen.length; i++) {
       if (formData.name[i]) {
-        const refdata: number = await con.insert(`insert into reference_contact(emp_id, name ,contact_number ,relation) values('${id}','${formData.name[i]}','${formData.mobileno[i]}','${formData.rel[i]}'`);
+        const refdata: number = await con.insert(`insert into reference_contact(emp_id, name ,contact_number ,relation) values('${id}','${formData.name[i]}','${formData.mobileno[i]}','${formData.rel[i]}')`);
       }
     }
     //section ended

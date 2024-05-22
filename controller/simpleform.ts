@@ -387,22 +387,22 @@ route.post(
                 lname,
                 designation,
                 email,
-                phone,
+                number,
                 gender,
-                rel_status,
+                relstatus,
                 address1,
                 address2,
                 city,
                 state,
                 zipcode,
-                bd,
+                dob,
 
             } = jsondata;
             let emp_detail = await con.update(
                 `UPDATE emp_details
-          SET fname = '${fname}', lname = '${lname}', designation = '${designation}', email = '${email}', phone = '${phone}', gender = '${gender}',
-            rel_status = '${rel_status}', address1 = '${address1}', address2 = '${address2}', city = '${city}',
-            state = '${state}', zipcode = '${zipcode}', bd = '${bd}'
+          SET fname = '${fname}', lname = '${lname}', designation = '${designation}', email = '${email}', phone = '${number}', gender = '${gender}',
+            rel_status = '${relstatus}', address1 = '${address1}', address2 = '${address2}', city = '${city}',
+            state = '${state}', zipcode = '${zipcode}', bd = '${dob}'
           WHERE emp_id = '${id}'; `
             ) as unknown as Array<ResultSetHeader>;
 

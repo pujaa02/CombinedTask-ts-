@@ -45,10 +45,13 @@ route.get("/afterregister/:str", (req: Request, res: Response) => {
 
     res.render("frontpage/activationpage", { lastid, actcode });
 });
+interface fetchResult {
+    date_time: Date;
+}
 //================checktime while update password======================
 route.get("/checktime/:actcode", async (req: Request, res: Response) => {
     let actcode: string = req.params.actcode;
-    let result = await con.getall(`select date_time from login where activatecode='${actcode}'`) as Array<RowDataPacket>;
+    let result = await con.getall(`select date_time from login where activatecode='${actcode}'`) as Array<fetchResult>;
     if (result.length > 0) {
         let d1: Date = new Date();
         let d2: Date = new Date(result[0].date_time);

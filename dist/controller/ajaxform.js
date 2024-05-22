@@ -215,7 +215,7 @@ route.post("/submit", checkauth_1.default, urlencodedParser, [
     let reflen = formData.name;
     for (let i = 0; i < reflen.length; i++) {
         if (formData.name[i]) {
-            const refdata = await database_1.default.insert(`insert into reference_contact(emp_id, name ,contact_number ,relation) values('${id}','${formData.name[i]}','${formData.mobileno[i]}','${formData.rel[i]}'`);
+            const refdata = await database_1.default.insert(`insert into reference_contact(emp_id, name ,contact_number ,relation) values('${id}','${formData.name[i]}','${formData.mobileno[i]}','${formData.rel[i]}')`);
         }
     }
     //section ended
@@ -224,7 +224,7 @@ route.post("/submit", checkauth_1.default, urlencodedParser, [
     res.json(id);
 });
 route.get("/update/:id", checkauth_1.default, (req, res) => {
-    let id = req.params.id;
+    let id = Number(req.params.id);
     res.render("ajaxinup/home", { id });
 });
 route.post("/update/:id", checkauth_1.default, urlencodedParser, [
@@ -253,7 +253,7 @@ route.post("/update/:id", checkauth_1.default, urlencodedParser, [
         max: 45,
     }),
 ], async (req, res) => {
-    let id = req.params.id;
+    let id = Number(req.params.id);
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
         const alert = errors.array();
@@ -265,7 +265,7 @@ route.post("/update/:id", checkauth_1.default, urlencodedParser, [
     if (req.params.id) {
         // Section 1
         const { fname, lname, designa, email, number, gender, relstatus, add1, add2, city, state, zipcode, dob, } = formData;
-        const predata = await database_1.default.update(`UPDATE emp_details
+        await database_1.default.update(`UPDATE emp_details
       SET fname='${fname}', lname='${lname}', designation='${designa}', email='${email}', phone='${number}', gender='${gender}',
       rel_status='${relstatus}', address1='${add1}', address2='${add2}', city='${city}', state='${state}', zipcode='${zipcode}', bd='${dob}'
       WHERE emp_id='${id}';`);
@@ -273,8 +273,6 @@ route.post("/update/:id", checkauth_1.default, urlencodedParser, [
         const edu = ["ssc", "hsc", "bachelor", "master"];
         const len = formData.board_name.length;
         const eduDetails = await database_1.default.getall(`SELECT edu_id FROM edu_detail WHERE emp_id IN (${id});`);
-        console.log("edudetails", eduDetails);
-        console.log(eduDetails[0]);
         for (let i = 0; i < len; i++) {
             if (eduDetails[i]) {
                 await database_1.default.update(`UPDATE edu_detail

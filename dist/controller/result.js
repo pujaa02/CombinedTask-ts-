@@ -51,7 +51,7 @@ route.get("/result", checkauth_1.default, async (req, res) => {
     });
 });
 route.get("/datares/:id", checkauth_1.default, async (req, res) => {
-    let id = req.params.id;
+    let id = Number(req.params.id);
     const ans1 = await database_1.default.getall(`select student_master26.id, student_master26.firstname,count( IF( att_master26.attendance = 'present' , att_master26.date, NULL)) as TOTAL_PRESENT,
   round((count( IF( att_master26.attendance = 'present' , att_master26.date, NULL)) * 100/90),2 )as Percentage from student_master26
  INNER JOIN att_master26  ON student_master26.id=att_master26.stu_id where student_master26.id=${id}  GROUP BY student_master26.id ;`);
