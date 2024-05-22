@@ -111,21 +111,22 @@ route.post(
                 alert,
             });
         }
-        let jsondata = req.body;
-
-        let fname: string = req.body.fname;
-        let lname: string = req.body.lname;
-        let designation: string = req.body.designa;
-        let email: string = req.body.email;
-        let phone: string = req.body.number;
-        let gender: string = req.body.gender;
-        let rel_status: string = req.body.relstatus;
-        let address1: string = req.body.add1;
-        let address2: string = req.body.add2;
-        let city: string = req.body.city;
-        let state: string = req.body.state;
-        let zipcode: string = req.body.zipcode;
-        let bd: string = req.body.dob;
+        let jsondata: FormData = req.body;
+        const {
+            fname,
+            lname,
+            designa: designation,
+            email,
+            number: phone,
+            gender,
+            relstatus: rel_status,
+            add1: address1,
+            add2: address2,
+            city,
+            state,
+            zipcode,
+            dob: bd,
+        } = jsondata;
 
         let edu: string[] = ["ssc", "hsc", "bachelor", "master"];
 
@@ -133,18 +134,18 @@ route.post(
         let lan2: Array<string | number> = ["", "", ""];
         let lan3: Array<string | number> = ["", "", ""];
 
-        lan1[1] = req.body.lan1;
-        if (req.body.able1) {
-            lan1[2] = req.body.able1.toString();
+        lan1[1] = jsondata.lan1;
+        if (jsondata.able1) {
+            lan1[2] = jsondata.able1.toString();
         }
 
-        lan2[1] = req.body.lan2;
-        if (req.body.able2) {
-            lan2[2] = req.body.able2.toString();
+        lan2[1] = jsondata.lan2;
+        if (jsondata.able2) {
+            lan2[2] = jsondata.able2.toString();
         }
-        lan3[1] = req.body.lan3;
-        if (req.body.able3) {
-            lan3[2] = req.body.able3.toString();
+        lan3[1] = jsondata.lan3;
+        if (jsondata.able3) {
+            lan3[2] = jsondata.able3.toString();
         }
 
         let tech1: Array<string | number> = ["", "", ""];
@@ -152,99 +153,113 @@ route.post(
         let tech3: Array<string | number> = ["", "", ""];
         let tech4: Array<string | number> = ["", "", ""];
 
-        tech1[1] = req.body.tech1;
-        tech1[2] = req.body.level1;
+        tech1[1] = jsondata.tech1;
+        tech1[2] = jsondata.level1;
 
-        tech2[1] = req.body.tech2;
-        tech2[2] = req.body.level2;
+        tech2[1] = jsondata.tech2;
+        tech2[2] = jsondata.level2;
 
-        tech3[1] = req.body.tech3;
-        tech3[2] = req.body.level3;
+        tech3[1] = jsondata.tech3;
+        tech3[2] = jsondata.level3;
 
-        tech4[1] = req.body.tech4;
-        tech4[2] = req.body.level4;
+        tech4[1] = jsondata.tech4;
+        tech4[2] = jsondata.level4;
 
         let ref1: string[] = ["", "", "", ""];
         let ref2: string[] = ["", "", "", ""];
         let ref3: string[] = ["", "", "", ""];
 
-        ref1[1] = req.body.name1;
-        ref1[2] = req.body.mobileno1;
-        ref1[3] = req.body.rel1;
+        ref1[1] = jsondata.name1;
+        ref1[2] = jsondata.mobileno1;
+        ref1[3] = jsondata.rel1;
 
-        ref2[1] = req.body.name2;
-        ref2[2] = req.body.mobileno2;
-        ref2[3] = req.body.rel2;
+        ref2[1] = jsondata.name2;
+        ref2[2] = jsondata.mobileno2;
+        ref2[3] = jsondata.rel2;
 
-        ref3[1] = req.body.name3;
-        ref3[2] = req.body.mobileno3;
-        ref3[3] = req.body.rel3;
+        ref3[1] = jsondata.name3;
+        ref3[2] = jsondata.mobileno3;
+        ref3[3] = jsondata.rel3;
 
         let pre: Array<string | number> = ["", "", "", "", "", ""];
 
-        pre[1] = req.body.preloc;
-        pre[2] = req.body.notice;
-        pre[3] = req.body.exctc;
-        pre[4] = req.body.curctc;
-        pre[5] = req.body.depa;
-
-        let result: number = await con.insert(`INSERT INTO emp_details(fname, lname, designation, email, phone, gender, rel_status, address1, address2, city, state, zipcode, bd) VALUES("${fname}", "${lname}", "${designation}", "${email}", "${phone}", "${gender}", "${rel_status}", "${address1}", "${address2}", "${city}", "${state}", "${zipcode}", "${bd}"`);
+        pre[1] = jsondata.preloc;
+        pre[2] = jsondata.notice;
+        pre[3] = jsondata.exctc;
+        pre[4] = jsondata.curctc;
+        pre[5] = jsondata.depa;
+        const values = [
+            fname,
+            lname,
+            designation,
+            email,
+            phone,
+            gender,
+            rel_status,
+            address1,
+            address2,
+            city,
+            state,
+            zipcode,
+            bd,
+        ];
+        let result: number = await con.insert(`INSERT INTO emp_details(fname, lname, designation, email, phone, gender, rel_status, address1, address2, city, state, zipcode, bd) VALUES(?)`, [values]);
 
         id = result;
 
-        let len = req.body.board_name;
+        let len = jsondata.board_name;
         for (let i = 0; i < len.length; i++) {
-            if (req.body.board_name[i]) {
-                await con.insert(`INSERT INTO edu_detail(emp_id, type_of_result, Name_of_board_or_course, Passing_year, Percentage) VALUES('${id}', '${edu[i]}', '${req.body.board_name[i]}', '${req.body.py[i]}', '${req.body.percentage[i]}')`) as unknown as Array<ResultSetHeader>
+            if (jsondata.board_name[i]) {
+                await con.insert(`INSERT INTO edu_detail(emp_id, type_of_result, Name_of_board_or_course, Passing_year, Percentage) VALUES('${id}', '${edu[i]}', '${jsondata.board_name[i]}', '${jsondata.py[i]}', '${jsondata.percentage[i]}')`) as unknown as Array<ResultSetHeader>
             }
         }
 
-        let wklen = req.body.companyname;
+        let wklen = jsondata.companyname;
         for (let i = 0; i < wklen.length; i++) {
-            if (req.body.companyname[i]) {
-                await con.insert(`INSERT INTO work_experience(emp_id, company_name, designation, from_date, to_date) VALUES('${id}', '${req.body.companyname[i]}', '${req.body.designation[i]}', '${req.body.from[i]}', '${req.body.to[i]}')`) as unknown as Array<ResultSetHeader>
+            if (jsondata.companyname[i]) {
+                await con.insert(`INSERT INTO work_experience(emp_id, company_name, designation, from_date, to_date) VALUES('${id}', '${jsondata.companyname[i]}', '${jsondata.designation[i]}', '${jsondata.from[i]}', '${jsondata.to[i]}')`) as unknown as Array<ResultSetHeader>
 
             }
         }
 
 
 
-        if (req.body.lan1) {
+        if (jsondata.lan1) {
             lan1[0] = id;
             await con.insert(`INSERT INTO language(emp_id, language_know, rws) VALUES(?)`, [lan1]) as unknown as Array<ResultSetHeader>
         }
-        if (req.body.lan2) {
+        if (jsondata.lan2) {
             lan2[0] = id;
             await con.insert(`INSERT INTO language(emp_id, language_know, rws) VALUES(?)`, [lan2]) as unknown as Array<ResultSetHeader>
         }
-        if (req.body.lan3) {
+        if (jsondata.lan3) {
             lan3[0] = id;
             await con.insert(`INSERT INTO language(emp_id, language_know, rws) VALUES(?)`, [lan3]) as unknown as Array<ResultSetHeader>
         }
 
 
         tech1[0] = id;
-        if (req.body.tech1) {
+        if (jsondata.tech1) {
             await con.insert(`INSERT INTO know_techno(emp_id, tech_know, level_of_technology) VALUES(?)`, [tech1]) as unknown as Array<ResultSetHeader>
         }
         tech2[0] = id;
-        if (req.body.tech2) {
+        if (jsondata.tech2) {
             await con.insert(`INSERT INTO know_techno(emp_id, tech_know, level_of_technology) VALUES(?)`, [tech2]) as unknown as Array<ResultSetHeader>
         }
         tech3[0] = id;
-        if (req.body.tech3) {
+        if (jsondata.tech3) {
             await con.insert(`INSERT INTO know_techno(emp_id, tech_know, level_of_technology) VALUES(?)`, [tech3]) as unknown as Array<ResultSetHeader>
         }
         tech4[0] = id;
-        if (req.body.tech4) {
+        if (jsondata.tech4) {
             await con.insert(`INSERT INTO know_techno(emp_id, tech_know, level_of_technology) VALUES(?)`, [tech4]) as unknown as Array<ResultSetHeader>
         }
 
         //section ref
-        let reflen = req.body.name;
+        let reflen = jsondata.name;
         for (let i = 0; i < reflen.length; i++) {
-            if (req.body.name[i]) {
-                await con.insert(`INSERT INTO reference_contact(emp_id, name, contact_number, relation) VALUES('${id}', '${req.body.name[i]}', '${req.body.mobileno[i]}', '${req.body.rel[i]}')`) as unknown as Array<ResultSetHeader>;
+            if (jsondata.name[i]) {
+                await con.insert(`INSERT INTO reference_contact(emp_id, name, contact_number, relation) VALUES('${id}', '${jsondata.name[i]}', '${jsondata.mobileno[i]}', '${jsondata.rel[i]}')`) as unknown as Array<ResultSetHeader>;
             }
         }
         //section ended
@@ -355,7 +370,7 @@ route.post(
         }),
     ],
     async (req: Request, res: Response) => {
-        let id = req.params.id;
+        let id: number = Number(req.params.id);
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             const alert = errors.array();
@@ -389,26 +404,26 @@ route.post(
             rel_status = '${rel_status}', address1 = '${address1}', address2 = '${address2}', city = '${city}',
             state = '${state}', zipcode = '${zipcode}', bd = '${bd}'
           WHERE emp_id = '${id}'; `
-            );
+            ) as unknown as Array<ResultSetHeader>;
 
             //==========section2=============
             let edu = ["ssc", "hsc", "bachelor", "master"];
-            let len = req.body.board_name;
+            let len = jsondata.board_name;
             let arr6 = await con.getall(
                 `select edu_id as edu_id from edu_detail where emp_id in (${id}); `
             ) as Array<RowDataPacket>;
             for (let i = 0; i < len.length; i++) {
                 if (arr6[i]) {
                     let edu_detail = await con.update(`UPDATE edu_detail
-          SET Name_of_board_or_course = '${req.body.board_name[i]}', Passing_year = '${req.body.py[i]}', Percentage = '${req.body.percentage[i]}'
-          WHERE emp_id = '${id}' and type_of_result = '${edu[i]}' and edu_id = '${arr6[i].edu_id}'; `);
+          SET Name_of_board_or_course = '${jsondata.board_name[i]}', Passing_year = '${jsondata.py[i]}', Percentage = '${jsondata.percentage[i]}'
+          WHERE emp_id = '${id}' and type_of_result = '${edu[i]}' and edu_id = '${arr6[i].edu_id}'; `) as unknown as Array<ResultSetHeader>;
                 } else {
                     if (len[i]) {
                         let inser_edu = await con.insert(`insert into edu_detail(emp_id,
                 type_of_result,
                 Name_of_board_or_course,
                 Passing_year,
-                Percentage) values('${id}', '${edu[i]}', '${req.body.board_name[i]}', '${req.body.py[i]}', '${req.body.percentage[i]}'); `);
+                Percentage) values('${id}', '${edu[i]}', '${jsondata.board_name[i]}', '${jsondata.py[i]}', '${jsondata.percentage[i]}'); `) as unknown as Array<ResultSetHeader>;
                     }
                 }
             }
@@ -417,16 +432,16 @@ route.post(
                 `select id as work_id from emp.work_experience where emp_id in (${id}); `
             ) as Array<RowDataPacket>;;
 
-            let wklen = req.body.companyname;
+            let wklen = jsondata.companyname;
             for (let i = 0; i < wklen.length; i++) {
                 if (arr[i]) {
                     let work_exp = await con.update(`UPDATE work_experience
-              SET company_name = '${req.body.companyname[i]}', designation = '${req.body.designation[i]}', from_date = '${req.body.from[i]}', to_date = '${req.body.to[i]}'
-              WHERE emp_id = '${id}' and id = '${arr[i].work_id}'; `) as unknown as Array<ResultSetHeader>;;
+              SET company_name = '${jsondata.companyname[i]}', designation = '${jsondata.designation[i]}', from_date = '${jsondata.from[i]}', to_date = '${jsondata.to[i]}'
+              WHERE emp_id = '${id}' and id = '${arr[i].work_id}'; `) as unknown as Array<ResultSetHeader>;
                 } else {
                     if (wklen[i]) {
                         let work_ins = await con.insert(`insert into work_experience(emp_id,
-                    company_name, designation, from_date, to_date) values('${id}', '${req.body.companyname[i]}', '${req.body.designation[i]}', '${req.body.from[i]}', '${req.body.to[i]}'); `);
+                    company_name, designation, from_date, to_date) values('${id}', '${jsondata.companyname[i]}', '${jsondata.designation[i]}', '${jsondata.from[i]}', '${jsondata.to[i]}'); `) as unknown as Array<ResultSetHeader>;
                     }
                 }
             }
@@ -435,42 +450,42 @@ route.post(
 
             let languagearr = [];
             let rwsarr = [];
-            if (req.body.lan1) {
-                languagearr.push(req.body.lan1);
-                rwsarr.push(req.body.able1);
+            if (jsondata.lan1) {
+                languagearr.push(jsondata.lan1);
+                rwsarr.push(jsondata.able1);
             }
-            if (req.body.lan2) {
-                languagearr.push(req.body.lan2);
-                rwsarr.push(req.body.able2);
+            if (jsondata.lan2) {
+                languagearr.push(jsondata.lan2);
+                rwsarr.push(jsondata.able2);
             }
-            if (req.body.lan3) {
-                languagearr.push(req.body.lan3);
-                rwsarr.push(req.body.able3);
+            if (jsondata.lan3) {
+                languagearr.push(jsondata.lan3);
+                rwsarr.push(jsondata.able3);
             }
-            let del = await con.delete(`delete from language where emp_id = '${id}'; `);
+            let del = await con.delete(`delete from language where emp_id = '${id}'; `) as unknown as Array<ResultSetHeader>;
             for (let i = 0; i < languagearr.length; i++) {
                 let lan_edit = await con.insert(`insert into language(emp_id,
                         language_know,
-                        rws) values('${id}', '${languagearr[i]}', '${rwsarr[i]}')`);
+                        rws) values('${id}', '${languagearr[i]}', '${rwsarr[i]}')`) as unknown as Array<ResultSetHeader>;
             }
 
             let tech = [];
             let level = [];
-            if (req.body.tech1) {
-                tech.push(req.body.tech1);
-                level.push(req.body.level1);
+            if (jsondata.tech1) {
+                tech.push(jsondata.tech1);
+                level.push(jsondata.level1);
             }
-            if (req.body.tech2) {
-                tech.push(req.body.tech2);
-                level.push(req.body.level2);
+            if (jsondata.tech2) {
+                tech.push(jsondata.tech2);
+                level.push(jsondata.level2);
             }
-            if (req.body.tech3) {
-                tech.push(req.body.tech3);
-                level.push(req.body.level3);
+            if (jsondata.tech3) {
+                tech.push(jsondata.tech3);
+                level.push(jsondata.level3);
             }
-            if (req.body.tech4) {
-                tech.push(req.body.tech4);
-                level.push(req.body.level4);
+            if (jsondata.tech4) {
+                tech.push(jsondata.tech4);
+                level.push(jsondata.level4);
             }
             let arr5 = await con.getall(
                 `select id as tech_id from emp.know_techno where emp_id in (${id}); `
@@ -494,17 +509,17 @@ tech_know = '${tech[i]}',
             let arr2 = await con.getall(
                 `select ref_id as ref_id from reference_contact where emp_id in (${id}); `
             ) as Array<RowDataPacket>;;
-            let reflen = req.body.name;
+            let reflen = jsondata.name;
             for (let i = 0; i < reflen.length; i++) {
                 if (arr2[i]) {
                     let work_exep = await con.update(`UPDATE reference_contact
-            SET name = '${req.body.name[i]}', contact_number = '${req.body.mobileno[i]}', relation = '${req.body.rel[i]}'
+            SET name = '${jsondata.name[i]}', contact_number = '${jsondata.mobileno[i]}', relation = '${jsondata.rel[i]}'
             WHERE emp_id = '${id}' and ref_id = '${arr2[i].ref_id}'; `) as unknown as Array<ResultSetHeader>;;
                 } else {
                     if (reflen[i]) {
                         let ins_workexp =
                             await con.insert(`insert into reference_contact(emp_id, name,
-        contact_number, relation) values('${id}', '${req.body.name[i]}', '${req.body.mobileno[i]}', '${req.body.rel[i]}'); `) as unknown as Array<ResultSetHeader>;;;
+        contact_number, relation) values('${id}', '${jsondata.name[i]}', '${jsondata.mobileno[i]}', '${jsondata.rel[i]}'); `) as unknown as Array<ResultSetHeader>;;;
                     }
                 }
             }
@@ -512,7 +527,7 @@ tech_know = '${tech[i]}',
             //section ended
             let pref = await con.update(
                 `UPDATE preferences
-        SET prefered_location = '${req.body.preloc}', notice_period = '${req.body.notice}', expected_ctc = '${req.body.exctc}', current_ctc = '${req.body.curctc}', department = '${req.body.depa}'
+        SET prefered_location = '${jsondata.preloc}', notice_period = '${jsondata.notice}', expected_ctc = '${jsondata.exctc}', current_ctc = '${jsondata.curctc}', department = '${jsondata.depa}'
         WHERE emp_id = '${id}'; `
             ) as unknown as Array<ResultSetHeader>;;;
             //end

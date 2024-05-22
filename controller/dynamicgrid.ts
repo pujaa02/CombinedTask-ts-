@@ -12,27 +12,27 @@ route.get("/fetch2", checkAuth, (req: Request, res: Response) => {
   res.render("taskone/home");
 });
 
-route.post("/fetch2",checkAuth, async(req: Request, res: Response) => {
+route.post("/fetch2", checkAuth, async (req: Request, res: Response) => {
   let jsonData = req.body;
   let search: string = jsonData["query"];
   let perPage: number = 5;
   let page: number = parseInt(req.query.page as string) || 1;
   const offset: number = (page - 1) * perPage;
-  const ans=await con.getall(`SELECT * FROM student_master26 WHERE id LIKE '%${search}%'`)as Array<RowDataPacket>;
-  const result=await con.getall(`SELECT * FROM student_master26 WHERE id LIKE '%${search}%' LIMIT ?, ?`,[offset,perPage])as Array<RowDataPacket>;
-      res.render("taskone/data", { users: result, page, search, len: ans });
+  const ans = await con.getall(`SELECT * FROM student_master26 WHERE id LIKE '%${search}%'`) as Array<RowDataPacket>;
+  const result = await con.getall(`SELECT * FROM student_master26 WHERE id LIKE '%${search}%' LIMIT ?, ?`, [offset, perPage]) as Array<RowDataPacket>;
+  res.render("taskone/data", { users: result, page, search, len: ans });
 });
 
-route.get("/fetch2/:page/:search", checkAuth, async(req: Request, res: Response) => {
+route.get("/fetch2/:page/:search", checkAuth, async (req: Request, res: Response) => {
   let search: string = req.params.search;
   let perPage: number = 5;
   let page: number = parseInt(req.params.page) || 1;
   const offset: number = (page - 1) * perPage;
- 
-  const ans1=await con.getall(`SELECT * FROM student_master26 WHERE id LIKE '%${search}%'`)as Array<RowDataPacket>;
-  const result1=await con.getall(`SELECT * FROM student_master26 WHERE id LIKE '%${search}%' LIMIT ?, ?`,[offset,perPage])as Array<RowDataPacket>;
 
-      res.render("taskone/data", { users: result1, page, search, len: ans1 });
+  const ans1 = await con.getall(`SELECT * FROM student_master26 WHERE id LIKE '%${search}%'`) as Array<RowDataPacket>;
+  const result1 = await con.getall(`SELECT * FROM student_master26 WHERE id LIKE '%${search}%' LIMIT ?, ?`, [offset, perPage]) as Array<RowDataPacket>;
+
+  res.render("taskone/data", { users: result1, page, search, len: ans1 });
 });
 
 route.get("/view", checkAuth, (req: Request, res: Response) => {
@@ -41,7 +41,7 @@ route.get("/view", checkAuth, (req: Request, res: Response) => {
 
 
 
-route.post("/view",checkAuth,async (req: Request, res: Response) => {
+route.post("/view", checkAuth, async (req: Request, res: Response) => {
   let data = JSON.stringify(req.body);
 
   let jsonData = req.body;
@@ -62,18 +62,18 @@ route.post("/view",checkAuth,async (req: Request, res: Response) => {
   let q: string = `SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa}  city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%' LIMIT ?, ?`;
 
 
-  const ans2=await con.getall(`SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa}  city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%'`,[offset,perPage])as Array<RowDataPacket>;
-  const result2=await con.getall(`SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa}  city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%' LIMIT ?, ?`,[offset,perPage])as Array<RowDataPacket>;
+  const ans2 = await con.getall(`SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa}  city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%'`, [offset, perPage]) as Array<RowDataPacket>;
+  const result2 = await con.getall(`SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa}  city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%' LIMIT ?, ?`, [offset, perPage]) as Array<RowDataPacket>;
 
-      res.render("taskone/data2", {
-        users: result2,
-        page,
-        len: ans2,
-        data,
+  res.render("taskone/data2", {
+    users: result2,
+    page,
+    len: ans2,
+    data,
   });
 });
 
-route.get("/view/:page/:jsonData", checkAuth, async(req: Request, res: Response) => {
+route.get("/view/:page/:jsonData", checkAuth, async (req: Request, res: Response) => {
   let jsonData: string = req.params.jsonData;
   let data = JSON.parse(jsonData);
 
@@ -88,17 +88,15 @@ route.get("/view/:page/:jsonData", checkAuth, async(req: Request, res: Response)
   let page: number = parseInt(req.params.page) || 1;
   const offset: number = (page - 1) * perPage;
 
-  const ans3=await con.getall(`SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa} city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%'`,[offset,perPage])as Array<RowDataPacket>;
-  const result3=await con.getall(`SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa} city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%' LIMIT ?, ?`,[offset,perPage])as Array<RowDataPacket>;
+  const ans3 = await con.getall(`SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa} city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%'`, [offset, perPage]) as Array<RowDataPacket>;
+  const result3 = await con.getall(`SELECT * FROM student_master26 WHERE firstname LIKE '%${fname}%' ${opa} lastname LIKE '%${lname}%' ${opa} email LIKE '%${email}%' ${opa} city LIKE '%${city}%' ${opa} blood_group LIKE '%${bg}%' LIMIT ?, ?`, [offset, perPage]) as Array<RowDataPacket>;
 
-  
-
-      res.render("taskone/data2", {
-        users: result3,
-        page,
-        len: ans3,
-        data: jsonData,
-      });
+  res.render("taskone/data2", {
+    users: result3,
+    page,
+    len: ans3,
+    data: jsonData,
+  });
 });
 
 export default route;

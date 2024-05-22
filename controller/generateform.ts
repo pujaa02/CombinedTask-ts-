@@ -15,8 +15,8 @@ route.get("/geneform", checkAuth, (req: Request, res: Response) => {
 route.post("/geneform", checkAuth,async(req: Request, res: Response) => {
   let jsonData = req.body;
 
-  let search = jsonData.query;
-  let type = jsonData.type;
+  let search:string = jsonData.query;
+  let type:string = jsonData.type;
 
   let result=await con.getall(`select selection_master.sel_id,selection_master.type,option_master.op_name from selection_master
   join option_master on selection_master.sel_id=option_master.sel_id 

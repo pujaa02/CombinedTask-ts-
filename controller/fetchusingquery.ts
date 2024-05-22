@@ -17,9 +17,9 @@ route.post("/fetch", async function (req: Request, res: Response) {
 
   let search = jsonData["query"];
 
-  let perPage = 20;
-  let page = parseInt(req.query.page as string) || 1;
-  const offset = (page - 1) * perPage;
+  let perPage: number = 20;
+  let page: number = parseInt(req.query.page as string) || 1;
+  const offset: number = (page - 1) * perPage;
 
   if (search === "") {
     res.send("Please Write Query First");
@@ -30,59 +30,59 @@ route.post("/fetch", async function (req: Request, res: Response) {
   ) {
     res.send("Please write only select query");
   } else if (search.search("limit") > 1) {
-    let q = `${search}`;
+    let q: string = `${search}`;
 
-  try {
-      let [rows,fields]=await con.getall(q,[offset,perPage]) as Array<RowDataPacket>
+    try {
+      let [rows, fields] = await con.getall(q, [offset, perPage]) as Array<RowDataPacket>
       res.render("taskzero/nolimit", { users: rows, field: fields });
     } catch (error) {
-        res.render("taskzero/home2", { error:error });
-  }
+      res.render("taskzero/home2", { error: error });
+    }
   } else {
-    let str = search;
+    let str: string = search;
     str = str.replace(";", " Limit ?,? ;");
-    let q = `${str}`;
-    let q2 = `${search}`;
+    let q: string = `${str}`;
+    let q2: string = `${search}`;
 
- try {
-    let [rows1,fields1]=await con.getall(q2) as Array<RowDataPacket>;
-    let [rows2,fields2]=await con.getall(q,[offset,perPage]) as Array<RowDataPacket>;
-    res.render("taskzero/data", {
+    try {
+      let [rows1, fields1] = await con.getall(q2) as Array<RowDataPacket>;
+      let [rows2, fields2] = await con.getall(q, [offset, perPage]) as Array<RowDataPacket>;
+      res.render("taskzero/data", {
         users: rows2,
         field: fields2,
         page,
         search,
         len: rows1,
       });
- } catch (error) {
-     res.render("taskzero/home2", { error: error });
- }
+    } catch (error) {
+      res.render("taskzero/home2", { error: error });
+    }
   }
 });
 route.get(
   "/fetchdata/:page/:query",
   checkAuth,
   async function (req: Request, res: Response) {
-    let search = req.params.query;
-    let page = parseInt(req.params.page);
+    let search: string = req.params.query;
+    let page: number = parseInt(req.params.page);
 
-    let perPage = 20;
-    const offset = (page - 1) * perPage;
+    let perPage: number = 20;
+    const offset: number = (page - 1) * perPage;
 
-    let sql = search;
+    let sql: string = search;
     sql = sql.replace(";", " Limit ?,? ;");
-    let q = `${sql}`;
-    let q2 = `${search}`;
+    let q: string = `${sql}`;
+    let q2: string = `${search}`;
 
-        let [rows3,fields3]=await con.getall(q2) as Array<RowDataPacket>;
-        let [rows4,fields4]=await con.getall(q,[offset,perPage]) as Array<RowDataPacket>;
-        res.render("taskzero/data", {
-            users: rows4,
-            field: fields4,
-            search,
-            page,
-            len: rows3,
-          });
+    let [rows3, fields3] = await con.getall(q2) as Array<RowDataPacket>;
+    let [rows4, fields4] = await con.getall(q, [offset, perPage]) as Array<RowDataPacket>;
+    res.render("taskzero/data", {
+      users: rows4,
+      field: fields4,
+      search,
+      page,
+      len: rows3,
+    });
   }
 );
 

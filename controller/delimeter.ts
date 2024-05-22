@@ -14,7 +14,7 @@ route.get("/sch", checkAuth, (req: Request, res: Response) => {
   res.render("specialchar/home");
 });
 
-route.post("/sch",checkAuth, async(req: Request, res: Response) => {
+route.post("/sch", checkAuth, async (req: Request, res: Response) => {
   let fname: string[] = [],
     lname: string[] = [],
     email: string[] = [],
@@ -59,7 +59,7 @@ route.post("/sch",checkAuth, async(req: Request, res: Response) => {
     }
 
 
-    let q1:string = `select * from student_master26 where `;
+    let q1: string = `select * from student_master26 where `;
 
     if (fname.length >= 1) {
       for (let i = 0; i < fname.length; i++) {
@@ -99,8 +99,8 @@ route.post("/sch",checkAuth, async(req: Request, res: Response) => {
     }
     q1 = q1.slice(0, q1.length - 4);
 
-    const result=await con.getall(q1) as Array<RowDataPacket>;
-      res.render("specialchar/data.ejs", { users: result });
+    const result = await con.getall(q1) as Array<RowDataPacket>;
+    res.render("specialchar/data.ejs", { users: result });
   } else {
     res.render("specialchar/home2.ejs");
   }
