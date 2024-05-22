@@ -409,7 +409,6 @@
 
   <fieldset class="form-control" style="width: 900px">
     <legend><b>Work Experience</b></legend>
-  <% console.log(result2) %>
     <div class="container">
       <% if(result2[0]) {%>
       <div class="row">
@@ -1568,7 +1567,6 @@
       if (e.which == 13) {
         e.preventDefault();
         var $next = $("[tabIndex=" + (+this.tabIndex + 1) + "]");
-        console.log($next.length);
         if (!$next.length) {
           $next = $("[tabIndex=1]");
         }
@@ -1616,21 +1614,16 @@
     function validateForm() {
       let date = document.getElementsByClassName("duration");
       let date1 = document.getElementsByClassName("duration").length;
-      console.log(`date : `);
-      console.log(date);
-      console.log(date1);
+  
       for (let i = 0; i < date.length; i++) {
         let dateString = new Date(date[i].value);
-        console.log(dateString);
         if (!isNaN(dateString.getTime())) {
           let day = dateString.getDate();
-          console.log(day);
           day = day < 10 ? "0" + day : day;
           let month = dateString.getMonth() + 1;
           month = month < 10 ? "0" + month : month;
           const year = dateString.getFullYear();
           const resultDate = `${year}/${day}/${month}`;
-          console.log(resultDate);
           date[i].value = resultDate;
         }
       }
@@ -1650,8 +1643,6 @@
 
       let text;
       for (let i = 0; i < arr.length; i++) {
-        console.log(i);
-        console.log(arr[i]);
         if (
           document.getElementById(arr[i]).value == "" ||
           document.getElementById(arr[i]).value == null
@@ -1683,16 +1674,12 @@
         }
         if (arr[i] == "dob") {
           let dateObj = new Date(document.getElementById(arr[i]).value);
-          console.log(dateObj);
           let day = dateObj.getDate();
-          console.log(day);
           day = day < 10 ? "0" + day : day;
           let month = dateObj.getMonth() + 1;
           month = month < 10 ? "0" + month : month;
           const year = dateObj.getFullYear();
           const resultDate = `${year}-${day}-${month}`;
-          console.log("data is");
-          console.log(resultDate);
           document.getElementById("dob").value = resultDate;
         }
       }
@@ -1764,9 +1751,6 @@
       //section 3
       for (let i = 0; i < workarr1.length; i++) {
         if (document.getElementById(workarr1[i]).value !== "") {
-          console.log(i);
-          console.log("entered");
-          console.log(document.getElementById(workarr1[i]).value);
           for (let j = 0; j < workarr1.length; j++) {
             if (
               document.getElementById(workarr1[j]).value == "" ||
@@ -1783,7 +1767,6 @@
       }
       for (let i = 0; i < workarr2.length; i++) {
         if (document.getElementById(workarr2[i]).value !== "") {
-          console.log("entered");
           for (let j = 0; j < workarr2.length; j++) {
             if (
               document.getElementById(workarr2[j]).value == "" ||
@@ -1800,7 +1783,6 @@
       }
       for (let i = 0; i < workarr3.length; i++) {
         if (document.getElementById(workarr3[i]).value !== "") {
-          console.log("entered");
           for (let j = 0; j < workarr3.length; j++) {
             if (
               document.getElementById(workarr3[j]).value == "" ||
@@ -1817,11 +1799,9 @@
       }
       // section4
       //for option check
-      console.log("section4");
 
       let check1 = document.getElementById(lan[0]);
       if (check1.checked) {
-        console.log("ck1");
         let read = document.getElementById("read1");
         let write = document.getElementById("write1");
         let speak = document.getElementById("speak1");
@@ -1834,12 +1814,10 @@
       }
       let check2 = document.getElementById(lan[1]);
       if (check2.checked) {
-        console.log("ck2");
         let read = document.getElementById("read2");
         let write = document.getElementById("write2");
         let speak = document.getElementById("speak2");
         if (!read.checked && !write.checked && !speak.checked) {
-          console.log("noo");
           document.getElementById(
             "print"
           ).innerHTML = `please choose option of ${lan[1]}`;
@@ -1848,7 +1826,6 @@
       }
       let check3 = document.getElementById(lan[2]);
       if (check3.checked) {
-        console.log("ck3");
         let read = document.getElementById("read3");
         let write = document.getElementById("write3");
         let speak = document.getElementById("speak3");
@@ -1937,9 +1914,7 @@
       }
       //for technology checked
       let level1 = document.forms["myForm"]["level1"].value;
-      console.log(level1);
       if (level1 !== "") {
-        console.log("enter in condition1");
         let tech1 = document.getElementById(tech[0]);
         if (!tech1.checked) {
           text = "plz select the technology first!!";
@@ -1949,9 +1924,7 @@
       }
 
       let level2 = document.forms["myForm"]["level2"].value;
-      console.log(level2);
       if (level2 !== "") {
-        console.log("enter in condition2");
         let tech2 = document.getElementById(tech[1]);
         if (!tech2.checked) {
           text = "plz select the technology first!!";
@@ -1961,21 +1934,16 @@
       }
 
       let level3 = document.forms["myForm"]["level3"].value;
-      console.log(level3);
       if (level3 !== "") {
-        console.log("enter in condition3");
         let tech3 = document.getElementById(tech[2]);
         if (!tech3.checked) {
-          console.log("not enter?");
           text = "plz select the technology first!!";
           document.getElementById("showmsg").innerHTML = text;
           return false;
         }
       }
       let level4 = document.forms["myForm"]["level4"].value;
-      console.log(level4);
       if (level4 !== "") {
-        console.log("enter in condition4");
         let tech4 = document.getElementById(tech[3]);
         if (!tech4.checked) {
           text = "plz select the technology first!!";
@@ -1986,9 +1954,6 @@
       // section 6
       for (let i = 0; i < ref1.length; i++) {
         if (document.getElementById(ref1[i]).value !== "") {
-          console.log(i);
-          console.log("entered");
-          console.log(document.getElementById(ref1[i]).value);
           for (let j = 0; j < ref1.length; j++) {
             if (
               document.getElementById(ref1[j]).value == "" ||
@@ -2005,9 +1970,6 @@
       }
       for (let i = 0; i < ref2.length; i++) {
         if (document.getElementById(ref2[i]).value !== "") {
-          console.log(i);
-          console.log("entered");
-          console.log(document.getElementById(ref2[i]).value);
           for (let j = 0; j < ref2.length; j++) {
             if (
               document.getElementById(ref2[j]).value == "" ||
@@ -2024,9 +1986,6 @@
       }
       for (let i = 0; i < ref3.length; i++) {
         if (document.getElementById(ref3[i]).value !== "") {
-          console.log(i);
-          console.log("entered");
-          console.log(document.getElementById(ref3[i]).value);
           for (let j = 0; j < ref3.length; j++) {
             if (
               document.getElementById(ref3[j]).value == "" ||
@@ -2044,8 +2003,6 @@
       //section 7
       let show;
       for (let i = 0; i < pref.length; i++) {
-        console.log(i);
-        console.log(pref[i]);
         if (
           document.getElementById(pref[i]).value == "" ||
           document.getElementById(pref[i]).value == null
@@ -2073,8 +2030,6 @@
         var hasNumber = /\d/;
         let id = document.getElementById(checknum[i]).value;
         if (hasNumber.test(id)) {
-          console.log("define");
-          console.log(id);
           document.getElementsByClassName("error")[
             i
           ].innerHTML = `Number is not Allowed!!`;
@@ -2097,8 +2052,6 @@
         var hasalpha = /[^a-z\d]/i;
         let id = document.getElementById(checkalpha[i]).value;
         if (hasalpha.test(id)) {
-          console.log("define");
-          console.log(id);
           document.getElementsByClassName("error")[
             i
           ].innerHTML = `Alphabets is not Allowed!!`;

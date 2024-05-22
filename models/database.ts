@@ -7,7 +7,7 @@ const con = new Db({
   password: process.env.DBPASSWORD,
   database: process.env.DATABASE,
   dateStrings: true,
- skiptzfix: true
+  skiptzfix: true
 });
 
 

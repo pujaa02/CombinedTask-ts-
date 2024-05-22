@@ -12,10 +12,12 @@ route.use(parser.urlencoded({ extended: false }));
 route.get("/fetch", checkAuth, (req: Request, res: Response) => {
   res.render("taskzero/home");
 });
+
+
 route.post("/fetch", async function (req: Request, res: Response) {
   let jsonData = req.body;
 
-  let search = jsonData["query"];
+  let search: string = jsonData["query"];
 
   let perPage: number = 20;
   let page: number = parseInt(req.query.page as string) || 1;
@@ -33,8 +35,15 @@ route.post("/fetch", async function (req: Request, res: Response) {
     let q: string = `${search}`;
 
     try {
-      let [rows, fields] = await con.getall(q, [offset, perPage]) as Array<RowDataPacket>
-      res.render("taskzero/nolimit", { users: rows, field: fields });
+      let result = await con.getall(q, [offset, perPage]) as Array<RowDataPacket>
+
+      let fields2: string[] = [];
+
+      Object.keys(result[0]).forEach(key => {
+        fields2.push(key);
+      })
+
+      res.render("taskzero/nolimit", { users: result, field: fields2 });
     } catch (error) {
       res.render("taskzero/home2", { error: error });
     }
@@ -45,14 +54,21 @@ route.post("/fetch", async function (req: Request, res: Response) {
     let q2: string = `${search}`;
 
     try {
-      let [rows1, fields1] = await con.getall(q2) as Array<RowDataPacket>;
-      let [rows2, fields2] = await con.getall(q, [offset, perPage]) as Array<RowDataPacket>;
+      let result2 = await con.query(q2) as Array<RowDataPacket>;
+      let result3 = await con.getall(q, [offset, perPage]) as Array<RowDataPacket>;
+
+      let fields: string[] = [];
+
+      Object.keys(result3[0]).forEach(key => {
+        fields.push(key);
+      })
+
       res.render("taskzero/data", {
-        users: rows2,
-        field: fields2,
+        users: result3,
+        field: fields,
         page,
         search,
-        len: rows1,
+        len: result2,
       });
     } catch (error) {
       res.render("taskzero/home2", { error: error });
@@ -74,14 +90,21 @@ route.get(
     let q: string = `${sql}`;
     let q2: string = `${search}`;
 
-    let [rows3, fields3] = await con.getall(q2) as Array<RowDataPacket>;
-    let [rows4, fields4] = await con.getall(q, [offset, perPage]) as Array<RowDataPacket>;
+    let result4 = await con.getall(q2) as Array<RowDataPacket>;
+    let result5 = await con.getall(q, [offset, perPage]) as Array<RowDataPacket>;
+
+    let fields2: string[] = [];
+
+    Object.keys(result5[0]).forEach(key => {
+      fields2.push(key);
+    })
+
     res.render("taskzero/data", {
-      users: rows4,
-      field: fields4,
+      users: result5,
+      field: fields2,
       search,
       page,
-      len: rows3,
+      len: result4,
     });
   }
 );

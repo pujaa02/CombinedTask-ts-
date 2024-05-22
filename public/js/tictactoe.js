@@ -66,7 +66,6 @@ const enabledbox = () => {
   msgContainer.classList.add("hide");
 };
 const showWinner = (winner) => {
-  console.log("winner");
   msg.innerText = `Congratulation Winner is : ${winner}`;
   msgContainer.classList.remove("hide");
   disabledbox();

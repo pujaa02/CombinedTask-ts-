@@ -5,7 +5,7 @@ let string = "";
 let count = 0;
 
 button.addEventListener("click", (e) => {
-  console.log("button was clicked");
+
   if (input.value == "") {
     alert("Please first write something!! ");
   } else {
@@ -13,7 +13,7 @@ button.addEventListener("click", (e) => {
     string = input.value;
     let li = document.createElement("li");
     li.setAttribute("class", count);
-    // console.log("id of "+count)
+  
     let span = document.createElement("span");
     let button = document.createElement("button");
     button.setAttribute("class", "delbtn");
@@ -32,7 +32,6 @@ button.addEventListener("click", (e) => {
 
         var y = btn.parentNode;
         var z = y.parentNode;
-        console.log(z);
         z.remove();
       });
     });

@@ -59,9 +59,7 @@ table {
     </style>
   </head>
   <body>
-    <% console.log("another page") %>
     <%- include("form")%>
-   
        <div class="btns">
          <button name="first" onclick="window.location.href='/fetchdata/1/<%=search%>'"<%= page==1 ? 'disabled':''%> >
            <<
@@ -74,29 +72,30 @@ table {
          <span id="span"><%=page%></span>
          <button
            name="next"
-           onclick="window.location.href='/fetchdata/<%=Number(page)+1%>/<%=search%>'"<%=page==(len.length/20) ? 'disabled':''%>
+           onclick="window.location.href='/fetchdata/<%=Number(page)+1%>/<%=search%>'"<%=page==Math.ceil(len.length/20) ? 'disabled':''%>
          >
            >
          </button>
-         <button name="last" onclick="window.location.href='/fetchdata/<%=(len.length/20)%>/<%=search%>'" <%=page==(len.length/20) ? 'disabled':'' %>
+         <button name="last" onclick="window.location.href='/fetchdata/<%=(len.length/20)%>/<%=search%>'" <%=page==Math.ceil(len.length/20) ? 'disabled':'' %>
            >>>
          </button>
          
        </div>
-    <table id="myTable">
-      <tr>
-      <%for(let i=0; i<field.length; i++){%>
-      <th><button onclick="sortTable(`<%=i%>`)"><%=field[i]["name"]%></button></th>
-      <%}%>
-    </tr>
-    <%users.forEach((user)=>{%>
-      <tr>
-           <%Object.keys(user).forEach(key=>{%>
-                <td ><%= user[key]%></td>
-           <%})%>
+       <table id="myTable">
+        <tr>
+        <%for(let i=0; i<field.length; i++){%>
+        <th><button onclick="sortTable(`<%=i%>`)"><%=field[i]%></button></th>
+        <%}%>
       </tr>
-    <%})%>
-    </table>
+      <%users.forEach((user)=>{%>
+        <tr>
+             <%Object.keys(user).forEach(key=>{%>
+                  <td ><%= user[key]%></td>
+             <%})%>
+        </tr>
+      <%})%>
+      </table>
+      
     <script>
     function sortTable(n) {
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;

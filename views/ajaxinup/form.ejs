@@ -1152,10 +1152,9 @@
     </form>
     <script>
       //script.js
-      console.log("enter in");
       const cardsPerPage = 1; // Number of cards to show per page
       const dataContainer = document.getElementById("data-container");
-      console.log(dataContainer);
+
       const pagination = document.getElementById("pagination");
       const prevButton = document.getElementById("prev");
       const nextButton = document.getElementById("next");
@@ -1164,7 +1163,7 @@
       const cards = Array.from(
         dataContainer.getElementsByClassName("fieldset")
       );
-      console.log(cards);
+
       let totalpages = cards.length;
       let curpage = 1;
 
@@ -1191,7 +1190,7 @@
       nextButton.addEventListener("click", () => {
         let flag = true;
         let validate = validateForm(curpage);
-        console.log(validate);
+
         if (validate) {
           if (curpage < totalpages) {
             curpage++;
@@ -1206,16 +1205,14 @@
       });
       sub.addEventListener("click", () => {
         let checkvalidate = validateForm(7);
-        console.log(checkvalidate);
+
         if (checkvalidate) {
-          console.log("you can");
           submitform();
         }
       });
       async function submitform() {
-        console.log("callled submitform");
         var response;
-        console.log(window.location.href.substring(22).startsWith("inuajax"));
+
         if (window.location.href.substring(22).startsWith("inuajax")) {
           response = await fetch("/submit", {
             method: "POST",
@@ -1224,7 +1221,7 @@
             ),
           });
           var result2 = await response.json();
-          console.log(result2);
+
           window.location.href = `http://localhost:5065/update`;
         } else if (window.location.href.substring(22).startsWith("update")) {
           response = await fetch(`/update/${id}`, {
@@ -1234,7 +1231,7 @@
             ),
           });
           var result2 = await response.json();
-          console.log(result2);
+
           window.location.href = `http://localhost:5065/showupdate`;
         }
       }
@@ -1248,12 +1245,11 @@
       display(curpage);
     </script>
     <script type="text/javascript">
-      console.log("hlw");
       $(document).on("keypress", "input,select", function (e) {
         if (e.which == 13) {
           e.preventDefault();
           var $next = $("[tabIndex=" + (+this.tabIndex + 1) + "]");
-          console.log($next.length);
+
           if (!$next.length) {
             $next = $("[tabIndex=1]");
           }
@@ -1311,8 +1307,6 @@
         let text;
         if (curpage == 1) {
           for (let i = 0; i < arr.length; i++) {
-            // console.log(i);
-            // console.log(arr[i]);
             if (
               document.getElementById(arr[i]).value == "" ||
               document.getElementById(arr[i]).value == null
@@ -1346,30 +1340,22 @@
             }
             if (arr[i] == "dob") {
               let dateObj = new Date(document.getElementById(arr[i]).value);
-              console.log(dateObj);
               let day = dateObj.getDate();
-              console.log(day);
               day = day < 10 ? "0" + day : day;
               let month = dateObj.getMonth() + 1;
               month = month < 10 ? "0" + month : month;
               const year = dateObj.getFullYear();
               const resultDate = `${year}-${day}-${month}`;
-              console.log("data is");
-              console.log(resultDate);
               document.getElementById("dob").value = resultDate;
             }
           }
         }
         if (curpage == 2) {
-          //  let ssc = ["board1", "py1", "pecentage1"];
-          // let hsc = ["board2", "py2", "pecentage2"];
-          // let bachelor = ["course1", "py11", "pecentage11"];
-          // let master = ["course2", "py22", "pecentage22"];
           //section 2
           for (let i = 0; i < ssc.length; i++) {
             if (document.getElementById(ssc[i]).value !== "") {
               for (let j = 0; j < ssc.length; j++) {
-                console.log(ssc[j]);
+               
                 if (
                   document.getElementById(ssc[j]).value == "" ||
                   document.getElementById(ssc[j]).value == null
@@ -1436,29 +1422,23 @@
           //section 3  res.render("updateform", { id });date : `);
           let date = document.getElementsByClassName("duration");
           let date1 = document.getElementsByClassName("duration").length;
-          console.log(`date : `);
-          console.log(date);
-          console.log(date1);
           for (let i = 0; i < date.length; i++) {
             let dateString = new Date(date[i].value);
-            console.log(dateString);
+          
             if (!isNaN(dateString.getTime())) {
               let day = dateString.getDate();
-              console.log(day);
+             
               day = day < 10 ? "0" + day : day;
               let month = dateString.getMonth() + 1;
               month = month < 10 ? "0" + month : month;
               const year = dateString.getFullYear();
               const resultDate = `${year}/${day}/${month}`;
-              console.log(resultDate);
+              
               date[i].value = resultDate;
             }
           }
           for (let i = 0; i < workarr1.length; i++) {
             if (document.getElementById(workarr1[i]).value !== "") {
-              console.log(i);
-              console.log("entered");
-              console.log(document.getElementById(workarr1[i]).value);
               for (let j = 0; j < workarr1.length; j++) {
                 if (
                   document.getElementById(workarr1[j]).value == "" ||
@@ -1475,7 +1455,7 @@
           }
           for (let i = 0; i < workarr2.length; i++) {
             if (document.getElementById(workarr2[i]).value !== "") {
-              console.log("entered");
+           
               for (let j = 0; j < workarr2.length; j++) {
                 if (
                   document.getElementById(workarr2[j]).value == "" ||
@@ -1492,7 +1472,7 @@
           }
           for (let i = 0; i < workarr3.length; i++) {
             if (document.getElementById(workarr3[i]).value !== "") {
-              console.log("entered");
+            
               for (let j = 0; j < workarr3.length; j++) {
                 if (
                   document.getElementById(workarr3[j]).value == "" ||
@@ -1511,10 +1491,10 @@
         if (curpage == 4) {
           // section4
           //for option check
-          console.log("section4");
+       
           let check1 = document.getElementById(lan[0]);
           if (check1.checked) {
-            console.log("ck1");
+           
             let read = document.getElementById("read1");
             let write = document.getElementById("write1");
             let speak = document.getElementById("speak1");
@@ -1527,12 +1507,11 @@
           }
           let check2 = document.getElementById(lan[1]);
           if (check2.checked) {
-            console.log("ck2");
             let read = document.getElementById("read2");
             let write = document.getElementById("write2");
             let speak = document.getElementById("speak2");
             if (!read.checked && !write.checked && !speak.checked) {
-              console.log("noo");
+             
               document.getElementById(
                 "print"
               ).innerHTML = `please choose option of ${lan[1]}`;
@@ -1541,7 +1520,7 @@
           }
           let check3 = document.getElementById(lan[2]);
           if (check3.checked) {
-            console.log("ck3");
+           
             let read = document.getElementById("read3");
             let write = document.getElementById("write3");
             let speak = document.getElementById("speak3");
@@ -1631,9 +1610,8 @@
           }
           //for technology checked
           let level1 = document.forms["myForm"]["level1"].value;
-          console.log(level1);
+       
           if (level1 !== "") {
-            console.log("enter in condition1");
             let tech1 = document.getElementById(tech[0]);
             if (!tech1.checked) {
               text = "plz select the technology first!!";
@@ -1642,9 +1620,7 @@
             }
           }
           let level2 = document.forms["myForm"]["level2"].value;
-          console.log(level2);
           if (level2 !== "") {
-            console.log("enter in condition2");
             let tech2 = document.getElementById(tech[1]);
             if (!tech2.checked) {
               text = "plz select the technology first!!";
@@ -1653,21 +1629,16 @@
             }
           }
           let level3 = document.forms["myForm"]["level3"].value;
-          console.log(level3);
           if (level3 !== "") {
-            console.log("enter in condition3");
             let tech3 = document.getElementById(tech[2]);
             if (!tech3.checked) {
-              console.log("not enter?");
               text = "plz select the technology first!!";
               document.getElementById("showmsg").innerHTML = text;
               return false;
             }
           }
           let level4 = document.forms["myForm"]["level4"].value;
-          console.log(level4);
           if (level4 !== "") {
-            console.log("enter in condition4");
             let tech4 = document.getElementById(tech[3]);
             if (!tech4.checked) {
               text = "plz select the technology first!!";
@@ -1680,9 +1651,6 @@
           // section 6
           for (let i = 0; i < ref1.length; i++) {
             if (document.getElementById(ref1[i]).value !== "") {
-              console.log(i);
-              console.log("entered");
-              console.log(document.getElementById(ref1[i]).value);
               for (let j = 0; j < ref1.length; j++) {
                 if (
                   document.getElementById(ref1[j]).value == "" ||
@@ -1699,9 +1667,6 @@
           }
           for (let i = 0; i < ref2.length; i++) {
             if (document.getElementById(ref2[i]).value !== "") {
-              console.log(i);
-              console.log("entered");
-              console.log(document.getElementById(ref2[i]).value);
               for (let j = 0; j < ref2.length; j++) {
                 if (
                   document.getElementById(ref2[j]).value == "" ||
@@ -1718,9 +1683,6 @@
           }
           for (let i = 0; i < ref3.length; i++) {
             if (document.getElementById(ref3[i]).value !== "") {
-              console.log(i);
-              console.log("entered");
-              console.log(document.getElementById(ref3[i]).value);
               for (let j = 0; j < ref3.length; j++) {
                 if (
                   document.getElementById(ref3[j]).value == "" ||
@@ -1740,8 +1702,6 @@
           //section 7
           let show;
           for (let i = 0; i < pref.length; i++) {
-            console.log(i);
-            console.log(pref[i]);
             if (
               document.getElementById(pref[i]).value == "" ||
               document.getElementById(pref[i]).value == null
@@ -1785,50 +1745,37 @@
     </script>
     <script>
       let link = window.location.href;
-      console.log("link", link);
-      // http://localhost:5058/update/16
       let id = link.substring(29);
 
-      console.log("id", id);
       async function fetchid() {
         const emp = await fetch("/emp");
         const emp_result = await emp.json();
-        console.log("emp", emp_result);
         let res1 = [];
         emp_result.forEach((el) => {
           if (el.emp_id == id) {
             res1.push(el);
           }
         });
-        console.log("res1", res1);
-        // let res1 = emp_result[id - 1];
-        // console.log(emp_result[id - 1]);
-        // console.log("res1", res1);
 
         const edu = await fetch("/edu");
         const edu_result = await edu.json();
         let res2 = edu_result;
-        console.log(res2);
 
         const work = await fetch("/work");
         const work_result = await work.json();
         let res3 = work_result;
-        console.log(res3);
-
+      
         const lan = await fetch("/lan");
         const lan_result = await lan.json();
         let res4 = lan_result;
-        console.log(res4);
 
         const techno = await fetch("/tech");
         const techno_result = await techno.json();
         let res5 = techno_result;
-        console.log(res5);
 
         const ref = await fetch("/ref");
         const ref_result = await ref.json();
         let res6 = ref_result;
-        console.log(res6);
 
         const pre = await fetch("/pre");
         const pre_result = await pre.json();
@@ -1839,9 +1786,11 @@
           }
         });
         // let res7 = pre_result[id - 1];
-        console.log("res7", res7);
 
-        document.getElementById("fname").setAttribute("value", `${res1[0].fname}`);
+
+        document
+          .getElementById("fname")
+          .setAttribute("value", `${res1[0].fname}`);
         document
           .getElementById("lname")
           .setAttribute("value", `${res1[0].lname}`);
@@ -1877,9 +1826,7 @@
         // ============section 2==============
         res2.forEach((obj) => {
           if (obj["emp_id"] == id) {
-            console.log("edu_det", obj);
             if (obj["type_of_result"] == "ssc") {
-              console.log("ssc");
               document
                 .getElementById("board1")
                 .setAttribute("value", `${obj.Name_of_board_or_course}`);
@@ -1891,7 +1838,6 @@
                 .setAttribute("value", `${obj.Percentage}`);
             }
             if (obj["type_of_result"] == "hsc") {
-              console.log("hsc");
               document
                 .getElementById("board2")
                 .setAttribute("value", `${obj.Name_of_board_or_course}`);
@@ -1903,7 +1849,6 @@
                 .setAttribute("value", `${obj.Percentage}`);
             }
             if (obj["type_of_result"] == "bachelor") {
-              console.log("bachelor");
               document
                 .getElementById("course1")
                 .setAttribute("value", `${obj.Name_of_board_or_course}`);
@@ -1915,7 +1860,6 @@
                 .setAttribute("value", `${obj.Percentage}`);
             }
             if (obj["type_of_result"] == "master") {
-              console.log("master");
               document
                 .getElementById("course2")
                 .setAttribute("value", `${obj.Name_of_board_or_course}`);
@@ -2011,9 +1955,6 @@
             rws3.push(s3);
           }
         }
-        console.log("arr4 is : ");
-        console.log(arr4);
-        console.log(languagearr, rws1, rws2, rws3);
         arr4.forEach((obj) => {
           document.getElementById(`${obj.language_know}`).checked = true;
         });
@@ -2063,7 +2004,6 @@
             rws1 = str.split(",");
           }
           if (rws1.indexOf("read") >= 0) {
-            console.log("read1");
             document.getElementById("read1").checked = true;
           }
           if (rws1.indexOf("write") >= 0) {
@@ -2147,8 +2087,6 @@
             arr6.push(el);
           }
         });
-        // console.log("arr6is:      =============");
-        // console.log(arr6);
         if (arr6[0]) {
           document
             .getElementById("name1")

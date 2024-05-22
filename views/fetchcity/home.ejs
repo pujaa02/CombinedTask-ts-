@@ -33,12 +33,9 @@
     async function fetchingcity(x) {
       const response = await fetch("/cities");
       const result = await response.json();
-      console.log(result);
       getcity(result, x);
     }
     function getcity(result, x) {
-      console.log("value of x");
-      console.log(x);
       let str = "";
       result.forEach((element) => {
         if (element.state_id == x) {
@@ -50,7 +47,6 @@
     function changecity() {
       var x = document.getElementById("state").value;
       fetchingcity(x);
-      console.log(x);
     }
   </script>
 </html>

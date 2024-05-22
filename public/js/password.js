@@ -19,11 +19,6 @@ function validateForm() {
     document.getElementById(arr[0]).value !=
     document.getElementById(arr[1]).value
   ) {
-    console.log(
-      "false value is ",
-      document.getElementById(arr[0]).value,
-      document.getElementById(arr[1]).value
-    );
     document.getElementsByClassName(
       "error"
     )[1].innerHTML = `The reenter password is must same as password!!`;

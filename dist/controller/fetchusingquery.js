@@ -53,8 +53,12 @@ route.post("/fetch", async function (req, res) {
     else if (search.search("limit") > 1) {
         let q = `${search}`;
         try {
-            let [rows, fields] = await database_1.default.getall(q, [offset, perPage]);
-            res.render("taskzero/nolimit", { users: rows, field: fields });
+            let result = await database_1.default.getall(q, [offset, perPage]);
+            let fields2 = [];
+            Object.keys(result[0]).forEach(key => {
+                fields2.push(key);
+            });
+            res.render("taskzero/nolimit", { users: result, field: fields2 });
         }
         catch (error) {
             res.render("taskzero/home2", { error: error });
@@ -66,14 +70,18 @@ route.post("/fetch", async function (req, res) {
         let q = `${str}`;
         let q2 = `${search}`;
         try {
-            let [rows1, fields1] = await database_1.default.getall(q2);
-            let [rows2, fields2] = await database_1.default.getall(q, [offset, perPage]);
+            let result2 = await database_1.default.query(q2);
+            let result3 = await database_1.default.getall(q, [offset, perPage]);
+            let fields = [];
+            Object.keys(result3[0]).forEach(key => {
+                fields.push(key);
+            });
             res.render("taskzero/data", {
-                users: rows2,
-                field: fields2,
+                users: result3,
+                field: fields,
                 page,
                 search,
-                len: rows1,
+                len: result2,
             });
         }
         catch (error) {
@@ -90,14 +98,18 @@ route.get("/fetchdata/:page/:query", checkauth_1.default, async function (req, r
     sql = sql.replace(";", " Limit ?,? ;");
     let q = `${sql}`;
     let q2 = `${search}`;
-    let [rows3, fields3] = await database_1.default.getall(q2);
-    let [rows4, fields4] = await database_1.default.getall(q, [offset, perPage]);
+    let result4 = await database_1.default.getall(q2);
+    let result5 = await database_1.default.getall(q, [offset, perPage]);
+    let fields2 = [];
+    Object.keys(result5[0]).forEach(key => {
+        fields2.push(key);
+    });
     res.render("taskzero/data", {
-        users: rows4,
-        field: fields4,
+        users: result5,
+        field: fields2,
         search,
         page,
-        len: rows3,
+        len: result4,
     });
 });
 exports.default = route;

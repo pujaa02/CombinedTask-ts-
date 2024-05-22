@@ -80,10 +80,7 @@ table {
     <title>data</title>
   </head>
   <body>
-    <%= console.log(((len.length)/5)+1) %>
     <%- include("form") -%>
-    <%= console.log("this is length rounded :") %>
-    <% console.log(Math.ceil(len.length/5)) %>
     <% let val= Math.ceil(len.length/5)%>
     <div class="btns">
       <button name="first" onclick="window.location.href='/fetch2/<%=1%>/<%=search%>'"<%= page==1 ? 'disabled':''%> >
